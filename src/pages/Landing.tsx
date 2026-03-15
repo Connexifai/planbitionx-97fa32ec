@@ -51,26 +51,6 @@ const features = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Sarah van den Berg",
-    role: "Operations Manager, LogiFlow BV",
-    quote: "Planbition X reduced our planning time from 6 hours to under 2 minutes. The WTA compliance alone saved us from costly violations.",
-    stars: 5,
-  },
-  {
-    name: "Thomas Müller",
-    role: "HR Director, MedCare GmbH",
-    quote: "The AI assistant is a game-changer. When someone calls in sick, we have a qualified replacement suggestion within seconds.",
-    stars: 5,
-  },
-  {
-    name: "Marie Dubois",
-    role: "Planning Lead, TransEurope SA",
-    quote: "Finally a tool that understands the complexity of 24/7 shift planning. Our employees are happier and our coverage is better than ever.",
-    stars: 5,
-  },
-];
 
 const stats = [
   { value: "16s", label: "Average solve time" },
