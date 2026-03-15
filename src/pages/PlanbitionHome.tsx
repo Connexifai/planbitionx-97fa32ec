@@ -124,7 +124,6 @@ export default function PlanbitionHome() {
               De online oplossing voor uw{" "}
               <span className="text-brand-accent">workforce management</span>
             </h1>
-            </h1>
             <p className="text-lg md:text-xl text-blue-100 max-w-xl mb-8 leading-relaxed">
               Planbition is een uitermate flexibel systeem dat vrijwel elk planningsproces kan
               ondersteunen. Van onboarding tot tijdregistratie — de juiste mensen op het juiste
