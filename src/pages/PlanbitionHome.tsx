@@ -255,7 +255,7 @@ export default function PlanbitionHome() {
 
             <div className="flex-1 flex justify-center">
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-brand-accent/10 rounded-3xl blur-2xl" />
                 <Card className="relative p-8 bg-card border-primary/20 shadow-2xl max-w-sm">
                   <img
                     src={robotImg}
