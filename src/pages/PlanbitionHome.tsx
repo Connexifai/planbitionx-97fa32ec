@@ -236,7 +236,7 @@ export default function PlanbitionHome() {
                   "Beschikbaar in 8 talen",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-accent-orange flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
