@@ -401,9 +401,7 @@ async function downloadPptx() {
     // Footer
     sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.1, w: 13.33, h: 0.4, fill: { color: CARD } });
     sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.1, w: 13.33, h: 0.01, fill: { color: BRD } });
-    if (logoB64) {
-      sl.addImage({ data: `image/png;base64,${logoB64}`, x: 5.5, y: 7.12, w: 2.3, h: 0.32, sizing: { type: "contain" as const, w: 2.3, h: 0.32 } });
-    }
+    sl.addText("Planbition X", { x: 5, y: 7.12, w: 3.33, h: 0.3, fontSize: 9, bold: true, color: MUT, fontFace: "Arial", align: "center" });
   }
 
   prs.writeFile({ fileName: "PlanbitionX_Presentatie.pptx" });
