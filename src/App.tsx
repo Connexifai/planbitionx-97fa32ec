@@ -70,6 +70,7 @@ const App = () => (
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/" element={<HomeOrPlanner />} />
+            <Route path="/presentation" element={<Presentation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
