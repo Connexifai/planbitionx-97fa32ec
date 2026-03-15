@@ -60,6 +60,9 @@
     --accent: 220 20% 95%;
     --accent-foreground: 220 30% 15%;
 
+    --accent-orange: 25 95% 53%;
+    --accent-orange-foreground: 0 0% 100%;
+
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
@@ -115,6 +118,9 @@
     --muted-foreground: 220 10% 55%;
     --accent: 220 20% 18%;
     --accent-foreground: 220 15% 90%;
+
+    --accent-orange: 25 95% 58%;
+    --accent-orange-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --border: 220 15% 20%;

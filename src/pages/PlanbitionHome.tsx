@@ -110,9 +110,9 @@ export default function PlanbitionHome() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[hsl(210,100%,50%)] via-[hsl(210,90%,40%)] to-[hsl(220,80%,30%)]" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary/80 to-accent-orange/80" />
         <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-accent-orange/30 blur-3xl" />
           <div className="absolute bottom-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-2xl" />
         </div>
 
@@ -120,9 +120,9 @@ export default function PlanbitionHome() {
           <div className="flex-1 text-white">
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
               De online oplossing voor uw{" "}
-              <span className="text-blue-200">workforce management</span>
+              <span className="text-accent-orange">workforce management</span>
             </h1>
-            <p className="text-lg md:text-xl text-blue-100 max-w-xl mb-8 leading-relaxed">
+            <p className="text-lg md:text-xl text-white/80 max-w-xl mb-8 leading-relaxed">
               Planbition is een uitermate flexibel systeem dat vrijwel elk planningsproces kan
               ondersteunen. Van onboarding tot tijdregistratie — de juiste mensen op het juiste
               moment op de juiste plaats.
@@ -130,7 +130,7 @@ export default function PlanbitionHome() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="text-base px-8 h-12 bg-white text-blue-700 hover:bg-blue-50"
+                className="text-base px-8 h-12 bg-accent-orange text-accent-orange-foreground hover:bg-accent-orange/90"
                 onClick={() => navigate("/login")}
               >
                 Start nu <ArrowRight className="ml-2 w-5 h-5" />
@@ -213,7 +213,7 @@ export default function PlanbitionHome() {
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-orange/10 text-accent-orange text-sm font-semibold mb-6">
                 <Sparkles className="w-4 h-4" />
                 NIEUW — AI-gestuurd roosteren
               </div>
@@ -236,7 +236,7 @@ export default function PlanbitionHome() {
                   "Beschikbaar in 8 talen",
                 ].map((item) => (
                   <li key={item} className="flex items-center gap-3 text-sm">
-                    <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0" />
+                    <CheckCircle2 className="w-5 h-5 text-accent-orange flex-shrink-0" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -305,10 +305,10 @@ export default function PlanbitionHome() {
             {features.map((f) => (
               <Card
                 key={f.title}
-                className="p-6 bg-card border-border hover:border-primary/30 hover:shadow-lg transition-all group"
+                className="p-6 bg-card border-border hover:border-accent-orange/30 hover:shadow-lg transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <f.icon className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-accent-orange/10 flex items-center justify-center mb-4 group-hover:bg-accent-orange/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-accent-orange" />
                 </div>
                 <h3 className="font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
@@ -332,7 +332,7 @@ export default function PlanbitionHome() {
             <ul className="space-y-4">
               {benefits.map((b) => (
                 <li key={b} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-accent-orange flex-shrink-0 mt-0.5" />
                   <span className="text-sm">{b}</span>
                 </li>
               ))}
