@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { MessageSquare, Sparkles, CheckCircle2, ArrowRight, Bot, User, Loader2 } from "lucide-react";
 
-const PHASE_DURATION = 4500; // ms per phase
+const PHASE_DURATION = 6500; // ms per phase (longer for phase 2 animation)
 const PHASES = 3;
 
 /* Mini roster data */
@@ -39,9 +39,15 @@ function ShiftBadge({ shift }: { shift: string }) {
   );
 }
 
-function MiniRoster({ rows, highlight }: { rows: typeof rosterRows; highlight?: { row: number; col: number; color: string }[] }) {
+function MiniRoster({ rows, highlight, dimCell, glowCell, rosterRef }: { 
+  rows: typeof rosterRows; 
+  highlight?: { row: number; col: number; color: string }[];
+  dimCell?: { row: number; col: number };
+  glowCell?: { row: number; col: number };
+  rosterRef?: React.RefObject<HTMLDivElement | null>;
+}) {
   return (
-    <div className="space-y-0.5">
+    <div className="space-y-0.5" ref={rosterRef}>
       {/* Header */}
       <div className="flex items-center gap-0.5 mb-1">
         <div className="w-16 text-[8px] text-muted-foreground font-medium" />
@@ -54,8 +60,15 @@ function MiniRoster({ rows, highlight }: { rows: typeof rosterRows; highlight?: 
           <div className="w-16 text-[9px] text-foreground font-medium truncate">{r.name}</div>
           {r.shifts.map((s, ci) => {
             const hl = highlight?.find((h) => h.row === ri && h.col === ci);
+            const isDimmed = dimCell && dimCell.row === ri && dimCell.col === ci;
+            const isGlowing = glowCell && glowCell.row === ri && glowCell.col === ci;
             return (
-              <div key={ci} className={`relative ${hl ? "ring-2 ring-offset-1 rounded" : ""}`} style={hl ? { "--tw-ring-color": hl.color } as any : undefined}>
+              <div 
+                key={ci} 
+                data-cell={`${ri}-${ci}`}
+                className={`relative transition-all duration-300 ${hl ? "ring-2 ring-offset-1 rounded" : ""} ${isDimmed ? "opacity-20 scale-90" : ""} ${isGlowing ? "ring-2 ring-primary rounded shadow-[0_0_12px_hsl(var(--primary)/0.5)] scale-110" : ""}`} 
+                style={hl ? { "--tw-ring-color": hl.color } as any : undefined}
+              >
                 <ShiftBadge shift={s} />
               </div>
             );
@@ -90,21 +103,24 @@ export default function SolverShowcase() {
     const timer = setInterval(() => {
       setPhase((p) => (p + 1) % PHASES);
       setSubStep(0);
-    }, PHASE_DURATION);
+    }, phase === 2 ? 7500 : PHASE_DURATION);
     return () => clearInterval(timer);
-  }, []);
+  }, [phase]);
 
   // Sub-step progression within each phase
   useEffect(() => {
     if (phase === 1) {
-      // Phase 1 has 2 sub-steps: solving → result
       const t1 = setTimeout(() => setSubStep(1), 1500);
       return () => clearTimeout(t1);
     }
     if (phase === 2) {
-      const t1 = setTimeout(() => setSubStep(1), 1800);
-      const t2 = setTimeout(() => setSubStep(2), 3200);
-      return () => { clearTimeout(t1); clearTimeout(t2); };
+      // 0: user request, 1: AI analyzing, 2: show roster + pickup glow, 3: flying, 4: landed/done
+      const t1 = setTimeout(() => setSubStep(1), 1400);
+      const t2 = setTimeout(() => setSubStep(2), 2800);
+      const t3 = setTimeout(() => setSubStep(3), 3800);
+      const t4 = setTimeout(() => setSubStep(4), 4800);
+      const t5 = setTimeout(() => setSubStep(5), 5600);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
     }
   }, [phase]);
 
@@ -241,14 +257,14 @@ export default function SolverShowcase() {
               )}
             </div>
 
-            {/* ── Phase 2: Post-solve AI change ── */}
+            {/* ── Phase 2: Post-solve AI change with pickup-and-fly ── */}
             <div
               className={`absolute inset-0 p-3 transition-all duration-500 ${
                 phase === 2 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8 pointer-events-none"
               }`}
             >
+              {/* Sub 0: User request */}
               {subStep === 0 && (
-                /* User asks for a swap */
                 <div>
                   <div className="flex items-center gap-1.5 mb-2">
                     <Bot className="w-3.5 h-3.5 text-primary" />
@@ -267,13 +283,9 @@ export default function SolverShowcase() {
                 </div>
               )}
 
+              {/* Sub 1: AI analyzing */}
               {subStep === 1 && (
-                /* AI analyzing */
                 <div>
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <Bot className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-[10px] font-semibold text-foreground">{t("home.showcasePostSolve")}</span>
-                  </div>
                   <div className="flex gap-2 justify-end mb-2">
                     <div className="bg-primary/15 rounded-lg rounded-tr-sm px-2.5 py-1.5 max-w-[90%]">
                       <p className="text-[10px] text-foreground">{t("home.showcaseSwapRequest")}</p>
@@ -296,27 +308,62 @@ export default function SolverShowcase() {
                 </div>
               )}
 
-              {subStep === 2 && (
-                /* AI resolved with updated roster */
-                <div>
-                  <div className="flex gap-2 mb-2">
-                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-3 h-3 text-primary" />
-                    </div>
-                    <div className="bg-muted/50 rounded-lg rounded-tl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-foreground leading-relaxed">
-                        <CheckCircle2 className="w-3 h-3 text-shift-early inline mr-0.5 -mt-0.5" />
-                        {t("home.showcaseSwapResult")}
-                      </p>
+              {/* Sub 2+: Roster with pickup-and-fly animation */}
+              {subStep >= 2 && (
+                <div className="relative">
+                  {/* Progress banner like the real solver */}
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-card border border-border rounded-xl shadow-lg">
+                      {subStep >= 5 ? (
+                        <>
+                          <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                            <CheckCircle2 className="w-2.5 h-2.5 text-primary-foreground" />
+                          </div>
+                          <span className="text-[9px] font-bold text-primary">
+                            {t("home.showcaseAllChanges")}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-4 h-4 rounded-full bg-primary/15 text-primary font-bold text-[8px] flex items-center justify-center border border-primary/30">
+                            {subStep <= 3 ? "1" : "2"}
+                          </div>
+                          <span className="text-[9px] font-semibold text-foreground">
+                            {subStep <= 3 ? "Franz X." : "Pieter J."}
+                          </span>
+                          <div className="w-10 h-1 rounded-full bg-muted overflow-hidden">
+                            <div 
+                              className="h-full rounded-full bg-primary transition-all duration-700"
+                              style={{ width: subStep <= 3 ? "50%" : "100%" }}
+                            />
+                          </div>
+                          <span className="text-[8px] text-muted-foreground">
+                            {subStep <= 3 ? "1/2" : "2/2"}
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
+
+                  {/* Roster with glow/dim/highlight effects */}
                   <MiniRoster
-                    rows={rosterAfterSwap}
-                    highlight={[
-                      { row: 2, col: 3, color: "hsl(152, 60%, 46%)" }, // Franz freed
-                      { row: 4, col: 4, color: "hsl(152, 60%, 46%)" }, // Pieter takes over
-                    ]}
+                    rows={subStep >= 4 ? rosterAfterSwap : rosterRows}
+                    glowCell={subStep === 2 ? { row: 2, col: 3 } : subStep === 3 ? { row: 4, col: 4 } : undefined}
+                    dimCell={subStep === 3 ? { row: 2, col: 3 } : undefined}
+                    highlight={subStep >= 4 ? [
+                      { row: 2, col: 3, color: "hsl(var(--primary))" },
+                      { row: 4, col: 4, color: "hsl(var(--primary))" },
+                    ] : undefined}
                   />
+
+                  {/* Flying badge overlay */}
+                  {subStep === 3 && (
+                    <div className="absolute pointer-events-none showcase-flying-badge" style={{ top: "42%", left: "55%" }}>
+                      <div className="w-7 h-5 rounded text-[9px] font-bold flex items-center justify-center bg-shift-early/40 text-shift-early border-2 border-primary shadow-[0_0_16px_hsl(var(--primary)/0.5)] scale-125">
+                        V
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
