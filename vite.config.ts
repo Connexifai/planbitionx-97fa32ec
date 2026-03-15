@@ -18,14 +18,14 @@ export default defineConfig(({ mode }) => ({
     mode === "development" && componentTagger(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "images/login-bg.gif"],
+      includeAssets: ["favicon-x.png", "images/login-bg.gif"],
       workbox: {
         navigateFallbackDenylist: [/^\/~oauth/],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
       },
       manifest: {
-        name: "Rooster Planner",
-        short_name: "Planner",
+        name: "Planbition X",
+        short_name: "Planbition X",
         description: "AI-gestuurde roosterplanning",
         theme_color: "#0f172a",
         background_color: "#0f172a",
@@ -34,9 +34,9 @@ export default defineConfig(({ mode }) => ({
         start_url: "/",
         icons: [
           {
-            src: "/favicon.ico",
-            sizes: "64x64",
-            type: "image/x-icon",
+            src: "/favicon-x.png",
+            sizes: "512x512",
+            type: "image/png",
           },
         ],
       },
