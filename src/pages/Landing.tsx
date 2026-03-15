@@ -12,7 +12,6 @@ import {
   BarChart3,
   Globe,
   ChevronRight,
-  Star,
   ArrowRight,
   Zap,
   CheckCircle2,
