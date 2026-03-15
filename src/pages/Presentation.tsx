@@ -98,7 +98,7 @@ async function downloadPptx() {
     sl.addShape(prs.ShapeType.rect, { x, y, w, h: 0.05, fill: { color: col } });
     sl.addText(name, { x: x + 0.25, y: y + 0.15, w: w - 0.5, h: 0.35, fontSize: 13, bold: true, color: FG, fontFace: "Arial" });
     sl.addText(desc, { x: x + 0.25, y: y + 0.5, w: w - 0.5, h: 0.4, fontSize: 10, color: FG2, fontFace: "Arial", lineSpacing: 14 });
-    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: 0.7, fontSize: 9, color: MUT, fontFace: "Arial", lineSpacing: 13, italic: true });
+    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: h - 1.1, fontSize: 9, color: MUT, fontFace: "Arial", lineSpacing: 13, italic: true, shrinkText: true });
   };
 
   // ═══════════════════════════════════════
@@ -337,8 +337,8 @@ async function downloadPptx() {
       const col = i < 2 ? 0 : 1;
       const row = i % 2;
       const cx = 0.5 + col * 6.2;
-      const cy = 1.7 + row * 2.6;
-      addTechCard(sl, cx, cy, 5.8, 2.4, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.7 + row * 2.75;
+      addTechCard(sl, cx, cy, 5.8, 2.55, NO_AI, c.name, c.desc, c.detail);
     });
 
     addRobot(sl, 11.3, 5.2, 1.2);
@@ -376,8 +376,8 @@ async function downloadPptx() {
 
     cards.forEach((c, i) => {
       const cx = 0.5;
-      const cy = 1.7 + i * 1.8;
-      addTechCard(sl, cx, cy, 11.5, 1.65, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.7 + i * 1.85;
+      addTechCard(sl, cx, cy, 11.5, 1.7, NO_AI, c.name, c.desc, c.detail);
     });
 
     addRobot(sl, 11.3, 5.5, 1.2);
