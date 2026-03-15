@@ -223,40 +223,8 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="pricing" className="py-24 md:py-32 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-            Ready to transform your planning?
-          </h2>
-          <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-            Join hundreds of operations teams who switched from spreadsheets to AI‑optimized rosters.
-          </p>
-
-          <Card className="p-8 md:p-10 bg-card border-border max-w-md mx-auto">
-            <div className="text-sm text-muted-foreground mb-2">Start for free</div>
-            <div className="text-4xl font-extrabold mb-1">€0</div>
-            <div className="text-sm text-muted-foreground mb-6">Up to 25 employees · no credit card</div>
-            <ul className="text-sm text-left space-y-3 mb-8">
-              {[
-                "AI roster optimization",
-                "Full WTA compliance engine",
-                "Real-time shift swap assistant",
-                "Multi-language interface",
-                "Analytics dashboard",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <Button className="w-full h-11 text-base" onClick={() => navigate("/login")}>
-              Get started <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </Card>
-        </div>
-      </section>
+      {/* Pricing Calculator */}
+      <PricingCalculator onGetStarted={() => navigate("/login")} />
 
       {/* Footer */}
       <footer className="border-t border-border py-8 px-6">
