@@ -68,7 +68,7 @@ const App = () => (
           <Routes>
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/" element={<LandingOrIndex />} />
+            <Route path="/" element={<HomeOrPlanner />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
