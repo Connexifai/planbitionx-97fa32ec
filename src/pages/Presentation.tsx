@@ -203,7 +203,7 @@ async function downloadPptx() {
       // Accent gradient stripe
       sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.08, fill: { color: ACCENT } });
       sl.addText("PLANBITION", {
-        x: 1, y: 1.5, w: 11, h: 0.6, fontSize: 18, color: "FFFFFF80", fontFace: "Arial", letterSpacing: 8, bold: true,
+        x: 1, y: 1.5, w: 11, h: 0.6, fontSize: 18, color: "FFFFFF80", fontFace: "Arial", charSpacing: 8, bold: true,
       });
       sl.addText("X", {
         x: 1, y: 2.2, w: 11, h: 1.8, fontSize: 96, bold: true, color: WHITE, fontFace: "Arial",
