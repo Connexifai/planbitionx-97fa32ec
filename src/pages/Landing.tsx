@@ -79,6 +79,114 @@ const stats = [
   { value: "8", label: "Languages supported" },
 ];
 
+const tiers = [
+  { name: "Free", maxEmp: 25, pricePerEmp: 0, features: ["AI roster optimization", "WTA compliance engine", "Basic analytics"] },
+  { name: "Pro", maxEmp: 200, pricePerEmp: 3.5, features: ["Everything in Free", "Shift swap assistant", "Multi-language", "Priority support"] },
+  { name: "Enterprise", maxEmp: Infinity, pricePerEmp: 2.5, features: ["Everything in Pro", "Custom integrations", "Dedicated account manager", "SLA guarantee"] },
+];
+
+function PricingCalculator({ onGetStarted }: { onGetStarted: () => void }) {
+  const [employeeCount, setEmployeeCount] = useState(50);
+
+  const pricing = useMemo(() => {
+    if (employeeCount <= 25) return { tier: tiers[0], monthly: 0 };
+    if (employeeCount <= 200) return { tier: tiers[1], monthly: employeeCount * tiers[1].pricePerEmp };
+    return { tier: tiers[2], monthly: employeeCount * tiers[2].pricePerEmp };
+  }, [employeeCount]);
+
+  return (
+    <section id="pricing" className="py-24 md:py-32 px-6">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+            Simple, transparent <span className="text-primary">pricing</span>
+          </h2>
+          <p className="text-muted-foreground max-w-lg mx-auto">
+            Drag the slider to see what Planbition X costs for your team.
+          </p>
+        </div>
+
+        {/* Slider */}
+        <Card className="p-8 md:p-10 bg-card border-border max-w-xl mx-auto mb-12">
+          <div className="flex items-baseline justify-between mb-2">
+            <span className="text-sm font-medium text-muted-foreground">Employees</span>
+            <span className="text-3xl font-extrabold text-foreground">{employeeCount}</span>
+          </div>
+          <Slider
+            value={[employeeCount]}
+            onValueChange={(v) => setEmployeeCount(v[0])}
+            min={5}
+            max={500}
+            step={5}
+            className="my-6"
+          />
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>5</span>
+            <span>500</span>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-border text-center">
+            <div className="text-sm text-muted-foreground mb-1">{pricing.tier.name} plan</div>
+            <div className="text-4xl font-extrabold text-foreground">
+              €{Math.round(pricing.monthly)}
+              <span className="text-lg font-normal text-muted-foreground">/mo</span>
+            </div>
+            {pricing.tier.pricePerEmp > 0 && (
+              <div className="text-sm text-muted-foreground mt-1">
+                €{pricing.tier.pricePerEmp}/employee/month
+              </div>
+            )}
+            {pricing.monthly === 0 && (
+              <div className="text-sm text-muted-foreground mt-1">Free up to 25 employees</div>
+            )}
+          </div>
+        </Card>
+
+        {/* Tier cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {tiers.map((tier) => {
+            const isActive =
+              tier.name === pricing.tier.name;
+            return (
+              <Card
+                key={tier.name}
+                className={`p-6 bg-card flex flex-col transition-all ${
+                  isActive ? "border-primary ring-2 ring-primary/20 scale-[1.02]" : "border-border"
+                }`}
+              >
+                <h3 className="text-lg font-bold mb-1">{tier.name}</h3>
+                <div className="text-sm text-muted-foreground mb-4">
+                  {tier.pricePerEmp === 0
+                    ? "€0 · up to 25 employees"
+                    : tier.maxEmp === Infinity
+                    ? `€${tier.pricePerEmp}/emp/mo · 200+`
+                    : `€${tier.pricePerEmp}/emp/mo · up to ${tier.maxEmp}`}
+                </div>
+                <ul className="text-sm space-y-2 flex-1 mb-6">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Button
+                  variant={isActive ? "default" : "outline"}
+                  className="w-full"
+                  onClick={onGetStarted}
+                >
+                  {tier.pricePerEmp === 0 ? "Start free" : "Get started"}
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function Landing() {
   const navigate = useNavigate();
 
