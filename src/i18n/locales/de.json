@@ -307,6 +307,13 @@
     "startFree": "Kostenlos starten",
     "getStartedBtn": "Jetzt starten",
     "footer": "KI-gesteuerte Dienstplanung",
-    "copyright": "Alle Rechte vorbehalten."
+    "copyright": "Alle Rechte vorbehalten.",
+    "howItWorksTitle": "So",
+    "howItWorksTitleAccent": "funktioniert es",
+    "step1Title": "Beschreiben Sie Ihre Wünsche in normaler Sprache",
+    "step1Desc": "Sagen Sie der KI einfach, was Sie brauchen — \"Jan kann nächste Woche keine Nachtschichten machen\", \"Mindestens 3 Personen am Samstag\" oder \"Marie bevorzugt Frühschichten\". Keine Formulare, keine Checkboxen. Einfach eintippen und der Solver berücksichtigt es.",
+    "step2Title": "KI-Solver erstellt den optimalen Dienstplan",
+    "step2Desc": "Der Solver wägt alle Präferenzen, Qualifikationen, Vertragsstunden und gesetzliche Regeln ab, um den bestmöglichen Dienstplan zu erstellen — konform und optimiert in Sekunden.",
+    "step3Title": "Störungen mit KI-Alternativen bewältigen",
+    "step3Desc": "Jemand krank? Schichttausch nötig? Sagen Sie es der KI. Sie findet sofort die besten Alternativen und kann auf Wunsch automatisch verfügbare Mitarbeiter kontaktieren."
   }
-}

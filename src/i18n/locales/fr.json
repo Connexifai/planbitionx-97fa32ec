@@ -307,6 +307,13 @@
     "startFree": "Commencer gratuitement",
     "getStartedBtn": "Commencer",
     "footer": "Planification de planning pilotée par IA",
-    "copyright": "Tous droits réservés."
+    "copyright": "Tous droits réservés.",
+    "howItWorksTitle": "Comment ça",
+    "howItWorksTitleAccent": "fonctionne",
+    "step1Title": "Décrivez vos préférences en langage naturel",
+    "step1Desc": "Dites simplement à l'IA ce dont vous avez besoin — \"Jan ne peut pas travailler de nuit la semaine prochaine\", \"Au moins 3 personnes le samedi\" ou \"Marie préfère les postes du matin\". Pas de formulaires, pas de cases à cocher. Tapez ce que vous voulez et le solveur en tient compte.",
+    "step2Title": "Le Solver IA crée le planning optimal",
+    "step2Desc": "Le solveur pondère toutes les préférences, qualifications, heures contractuelles et règles légales pour générer le meilleur planning possible — conforme et optimisé en quelques secondes.",
+    "step3Title": "Gérez les perturbations avec des alternatives IA",
+    "step3Desc": "Quelqu'un est malade ? Besoin d'un échange de poste ? Dites-le à l'IA. Elle trouve instantanément les meilleures alternatives et peut même contacter automatiquement les employés disponibles."
   }
-}

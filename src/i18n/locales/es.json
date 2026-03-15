@@ -307,6 +307,13 @@
     "startFree": "Empezar gratis",
     "getStartedBtn": "Empezar",
     "footer": "Planificación de turnos impulsada por IA",
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "howItWorksTitle": "Cómo",
+    "howItWorksTitleAccent": "funciona",
+    "step1Title": "Describe tus preferencias en lenguaje natural",
+    "step1Desc": "Simplemente dile a la IA lo que necesitas — \"Jan no puede trabajar de noche la próxima semana\", \"Al menos 3 personas el sábado\" o \"Marie prefiere turnos de mañana\". Sin formularios, sin casillas. Escribe lo que quieras y el solver lo tiene en cuenta.",
+    "step2Title": "El Solver IA crea el turno óptimo",
+    "step2Desc": "El solver pondera todas las preferencias, cualificaciones, horas contractuales y normativa legal para generar el mejor turno posible — conforme y optimizado en segundos.",
+    "step3Title": "Gestiona disrupciones con alternativas IA",
+    "step3Desc": "¿Alguien enfermo? ¿Necesitas un cambio de turno? Díselo a la IA. Encuentra instantáneamente las mejores alternativas y puede contactar automáticamente a los empleados disponibles."
   }
-}
