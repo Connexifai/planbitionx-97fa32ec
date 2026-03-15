@@ -17,6 +17,9 @@ import {
   ArrowRight,
   Zap,
   CheckCircle2,
+  MessageSquareText,
+  Cpu,
+  RefreshCw,
 } from "lucide-react";
 
 const featureIcons = [Brain, Shield, Clock, Users, BarChart3, Globe];
