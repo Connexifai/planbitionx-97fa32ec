@@ -103,21 +103,24 @@ export default function SolverShowcase() {
     const timer = setInterval(() => {
       setPhase((p) => (p + 1) % PHASES);
       setSubStep(0);
-    }, PHASE_DURATION);
+    }, phase === 2 ? 7500 : PHASE_DURATION);
     return () => clearInterval(timer);
-  }, []);
+  }, [phase]);
 
   // Sub-step progression within each phase
   useEffect(() => {
     if (phase === 1) {
-      // Phase 1 has 2 sub-steps: solving → result
       const t1 = setTimeout(() => setSubStep(1), 1500);
       return () => clearTimeout(t1);
     }
     if (phase === 2) {
-      const t1 = setTimeout(() => setSubStep(1), 1800);
-      const t2 = setTimeout(() => setSubStep(2), 3200);
-      return () => { clearTimeout(t1); clearTimeout(t2); };
+      // 0: user request, 1: AI analyzing, 2: show roster + pickup glow, 3: flying, 4: landed/done
+      const t1 = setTimeout(() => setSubStep(1), 1400);
+      const t2 = setTimeout(() => setSubStep(2), 2800);
+      const t3 = setTimeout(() => setSubStep(3), 3800);
+      const t4 = setTimeout(() => setSubStep(4), 4800);
+      const t5 = setTimeout(() => setSubStep(5), 5600);
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); };
     }
   }, [phase]);
 
