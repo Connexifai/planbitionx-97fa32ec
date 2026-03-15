@@ -105,7 +105,6 @@ export default function PlanbitionHome() {
             <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
           </div>
         </div>
-        </div>
       </nav>
 
       {/* Hero */}
