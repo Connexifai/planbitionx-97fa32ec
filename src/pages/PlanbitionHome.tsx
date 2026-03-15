@@ -310,8 +310,8 @@ export default function PlanbitionHome() {
                 key={f.title}
                 className="p-6 bg-card border-border hover:border-primary/30 hover:shadow-lg transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <f.icon className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-brand-accent" />
                 </div>
                 <h3 className="font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
