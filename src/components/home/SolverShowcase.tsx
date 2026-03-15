@@ -39,9 +39,15 @@ function ShiftBadge({ shift }: { shift: string }) {
   );
 }
 
-function MiniRoster({ rows, highlight }: { rows: typeof rosterRows; highlight?: { row: number; col: number; color: string }[] }) {
+function MiniRoster({ rows, highlight, dimCell, glowCell, rosterRef }: { 
+  rows: typeof rosterRows; 
+  highlight?: { row: number; col: number; color: string }[];
+  dimCell?: { row: number; col: number };
+  glowCell?: { row: number; col: number };
+  rosterRef?: React.RefObject<HTMLDivElement | null>;
+}) {
   return (
-    <div className="space-y-0.5">
+    <div className="space-y-0.5" ref={rosterRef}>
       {/* Header */}
       <div className="flex items-center gap-0.5 mb-1">
         <div className="w-16 text-[8px] text-muted-foreground font-medium" />
@@ -54,8 +60,15 @@ function MiniRoster({ rows, highlight }: { rows: typeof rosterRows; highlight?: 
           <div className="w-16 text-[9px] text-foreground font-medium truncate">{r.name}</div>
           {r.shifts.map((s, ci) => {
             const hl = highlight?.find((h) => h.row === ri && h.col === ci);
+            const isDimmed = dimCell && dimCell.row === ri && dimCell.col === ci;
+            const isGlowing = glowCell && glowCell.row === ri && glowCell.col === ci;
             return (
-              <div key={ci} className={`relative ${hl ? "ring-2 ring-offset-1 rounded" : ""}`} style={hl ? { "--tw-ring-color": hl.color } as any : undefined}>
+              <div 
+                key={ci} 
+                data-cell={`${ri}-${ci}`}
+                className={`relative transition-all duration-300 ${hl ? "ring-2 ring-offset-1 rounded" : ""} ${isDimmed ? "opacity-20 scale-90" : ""} ${isGlowing ? "ring-2 ring-primary rounded shadow-[0_0_12px_hsl(var(--primary)/0.5)] scale-110" : ""}`} 
+                style={hl ? { "--tw-ring-color": hl.color } as any : undefined}
+              >
                 <ShiftBadge shift={s} />
               </div>
             );
