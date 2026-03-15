@@ -257,14 +257,14 @@ export default function SolverShowcase() {
               )}
             </div>
 
-            {/* ── Phase 2: Post-solve AI change ── */}
+            {/* ── Phase 2: Post-solve AI change with pickup-and-fly ── */}
             <div
               className={`absolute inset-0 p-3 transition-all duration-500 ${
                 phase === 2 ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8 pointer-events-none"
               }`}
             >
+              {/* Sub 0: User request */}
               {subStep === 0 && (
-                /* User asks for a swap */
                 <div>
                   <div className="flex items-center gap-1.5 mb-2">
                     <Bot className="w-3.5 h-3.5 text-primary" />
@@ -283,13 +283,9 @@ export default function SolverShowcase() {
                 </div>
               )}
 
+              {/* Sub 1: AI analyzing */}
               {subStep === 1 && (
-                /* AI analyzing */
                 <div>
-                  <div className="flex items-center gap-1.5 mb-2">
-                    <Bot className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-[10px] font-semibold text-foreground">{t("home.showcasePostSolve")}</span>
-                  </div>
                   <div className="flex gap-2 justify-end mb-2">
                     <div className="bg-primary/15 rounded-lg rounded-tr-sm px-2.5 py-1.5 max-w-[90%]">
                       <p className="text-[10px] text-foreground">{t("home.showcaseSwapRequest")}</p>
@@ -312,27 +308,62 @@ export default function SolverShowcase() {
                 </div>
               )}
 
-              {subStep === 2 && (
-                /* AI resolved with updated roster */
-                <div>
-                  <div className="flex gap-2 mb-2">
-                    <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-3 h-3 text-primary" />
-                    </div>
-                    <div className="bg-muted/50 rounded-lg rounded-tl-sm px-2.5 py-1.5 max-w-[90%]">
-                      <p className="text-[10px] text-foreground leading-relaxed">
-                        <CheckCircle2 className="w-3 h-3 text-shift-early inline mr-0.5 -mt-0.5" />
-                        {t("home.showcaseSwapResult")}
-                      </p>
+              {/* Sub 2+: Roster with pickup-and-fly animation */}
+              {subStep >= 2 && (
+                <div className="relative">
+                  {/* Progress banner like the real solver */}
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="flex items-center gap-2 px-3 py-1 bg-card border border-border rounded-xl shadow-lg">
+                      {subStep >= 5 ? (
+                        <>
+                          <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+                            <CheckCircle2 className="w-2.5 h-2.5 text-primary-foreground" />
+                          </div>
+                          <span className="text-[9px] font-bold text-primary">
+                            {t("home.showcaseAllChanges")}
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          <div className="w-4 h-4 rounded-full bg-primary/15 text-primary font-bold text-[8px] flex items-center justify-center border border-primary/30">
+                            {subStep <= 3 ? "1" : "2"}
+                          </div>
+                          <span className="text-[9px] font-semibold text-foreground">
+                            {subStep <= 3 ? "Franz X." : "Pieter J."}
+                          </span>
+                          <div className="w-10 h-1 rounded-full bg-muted overflow-hidden">
+                            <div 
+                              className="h-full rounded-full bg-primary transition-all duration-700"
+                              style={{ width: subStep <= 3 ? "50%" : "100%" }}
+                            />
+                          </div>
+                          <span className="text-[8px] text-muted-foreground">
+                            {subStep <= 3 ? "1/2" : "2/2"}
+                          </span>
+                        </>
+                      )}
                     </div>
                   </div>
+
+                  {/* Roster with glow/dim/highlight effects */}
                   <MiniRoster
-                    rows={rosterAfterSwap}
-                    highlight={[
-                      { row: 2, col: 3, color: "hsl(152, 60%, 46%)" }, // Franz freed
-                      { row: 4, col: 4, color: "hsl(152, 60%, 46%)" }, // Pieter takes over
-                    ]}
+                    rows={subStep >= 4 ? rosterAfterSwap : rosterRows}
+                    glowCell={subStep === 2 ? { row: 2, col: 3 } : subStep === 3 ? { row: 4, col: 4 } : undefined}
+                    dimCell={subStep === 3 ? { row: 2, col: 3 } : undefined}
+                    highlight={subStep >= 4 ? [
+                      { row: 2, col: 3, color: "hsl(var(--primary))" },
+                      { row: 4, col: 4, color: "hsl(var(--primary))" },
+                    ] : undefined}
                   />
+
+                  {/* Flying badge overlay */}
+                  {subStep === 3 && (
+                    <div className="absolute pointer-events-none showcase-flying-badge" style={{ top: "42%", left: "55%" }}>
+                      <div className="w-7 h-5 rounded text-[9px] font-bold flex items-center justify-center bg-shift-early/40 text-shift-early border-2 border-primary shadow-[0_0_16px_hsl(var(--primary)/0.5)] scale-125">
+                        V
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
