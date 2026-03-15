@@ -98,7 +98,7 @@ async function downloadPptx() {
     sl.addShape(prs.ShapeType.rect, { x, y, w, h: 0.05, fill: { color: col } });
     sl.addText(name, { x: x + 0.25, y: y + 0.15, w: w - 0.5, h: 0.35, fontSize: 13, bold: true, color: FG, fontFace: "Arial" });
     sl.addText(desc, { x: x + 0.25, y: y + 0.5, w: w - 0.5, h: 0.4, fontSize: 10, color: FG2, fontFace: "Arial", lineSpacing: 14 });
-    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: h - 1.1, fontSize: 9, color: MUT, fontFace: "Arial", lineSpacing: 13, italic: true, shrinkText: true });
+    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: h - 1.1, fontSize: 9.5, color: FG2, fontFace: "Arial", lineSpacing: 14 });
   };
 
   // ═══════════════════════════════════════
@@ -304,32 +304,28 @@ async function downloadPptx() {
   {
     const sl = contentSlide(6);
     addHeading(sl, "Solver — Metaheuristieken", "Zoektechnieken die het optimale rooster vinden");
-    pill(sl, 0.7, 1.25, 2.6, "🔧  Operations Research", NO_AI, "FFFFFF");
-
-    sl.addText("Geavanceerde zoekalgoritmen die grote, complexe roosterproblemen efficiënt oplossen.", {
-      x: 3.6, y: 1.2, w: 8, h: 0.4, fontSize: 10, color: MUT, fontFace: "Arial",
-    });
+    pill(sl, 0.7, 1.55, 2.6, "🔧  Operations Research", NO_AI, "FFFFFF");
 
     const cards = [
       {
         name: "Large Neighborhood Search (LNS)",
-        desc: "Vernietigt en herbouwt grote delen van het rooster om lokale optima te ontsnappen.",
-        detail: "Destroy operators selecteren 20-40% van toewijzingen. Repair operators herbouwen via greedy heuristieken met constraint-verificatie. Levert structureel betere oplossingen dan lokale zoektechnieken.",
+        desc: "Vernietigt en herbouwt grote delen van het rooster om lokale optima te doorbreken.",
+        detail: "Destroy/repair-cyclus op 20-40% van toewijzingen met directe constraint-check.",
       },
       {
         name: "Simulated Annealing (SA)",
-        desc: "Accepteert tijdelijk slechtere oplossingen om uit lokale optima te ontsnappen.",
-        detail: "Start met hoge 'temperatuur' (accepteert veel verslechteringen) en koelt geleidelijk af. Voorkomt dat de solver vastloopt in suboptimale roosters. Gecombineerd met LNS voor maximale diversificatie.",
+        desc: "Accepteert tijdelijk slechtere moves om beter globaal optimum te vinden.",
+        detail: "Temperatuur daalt stapsgewijs; voorkomt vastlopen in lokale optima.",
       },
       {
         name: "GRASP + Tabu Hybride",
-        desc: "Combineert greedy randomized constructie met geheugen-gestuurde lokale zoektechnieken.",
-        detail: "GRASP bouwt diverse startoplossingen; Tabu Search verfijnt deze met een korte-termijn geheugen dat cyclisch gedrag voorkomt. Meerdere threads werken parallel aan verschillende startpunten.",
+        desc: "Randomized constructie + geheugen-gestuurde lokale search.",
+        detail: "Diverse startoplossingen, daarna Tabu-refinement zonder cyclisch gedrag.",
       },
       {
         name: "Late Acceptance Hill Climbing (LAHC)",
-        desc: "Vergelijkt moves met een historische fitness in plaats van alleen de huidige oplossing.",
-        detail: "Houdt een buffer van eerdere scores bij. Een move wordt geaccepteerd als hij beter is dan de score van N stappen geleden. Simpel, parameterarm en zeer effectief als diversificatiestrategie naast LNS.",
+        desc: "Vergelijkt met historische score i.p.v. alleen de huidige score.",
+        detail: "Buffer-gebaseerde acceptatie geeft sterke diversificatie naast LNS.",
       },
     ];
 
@@ -337,11 +333,11 @@ async function downloadPptx() {
       const col = i < 2 ? 0 : 1;
       const row = i % 2;
       const cx = 0.5 + col * 6.2;
-      const cy = 1.7 + row * 2.75;
-      addTechCard(sl, cx, cy, 5.8, 2.55, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.95 + row * 2.45;
+      addTechCard(sl, cx, cy, 5.8, 2.3, NO_AI, c.name, c.desc, c.detail);
     });
 
-    addRobot(sl, 11.3, 5.2, 1.2);
+    addRobot(sl, 11.3, 5.15, 1.2);
   }
 
   // ═══════════════════════════════════════
@@ -350,37 +346,33 @@ async function downloadPptx() {
   {
     const sl = contentSlide(7);
     addHeading(sl, "Solver — Constraints & Scoring Engine", "De motor die elk rooster valideert en scoort");
-    pill(sl, 0.7, 1.25, 2.6, "🔧  Deterministische engine", NO_AI, "FFFFFF");
-
-    sl.addText("Wiskundige validatie en scoring — garantie voor correctheid en compliance.", {
-      x: 3.6, y: 1.2, w: 8, h: 0.4, fontSize: 10, color: MUT, fontFace: "Arial",
-    });
+    pill(sl, 0.7, 1.55, 2.6, "🔧  Deterministische engine", NO_AI, "FFFFFF");
 
     const cards = [
       {
         name: "Constraint Propagation",
-        desc: "Domeinfiltering die onmogelijke toewijzingen vooraf elimineert.",
-        detail: "Voordat de solver begint te zoeken, worden onhaalbare combinaties verwijderd op basis van beschikbaarheid, kwalificaties, rusttijden en contractregels. Verkleint de zoekruimte met 60-80%, waardoor de solver sneller convergeert.",
+        desc: "Filtert onmogelijke toewijzingen vóór de zoekfase.",
+        detail: "Verkleint de zoekruimte op basis van beschikbaarheid, kwalificaties en rustregels.",
       },
       {
         name: "Incremental Constraint Scoring",
-        desc: "Evalueert de impact van een enkele wijziging in O(1) i.p.v. het hele rooster opnieuw.",
-        detail: "Delta-evaluatie voor alle harde en zachte constraints. Maakt het mogelijk om >100.000 moves per seconde te evalueren. Essentieel voor de snelheid van LNS, SA en Tabu Search.",
+        desc: "Herberekent alleen de delta van een wijziging (O(1)).",
+        detail: "Maakt >100.000 evaluaties/sec mogelijk voor snelle iteratieve optimalisatie.",
       },
       {
         name: "ATW Compliance Engine",
-        desc: "Volledige implementatie van de Arbeidstijdenwet als harde constraints.",
-        detail: "Max uren per dag/week/periode, minimale rust (11u/36u/46u), nachtdienst-limieten, verkorte rust, pauzeregels, consignatieregels. Elke toewijzing wordt real-time gevalideerd — 100% compliance gegarandeerd.",
+        desc: "Arbeidstijdenwet volledig als harde constraints geïmplementeerd.",
+        detail: "Controle op uren, rust, nacht-, pauze- en consignatieregels met real-time validatie.",
       },
     ];
 
     cards.forEach((c, i) => {
       const cx = 0.5;
-      const cy = 1.7 + i * 1.85;
-      addTechCard(sl, cx, cy, 11.5, 1.7, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.95 + i * 1.62;
+      addTechCard(sl, cx, cy, 11.5, 1.55, NO_AI, c.name, c.desc, c.detail);
     });
 
-    addRobot(sl, 11.3, 5.5, 1.2);
+    addRobot(sl, 11.3, 5.45, 1.1);
   }
 
   // ═══════════════════════════════════════
