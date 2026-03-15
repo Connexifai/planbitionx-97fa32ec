@@ -104,9 +104,7 @@ export default function PlanbitionHome() {
             </a>
             <a href="#contact" className="hover:text-foreground transition-colors">Contact</a>
           </div>
-          <Button onClick={() => navigate("/login")} size="sm">
-            Inloggen <ChevronRight className="ml-1 w-4 h-4" />
-          </Button>
+        </div>
         </div>
       </nav>
 
