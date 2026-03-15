@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import robotImg from "@/assets/robot-assistant.png";
+import SolverShowcase from "@/components/home/SolverShowcase";
 
 const clients = [
   { name: "Timing", src: "/images/clients/timing.png" },
