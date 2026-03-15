@@ -57,7 +57,7 @@ export default function Login() {
       <div className="relative z-10 w-full max-w-sm mx-4">
         <div className="bg-background/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-2xl p-7 space-y-5">
           <div className="flex flex-col items-center">
-            <img src={robotImg} alt="Planbition X" className="w-28 h-28 object-contain drop-shadow-2xl robot-float hover:scale-110 transition-transform duration-500 cursor-pointer mb-4" />
+            <img src={robotImg} alt="Planbition XYZ" className="w-28 h-28 object-contain drop-shadow-2xl robot-float hover:scale-110 transition-transform duration-500 cursor-pointer mb-4" />
             <h1 className="text-3xl font-black tracking-tight text-foreground">{t("app.title")}</h1>
             <span className="text-xl font-bold text-foreground tracking-wide mt-1">Chapter One</span>
             <p className="text-muted-foreground text-sm mt-2">{t("app.subtitle")}</p>
