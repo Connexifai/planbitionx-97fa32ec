@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -10,10 +10,24 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import robotImg from "@/assets/robot-assistant.png";
 
-function AnimatedBackground() {
+function AnimatedBackground({ onReady }: { onReady: () => void }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const handle = () => onReady();
+    if (video.readyState >= 3) {
+      onReady();
+    } else {
+      video.addEventListener("canplaythrough", handle, { once: true });
+      return () => video.removeEventListener("canplaythrough", handle);
+    }
+  }, [onReady]);
+
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
+      <video ref={videoRef} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover">
         <source src="/videos/login-bg.mp4" type="video/mp4" />
       </video>
       <div className="absolute inset-0 bg-background/30" />
@@ -29,7 +43,17 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [entered, setEntered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Small delay to trigger entrance animation
+    const t = setTimeout(() => setEntered(true), 50);
+    return () => clearTimeout(t);
+  }, []);
+
+  const handleVideoReady = useRef(() => setVideoReady(true)).current;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,12 +73,25 @@ export default function Login() {
   };
 
   return (
-    <div ref={containerRef} className={`min-h-screen flex items-center justify-center bg-background relative transition-all duration-700 ease-in-out ${exiting ? "scale-110 opacity-0 blur-sm" : ""}`}>
-      <AnimatedBackground />
+    <div
+      ref={containerRef}
+      className={`min-h-screen flex items-center justify-center relative bg-[hsl(var(--background))] transition-all duration-700 ease-in-out ${exiting ? "scale-110 opacity-0 blur-sm" : ""}`}
+    >
+      <AnimatedBackground onReady={handleVideoReady} />
+
+      {/* Dark overlay that fades in once video is ready */}
+      <div
+        className="fixed inset-0 bg-background transition-opacity duration-1000 pointer-events-none z-[1]"
+        style={{ opacity: videoReady ? 0 : 1 }}
+      />
+
       <div className="absolute top-4 right-4 z-20">
         <LanguageSwitcher />
       </div>
-      <div className="relative z-10 w-full max-w-sm mx-4">
+
+      <div
+        className={`relative z-10 w-full max-w-sm mx-4 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      >
         <div className="bg-background/5 backdrop-blur-sm border border-white/10 rounded-2xl shadow-2xl p-7 space-y-5">
           <div className="flex flex-col items-center">
             <img src={robotImg} alt="Planbition X" className="w-28 h-28 object-contain drop-shadow-2xl robot-float hover:scale-110 transition-transform duration-500 cursor-pointer mb-4" />
