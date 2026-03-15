@@ -9,6 +9,7 @@ import Login from "./pages/Login.tsx";
 import Landing from "./pages/Landing.tsx";
 import PlanbitionHome from "./pages/PlanbitionHome.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Presentation from "./pages/Presentation.tsx";
 import robotImg from "@/assets/robot-assistant.png";
 
 const queryClient = new QueryClient();
