@@ -12,7 +12,6 @@ import {
   BarChart3,
   Globe,
   ChevronRight,
-  Star,
   ArrowRight,
   Zap,
   CheckCircle2,
@@ -51,26 +50,6 @@ const features = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Sarah van den Berg",
-    role: "Operations Manager, LogiFlow BV",
-    quote: "Planbition X reduced our planning time from 6 hours to under 2 minutes. The WTA compliance alone saved us from costly violations.",
-    stars: 5,
-  },
-  {
-    name: "Thomas Müller",
-    role: "HR Director, MedCare GmbH",
-    quote: "The AI assistant is a game-changer. When someone calls in sick, we have a qualified replacement suggestion within seconds.",
-    stars: 5,
-  },
-  {
-    name: "Marie Dubois",
-    role: "Planning Lead, TransEurope SA",
-    quote: "Finally a tool that understands the complexity of 24/7 shift planning. Our employees are happier and our coverage is better than ever.",
-    stars: 5,
-  },
-];
 
 const stats = [
   { value: "16s", label: "Average solve time" },
@@ -203,7 +182,7 @@ export default function Landing() {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#testimonials" className="hover:text-foreground transition-colors">Testimonials</a>
+            <a href="#microservice" className="hover:text-foreground transition-colors">Microservice</a>
             <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
           </div>
           <Button onClick={() => navigate("/login")} size="sm">
@@ -213,11 +192,18 @@ export default function Landing() {
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6">
-        {/* Background blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/8 blur-3xl" />
+      <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
+        {/* Video background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            src="/videos/login-bg.mp4"
+          />
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
@@ -250,7 +236,7 @@ export default function Landing() {
         </div>
 
         {/* Floating robot */}
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-16 relative z-10">
           <img
             src={robotImg}
             alt="Planbition X AI Assistant"
@@ -301,32 +287,61 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="testimonials" className="py-24 md:py-32 px-6 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+      {/* Microservice Section */}
+      <section id="microservice" className="py-24 md:py-32 px-6 bg-muted/30">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+              <Zap className="w-4 h-4" />
+              Microservice Architecture
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
-              Trusted by planning teams <span className="text-primary">across Europe</span>
+              A standalone solver <span className="text-primary">for any platform</span>
             </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              Planbition X is built as an independent microservice with a clean REST API.
+              Workforce management vendors, ERP systems, and custom platforms can integrate
+              our AI‑powered solver directly — no lock‑in, no monolith.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {testimonials.map((t) => (
-              <Card key={t.name} className="p-6 bg-card border-border flex flex-col">
-                <div className="flex gap-0.5 mb-4">
-                  {Array.from({ length: t.stars }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed text-foreground/90 flex-1 mb-6">
-                  "{t.quote}"
-                </blockquote>
-                <div>
-                  <div className="font-semibold text-sm">{t.name}</div>
-                  <div className="text-xs text-muted-foreground">{t.role}</div>
-                </div>
-              </Card>
-            ))}
+            <Card className="p-6 bg-card border-border">
+              <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Globe className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">REST API</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Send a JSON payload with employees, shifts, and constraints. Receive an optimized roster back. That's it.
+              </p>
+            </Card>
+            <Card className="p-6 bg-card border-border">
+              <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <Shield className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">White-Label Ready</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Embed the solver in your own product under your brand. We handle the optimization, you own the experience.
+              </p>
+            </Card>
+            <Card className="p-6 bg-card border-border">
+              <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <BarChart3 className="w-5 h-5 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold mb-2">Multi-Tenant</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Scalable infrastructure with isolated tenant data. Each customer gets their own solver instance with guaranteed SLAs.
+              </p>
+            </Card>
+          </div>
+
+          <div className="mt-10 text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              Already used by WFM providers, logistics platforms, and healthcare systems across Europe.
+            </p>
+            <Button variant="outline" size="lg" onClick={() => navigate("/login")}>
+              Request API access <ArrowRight className="ml-2 w-4 h-4" />
+            </Button>
           </div>
         </div>
       </section>
