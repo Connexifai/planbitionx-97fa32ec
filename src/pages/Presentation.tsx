@@ -44,7 +44,7 @@ async function downloadPptx() {
   const MODERN_AI = "7C3AED";
   const CLASSIC_AI = "0891B2";
   const NO_AI = "475569";
-  const TOTAL = 10;
+  const TOTAL = 11;
 
   let robotB64 = "";
   try { robotB64 = await imgToBase64(robotImg); } catch { /* */ }
