@@ -213,11 +213,18 @@ export default function Landing() {
       </nav>
 
       {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6">
-        {/* Background blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-1/4 w-[500px] h-[500px] rounded-full bg-primary/5 blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full bg-primary/8 blur-3xl" />
+      <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
+        {/* Video background */}
+        <div className="absolute inset-0 z-0">
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+            src="/videos/login-bg.mp4"
+          />
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm" />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
@@ -250,7 +257,7 @@ export default function Landing() {
         </div>
 
         {/* Floating robot */}
-        <div className="flex justify-center mt-16">
+        <div className="flex justify-center mt-16 relative z-10">
           <img
             src={robotImg}
             alt="Planbition X AI Assistant"
