@@ -308,7 +308,7 @@ export default function PlanbitionHome() {
             {features.map((f) => (
               <Card
                 key={f.title}
-                className="p-6 bg-card border-border hover:border-primary/30 hover:shadow-lg transition-all group"
+                className="p-6 bg-card border-border hover:border-brand-accent/30 hover:shadow-lg transition-all group"
               >
                 <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors">
                   <f.icon className="w-6 h-6 text-brand-accent" />
