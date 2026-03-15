@@ -98,7 +98,7 @@ async function downloadPptx() {
     sl.addShape(prs.ShapeType.rect, { x, y, w, h: 0.05, fill: { color: col } });
     sl.addText(name, { x: x + 0.25, y: y + 0.15, w: w - 0.5, h: 0.35, fontSize: 13, bold: true, color: FG, fontFace: "Arial" });
     sl.addText(desc, { x: x + 0.25, y: y + 0.5, w: w - 0.5, h: 0.4, fontSize: 10, color: FG2, fontFace: "Arial", lineSpacing: 14 });
-    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: h - 1.1, fontSize: 9, color: MUT, fontFace: "Arial", lineSpacing: 13, italic: true, shrinkText: true });
+    sl.addText(detail, { x: x + 0.25, y: y + 0.95, w: w - 0.5, h: h - 1.1, fontSize: 9.5, color: FG2, fontFace: "Arial", lineSpacing: 14 });
   };
 
   // ═══════════════════════════════════════
