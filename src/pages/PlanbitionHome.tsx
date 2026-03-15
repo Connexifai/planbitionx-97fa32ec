@@ -171,7 +171,7 @@ export default function PlanbitionHome() {
                       <div key={kpi.label} className="rounded-md bg-muted/50 p-3">
                         <div className="text-[10px] text-muted-foreground">{kpi.label}</div>
                         <div className="text-lg font-bold text-foreground">{kpi.val}</div>
-                        <div className="text-[10px] text-primary font-medium">{kpi.change}</div>
+                        <div className="text-[10px] text-brand-accent font-medium">{kpi.change}</div>
                       </div>
                     ))}
                   </div>
