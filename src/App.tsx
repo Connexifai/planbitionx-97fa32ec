@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Index from "./pages/Index.tsx";
 import Login from "./pages/Login.tsx";
 import Landing from "./pages/Landing.tsx";
+import PlanbitionHome from "./pages/PlanbitionHome.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import robotImg from "@/assets/robot-assistant.png";
 
@@ -50,11 +51,11 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function LandingOrIndex() {
+function HomeOrPlanner() {
   const { session, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (session) return <Index />;
-  return <Landing />;
+  return <PlanbitionHome />;
 }
 
 const App = () => (
@@ -67,7 +68,7 @@ const App = () => (
           <Routes>
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/" element={<LandingOrIndex />} />
+            <Route path="/" element={<HomeOrPlanner />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
