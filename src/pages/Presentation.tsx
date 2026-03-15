@@ -90,31 +90,28 @@ async function downloadPptx() {
   // ═══════════════════════════════════════
   {
     const sl = prs.addSlide();
-    // Clean white background instead of blue (avoids contrast issues)
-    sl.background = { color: CARD };
+    // Landing page hero style: full blue background with gradient feel
+    sl.background = { color: P };
 
-    // Top accent bars
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.06, fill: { color: P } });
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0.06, w: 13.33, h: 0.03, fill: { color: ACC } });
+    // Orange accent at top (like landing page)
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.05, fill: { color: ACC } });
 
-    // Left side content area with subtle blue panel
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0.09, w: 8.5, h: 7.41, fill: { color: BG } });
+    // Subtle lighter area bottom-right for depth
+    sl.addShape(prs.ShapeType.ellipse, { x: 8, y: 4, w: 6, h: 4, fill: { color: P_DARK } });
 
-    // Logo
-    if (logoB64) {
-      sl.addImage({ data: `image/png;base64,${logoB64}`, x: 0.8, y: 0.6, w: 2.8, h: 0.55, sizing: { type: "contain" as const, w: 2.8, h: 0.55 } });
-    }
+    // "PLANBITION" text brand (no logo image)
+    sl.addText("PLANBITION", { x: 1.0, y: 0.7, w: 6, h: 0.5, fontSize: 14, bold: true, color: "FFFFFF", fontFace: "Arial", charSpacing: 8 });
 
-    // Big X with primary color
-    sl.addText("X", { x: 0.5, y: 1.2, w: 4, h: 3.2, fontSize: 180, bold: true, color: P, fontFace: "Arial" });
+    // Giant X
+    sl.addText("X", { x: 0.6, y: 1.2, w: 4.5, h: 3.5, fontSize: 200, bold: true, color: "FFFFFF", fontFace: "Arial" });
 
-    // Subtitle
+    // Subtitle — white on blue like landing hero
     sl.addText("AI-gedreven\nroosterplanning", {
-      x: 3.8, y: 1.8, w: 4.2, h: 1.6, fontSize: 32, bold: true, color: FG, fontFace: "Arial", lineSpacing: 42,
+      x: 4.2, y: 1.6, w: 4.5, h: 1.6, fontSize: 34, bold: true, color: "FFFFFF", fontFace: "Arial", lineSpacing: 46,
     });
 
     sl.addText("De volgende generatie workforce scheduling", {
-      x: 3.8, y: 3.4, w: 4.2, h: 0.4, fontSize: 13, color: MUT, fontFace: "Arial",
+      x: 4.2, y: 3.3, w: 4.5, h: 0.4, fontSize: 13, color: "FFFFFF", fontFace: "Arial",
     });
 
     // Shift badges
@@ -122,35 +119,34 @@ async function downloadPptx() {
       { l: "Vroeg", c: S_E }, { l: "Dag", c: S_D },
       { l: "Laat", c: S_L }, { l: "Nacht", c: S_N },
     ].forEach((b, i) => {
-      pill(sl, 3.8 + i * 1.35, 4.1, 1.2, b.l, b.c, "FFFFFF");
+      pill(sl, 4.2 + i * 1.35, 4.0, 1.2, b.l, b.c, "FFFFFF");
     });
 
-    // Tagline
+    // Tagline pills
     sl.addText("Solver  ·  AI  ·  Compliance  ·  Microservice", {
-      x: 0.8, y: 5.2, w: 7, h: 0.35, fontSize: 11, bold: true, color: P, fontFace: "Arial",
+      x: 1.0, y: 5.0, w: 7, h: 0.35, fontSize: 11, bold: true, color: "FFFFFF", fontFace: "Arial",
     });
 
-    // KPI row on title
+    // KPI row
     const kpis = [
-      { v: "<1 min", l: "Oplostijd", c: P },
-      { v: "100%", l: "ATW-compliant", c: S_E },
-      { v: "73%", l: "Minder handwerk", c: ACC },
+      { v: "<1 min", l: "Oplostijd", c: "FFFFFF" },
+      { v: "100%", l: "ATW-compliant", c: "FFFFFF" },
+      { v: "73%", l: "Minder handwerk", c: "FFFFFF" },
     ];
     kpis.forEach((k, i) => {
-      const kx = 0.8 + i * 2.4;
-      sl.addText(k.v, { x: kx, y: 5.8, w: 2.0, h: 0.55, fontSize: 22, bold: true, color: k.c, fontFace: "Arial" });
-      sl.addText(k.l, { x: kx, y: 6.3, w: 2.0, h: 0.3, fontSize: 9, color: MUT, fontFace: "Arial" });
+      const kx = 1.0 + i * 2.4;
+      sl.addText(k.v, { x: kx, y: 5.6, w: 2.0, h: 0.55, fontSize: 24, bold: true, color: "FFFFFF", fontFace: "Arial" });
+      sl.addText(k.l, { x: kx, y: 6.1, w: 2.0, h: 0.3, fontSize: 9, color: "FFFFFF", fontFace: "Arial" });
     });
 
     // Footer
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.1, w: 13.33, h: 0.4, fill: { color: CARD } });
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.1, w: 13.33, h: 0.01, fill: { color: BRD } });
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.05, w: 13.33, h: 0.45, fill: { color: P_DARK } });
     sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
-      x: 1, y: 7.12, w: 11.33, h: 0.3, fontSize: 9, color: MUT, fontFace: "Arial", align: "center",
+      x: 1, y: 7.1, w: 11.33, h: 0.3, fontSize: 9, color: "FFFFFF", fontFace: "Arial", align: "center",
     });
 
     // Robot — RIGHT SIDE, in front of everything, large and prominent
-    addRobot(sl, 9.0, 1.0, 3.8);
+    addRobot(sl, 9.0, 0.8, 4.0);
   }
 
   // ═══════════════════════════════════════
