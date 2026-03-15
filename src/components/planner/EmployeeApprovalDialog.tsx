@@ -111,7 +111,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                       <span className="text-[12px] font-black text-primary-foreground">PX</span>
                     </div>
                     <div>
-                      <div className="text-[14px] font-semibold text-foreground leading-tight">Planbition XYZ</div>
+                      <div className="text-[14px] font-semibold text-foreground leading-tight">Planbition X</div>
                       <div className="text-[12px] text-muted-foreground leading-tight">
                         {notificationMode ? "Bevestiging" : "Roosterwijziging"}
                       </div>
