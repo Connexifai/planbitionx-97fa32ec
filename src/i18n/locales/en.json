@@ -317,6 +317,14 @@
     "startFree": "Start free",
     "getStartedBtn": "Get started",
     "footer": "AI-driven roster planning",
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "howItWorksTitle": "How it",
+    "howItWorksTitleAccent": "works",
+    "step1Title": "Describe your preferences in plain language",
+    "step1Desc": "Simply tell the AI what you need — \"Jan cannot work nights next week\", \"At least 3 people on Saturday\" or \"Marie prefers early shifts\". No forms, no checkboxes. Just type what you want and the solver takes it into account.",
+    "step2Title": "AI Solver creates the optimal roster",
+    "step2Desc": "The solver weighs all preferences, qualifications, contract hours, and legal rules to generate the best possible roster — compliant and optimized in seconds.",
+    "step3Title": "Handle disruptions with AI alternatives",
+    "step3Desc": "Someone calls in sick? Need a shift swap? Just tell the AI. It instantly finds the best alternatives and can even automatically reach out to available employees to arrange coverage."
   }
 }

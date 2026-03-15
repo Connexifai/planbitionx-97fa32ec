@@ -307,6 +307,14 @@
     "startFree": "Zacznij za darmo",
     "getStartedBtn": "Rozpocznij",
     "footer": "Planowanie grafików oparte na AI",
-    "copyright": "Wszelkie prawa zastrzeżone."
+    "copyright": "Wszelkie prawa zastrzeżone.",
+    "howItWorksTitle": "Jak to",
+    "howItWorksTitleAccent": "działa",
+    "step1Title": "Opisz swoje preferencje zwykłym językiem",
+    "step1Desc": "Po prostu powiedz AI czego potrzebujesz — \"Jan nie może pracować na nocki w przyszłym tygodniu\", \"Minimum 3 osoby w sobotę\" lub \"Marie preferuje ranne zmiany\". Żadnych formularzy, żadnych checkboxów. Wpisz czego chcesz, a solver weźmie to pod uwagę.",
+    "step2Title": "Solver AI tworzy optymalny grafik",
+    "step2Desc": "Solver waży wszystkie preferencje, kwalifikacje, godziny kontraktowe i przepisy prawne, aby wygenerować najlepszy możliwy grafik — zgodny i zoptymalizowany w sekundy.",
+    "step3Title": "Obsłuż zakłócenia z alternatywami AI",
+    "step3Desc": "Ktoś choruje? Potrzebna zamiana zmiany? Powiedz AI. Natychmiast znajdzie najlepsze alternatywy i może automatycznie skontaktować się z dostępnymi pracownikami."
   }
 }

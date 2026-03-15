@@ -317,6 +317,14 @@
     "startFree": "Gratis starten",
     "getStartedBtn": "Aan de slag",
     "footer": "AI-gestuurde roosterplanning",
-    "copyright": "Alle rechten voorbehouden."
+    "copyright": "Alle rechten voorbehouden.",
+    "howItWorksTitle": "Hoe het",
+    "howItWorksTitleAccent": "werkt",
+    "step1Title": "Beschrijf je voorkeuren in gewone taal",
+    "step1Desc": "Vertel de AI gewoon wat je nodig hebt — \"Jan mag geen nachtdiensten draaien volgende week\", \"Minimaal 3 mensen op zaterdag\" of \"Marie heeft voorkeur voor vroege diensten\". Geen formulieren, geen vinkjes. Typ wat je wilt en de solver houdt er rekening mee.",
+    "step2Title": "AI Solver maakt het optimale rooster",
+    "step2Desc": "De solver weegt alle voorkeuren, kwalificaties, contracturen en wettelijke regels af om het best mogelijke rooster te genereren — compliant en geoptimaliseerd in seconden.",
+    "step3Title": "Verstoringen afhandelen met AI-alternatieven",
+    "step3Desc": "Iemand ziek? Dienst ruilen? Vertel het de AI. Hij vindt direct de beste alternatieven en kan desgewenst automatisch beschikbare medewerkers benaderen om de dienst op te vangen."
   }
 }

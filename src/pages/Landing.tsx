@@ -17,6 +17,9 @@ import {
   ArrowRight,
   Zap,
   CheckCircle2,
+  MessageSquareText,
+  Cpu,
+  RefreshCw,
 } from "lucide-react";
 
 const featureIcons = [Brain, Shield, Clock, Users, BarChart3, Globe];
@@ -186,6 +189,36 @@ export default function Landing() {
               <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+              {t("landing.howItWorksTitle")} <span className="text-primary">{t("landing.howItWorksTitleAccent")}</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {([
+              { icon: MessageSquareText, step: 1, titleKey: "step1Title", descKey: "step1Desc" },
+              { icon: Cpu, step: 2, titleKey: "step2Title", descKey: "step2Desc" },
+              { icon: RefreshCw, step: 3, titleKey: "step3Title", descKey: "step3Desc" },
+            ] as const).map((item) => (
+              <div key={item.step} className="relative">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-sm flex-shrink-0">
+                    {item.step}
+                  </div>
+                  <item.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-3">{t(`landing.${item.titleKey}`)}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{t(`landing.${item.descKey}`)}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

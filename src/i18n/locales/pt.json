@@ -307,6 +307,14 @@
     "startFree": "Começar grátis",
     "getStartedBtn": "Começar",
     "footer": "Planeamento de escalas com IA",
-    "copyright": "Todos os direitos reservados."
+    "copyright": "Todos os direitos reservados.",
+    "howItWorksTitle": "Como",
+    "howItWorksTitleAccent": "funciona",
+    "step1Title": "Descreva as suas preferências em linguagem natural",
+    "step1Desc": "Diga simplesmente à IA o que precisa — \"Jan não pode trabalhar à noite na próxima semana\", \"Pelo menos 3 pessoas ao sábado\" ou \"Marie prefere turnos da manhã\". Sem formulários, sem caixas de seleção. Escreva o que quer e o solver tem em conta.",
+    "step2Title": "O Solver IA cria a escala ótima",
+    "step2Desc": "O solver pondera todas as preferências, qualificações, horas contratuais e regras legais para gerar a melhor escala possível — conforme e otimizada em segundos.",
+    "step3Title": "Lide com perturbações com alternativas IA",
+    "step3Desc": "Alguém doente? Precisa de trocar turno? Diga à IA. Encontra instantaneamente as melhores alternativas e pode contactar automaticamente os funcionários disponíveis."
   }
 }
