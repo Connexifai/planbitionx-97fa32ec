@@ -51,9 +51,7 @@ async function downloadPptx() {
   let robotB64 = "";
   try { robotB64 = await imgToBase64(robotImg); } catch { /* */ }
 
-  // ── Logo embed ──
-  let logoB64 = "";
-  try { logoB64 = await imgToBase64("/images/planbition-logo.png"); } catch { /* */ }
+  // No logo image — use text instead to avoid stretching
 
   // ── Shared helpers ──
   const addTopBar = (sl: any) => {
