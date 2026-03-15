@@ -106,20 +106,31 @@ async function downloadPptx() {
   // ═══════════════════════════════════════
   {
     const sl = prs.addSlide();
-    sl.background = { color: P };
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.05, fill: { color: ACC } });
-    sl.addShape(prs.ShapeType.ellipse, { x: 8, y: 4, w: 6, h: 4, fill: { color: P_DARK } });
+    const DARK_BG = "0B1120";
+    const DARK_BG2 = "111B2E";
+    sl.background = { color: DARK_BG };
 
-    sl.addText("PLANBITION", { x: 1.0, y: 0.7, w: 6, h: 0.5, fontSize: 14, bold: true, color: "FFFFFF", fontFace: "Arial", charSpacing: 8 });
-    sl.addText("X", { x: 0.6, y: 1.2, w: 4.5, h: 3.5, fontSize: 200, bold: true, color: "FFFFFF", fontFace: "Arial" });
+    // Subtle geometric accents (like landing page floating orbs)
+    sl.addShape(prs.ShapeType.ellipse, { x: 9, y: 3.5, w: 5, h: 5, fill: { color: "1E3A5F" } });
+    sl.addShape(prs.ShapeType.ellipse, { x: -1, y: 5, w: 4, h: 4, fill: { color: "1A1A3E" } });
+
+    // Top accent bar (orange, like landing page CTA accent)
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.04, fill: { color: ACC } });
+
+    // Branding
+    sl.addText("PLANBITION", { x: 1.0, y: 0.6, w: 6, h: 0.5, fontSize: 14, bold: true, color: "94A3B8", fontFace: "Arial", charSpacing: 8 });
+
+    // Giant X with accent color glow effect
+    sl.addText("X", { x: 0.6, y: 1.0, w: 4.5, h: 3.5, fontSize: 200, bold: true, color: ACC, fontFace: "Arial" });
 
     sl.addText("AI-gedreven\nroosterplanning", {
-      x: 4.2, y: 1.6, w: 4.5, h: 1.6, fontSize: 34, bold: true, color: "FFFFFF", fontFace: "Arial", lineSpacing: 46,
+      x: 4.2, y: 1.6, w: 5.5, h: 1.6, fontSize: 34, bold: true, color: "FFFFFF", fontFace: "Arial", lineSpacing: 46,
     });
     sl.addText("De volgende generatie workforce scheduling", {
-      x: 4.2, y: 3.3, w: 4.5, h: 0.4, fontSize: 13, color: "FFFFFF", fontFace: "Arial",
+      x: 4.2, y: 3.3, w: 5.5, h: 0.4, fontSize: 13, color: "94A3B8", fontFace: "Arial",
     });
 
+    // Shift pills
     [
       { l: "Vroeg", c: S_E }, { l: "Dag", c: S_D },
       { l: "Laat", c: S_L }, { l: "Nacht", c: S_N },
@@ -128,22 +139,24 @@ async function downloadPptx() {
     });
 
     sl.addText("Solver  ·  AI  ·  Compliance  ·  Microservice", {
-      x: 1.0, y: 5.0, w: 7, h: 0.35, fontSize: 11, bold: true, color: "FFFFFF", fontFace: "Arial",
+      x: 1.0, y: 5.0, w: 7, h: 0.35, fontSize: 11, bold: true, color: "CBD5E1", fontFace: "Arial",
     });
 
+    // KPIs
     [
       { v: "<1 min", l: "Oplostijd" },
       { v: "100%", l: "ATW-compliant" },
       { v: "73%", l: "Minder handwerk" },
     ].forEach((k, i) => {
       const kx = 1.0 + i * 2.4;
-      sl.addText(k.v, { x: kx, y: 5.6, w: 2.0, h: 0.55, fontSize: 24, bold: true, color: "FFFFFF", fontFace: "Arial" });
-      sl.addText(k.l, { x: kx, y: 6.1, w: 2.0, h: 0.3, fontSize: 9, color: "FFFFFF", fontFace: "Arial" });
+      sl.addText(k.v, { x: kx, y: 5.6, w: 2.0, h: 0.55, fontSize: 24, bold: true, color: ACC, fontFace: "Arial" });
+      sl.addText(k.l, { x: kx, y: 6.1, w: 2.0, h: 0.3, fontSize: 9, color: "94A3B8", fontFace: "Arial" });
     });
 
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.05, w: 13.33, h: 0.45, fill: { color: P_DARK } });
+    // Footer bar
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.05, w: 13.33, h: 0.45, fill: { color: DARK_BG2 } });
     sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
-      x: 1, y: 7.1, w: 11.33, h: 0.3, fontSize: 9, color: "FFFFFF", fontFace: "Arial", align: "center",
+      x: 1, y: 7.1, w: 11.33, h: 0.3, fontSize: 9, color: "64748B", fontFace: "Arial", align: "center",
     });
 
     addRobot(sl, 9.0, 0.8, 4.0);
