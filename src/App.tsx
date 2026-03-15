@@ -50,6 +50,13 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function LandingOrIndex() {
+  const { session, loading } = useAuth();
+  if (loading) return <LoadingScreen />;
+  if (session) return <Index />;
+  return <Landing />;
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -60,7 +67,7 @@ const App = () => (
           <Routes>
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
-            <Route path="/" element={<ProtectedRoute><Index /></ProtectedRoute>} />
+            <Route path="/" element={<LandingOrIndex />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
