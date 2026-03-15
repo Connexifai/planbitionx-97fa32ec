@@ -109,7 +109,7 @@ export default function Landing() {
   const { t } = useTranslation();
 
   const stats = [
-    { value: "16s", label: t("landing.statSolveTime") },
+    { value: "<1min", label: t("landing.statSolveTime") },
     { value: "100%", label: t("landing.statCompliance") },
     { value: "73%", label: t("landing.statEffort") },
     { value: "8", label: t("landing.statLanguages") },

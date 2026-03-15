@@ -258,7 +258,7 @@
     "navFeatures": "Features",
     "navMicroservice": "Microservice",
     "navPricing": "Pricing",
-    "statSolveTime": "Average solve time",
+    "statSolveTime": "Typical solve time",
     "statCompliance": "WTA compliance rate",
     "statEffort": "Less planning effort",
     "statLanguages": "Languages supported",

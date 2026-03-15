@@ -248,7 +248,7 @@
     "navFeatures": "Fonctionnalités",
     "navMicroservice": "Microservice",
     "navPricing": "Tarifs",
-    "statSolveTime": "Temps de résolution moyen",
+    "statSolveTime": "Temps de résolution typique",
     "statCompliance": "Taux de conformité",
     "statEffort": "Moins d'effort de planification",
     "statLanguages": "Langues supportées",
