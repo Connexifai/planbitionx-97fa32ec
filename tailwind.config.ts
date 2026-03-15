@@ -75,6 +75,10 @@ export default {
           time: "hsl(var(--kpi-time))",
         },
         weekend: "hsl(var(--weekend-bg))",
+        "brand-accent": {
+          DEFAULT: "hsl(var(--brand-accent))",
+          foreground: "hsl(var(--brand-accent-foreground))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -111,6 +111,8 @@ export default function PlanbitionHome() {
       <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
         {/* Background gradient */}
         <div className="absolute inset-0 z-0 bg-gradient-to-br from-[hsl(210,100%,50%)] via-[hsl(210,90%,40%)] to-[hsl(220,80%,30%)]" />
+        {/* Subtle orange glow from logo accent */}
+        <div className="absolute bottom-0 right-0 w-[40%] h-[40%] z-0 bg-brand-accent/10 blur-[120px] rounded-full" />
         <div className="absolute inset-0 z-0 opacity-20">
           <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
           <div className="absolute bottom-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-2xl" />
@@ -120,7 +122,7 @@ export default function PlanbitionHome() {
           <div className="flex-1 text-white">
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
               De online oplossing voor uw{" "}
-              <span className="text-blue-200">workforce management</span>
+              <span className="text-brand-accent">workforce management</span>
             </h1>
             <p className="text-lg md:text-xl text-blue-100 max-w-xl mb-8 leading-relaxed">
               Planbition is een uitermate flexibel systeem dat vrijwel elk planningsproces kan
@@ -168,7 +170,7 @@ export default function PlanbitionHome() {
                       <div key={kpi.label} className="rounded-md bg-muted/50 p-3">
                         <div className="text-[10px] text-muted-foreground">{kpi.label}</div>
                         <div className="text-lg font-bold text-foreground">{kpi.val}</div>
-                        <div className="text-[10px] text-primary font-medium">{kpi.change}</div>
+                        <div className="text-[10px] text-brand-accent font-medium">{kpi.change}</div>
                       </div>
                     ))}
                   </div>
@@ -213,7 +215,7 @@ export default function PlanbitionHome() {
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="flex-1">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/10 text-brand-accent text-sm font-semibold mb-6">
                 <Sparkles className="w-4 h-4" />
                 NIEUW — AI-gestuurd roosteren
               </div>
@@ -252,7 +254,7 @@ export default function PlanbitionHome() {
 
             <div className="flex-1 flex justify-center">
               <div className="relative">
-                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-primary/5 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-brand-accent/10 rounded-3xl blur-2xl" />
                 <Card className="relative p-8 bg-card border-primary/20 shadow-2xl max-w-sm">
                   <img
                     src={robotImg}
@@ -305,10 +307,10 @@ export default function PlanbitionHome() {
             {features.map((f) => (
               <Card
                 key={f.title}
-                className="p-6 bg-card border-border hover:border-primary/30 hover:shadow-lg transition-all group"
+                className="p-6 bg-card border-border hover:border-brand-accent/30 hover:shadow-lg transition-all group"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <f.icon className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 rounded-xl bg-brand-accent/10 flex items-center justify-center mb-4 group-hover:bg-brand-accent/20 transition-colors">
+                  <f.icon className="w-6 h-6 text-brand-accent" />
                 </div>
                 <h3 className="font-semibold mb-2">{f.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
