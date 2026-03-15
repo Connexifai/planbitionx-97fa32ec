@@ -110,9 +110,9 @@ export default function PlanbitionHome() {
       {/* Hero */}
       <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
         {/* Background gradient */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-[hsl(210,100%,50%)] via-[hsl(210,90%,40%)] to-[hsl(220,80%,30%)]" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-br from-primary via-primary/80 to-accent-orange/80" />
         <div className="absolute inset-0 z-0 opacity-20">
-          <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-white/10 blur-3xl" />
+          <div className="absolute top-20 right-20 w-96 h-96 rounded-full bg-accent-orange/30 blur-3xl" />
           <div className="absolute bottom-10 left-10 w-72 h-72 rounded-full bg-white/5 blur-2xl" />
         </div>
 
