@@ -433,10 +433,10 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 8 — WAAROM PLANBITION X (Marketing)
+  // SLIDE 9 — WAAROM PLANBITION X (Marketing)
   // ═══════════════════════════════════════
   {
-    const sl = contentSlide(8);
+    const sl = contentSlide(9);
     addHeading(sl, "Waarom Planbition X?", "De voordelen voor uw organisatie");
 
     const benefits = [
