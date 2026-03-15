@@ -2,13 +2,14 @@ import { useEffect, useRef } from "react";
 import { Download, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import robotImg from "@/assets/robot-assistant.png";
 
 /* ══════════════════════════════════════════
    SLIDE DATA — 100% Planbition X
    ══════════════════════════════════════════ */
 
 interface PptxSlide {
-  type: "title" | "intro" | "stats" | "items" | "two-col" | "closing";
+  type: "title" | "intro" | "stats" | "items" | "two-col" | "closing" | "how-it-works";
   title: string;
   subtitle?: string;
   tagline?: string;
@@ -17,17 +18,18 @@ interface PptxSlide {
   items?: { name: string; desc: string }[];
   left?: { heading: string; points: string[] };
   right?: { heading: string; points: string[] };
+  steps?: { num: string; title: string; desc: string }[];
+  robotPosition?: "right" | "bottom-right" | "left";
 }
 
 const slides: PptxSlide[] = [
-  /* 1 — Title */
   {
     type: "title",
     title: "Planbition X",
     subtitle: "AI-gedreven roosterplanning — de volgende generatie",
     tagline: "Solver  •  AI  •  Compliance  •  Microservice",
+    robotPosition: "right",
   },
-  /* 2 — Wat is Planbition X */
   {
     type: "intro",
     title: "Wat is Planbition X?",
@@ -40,60 +42,68 @@ const slides: PptxSlide[] = [
       "Slimme verstoringsafhandeling bij ziekte of verzoeken",
       "Beschikbaar als standalone microservice met REST API",
     ],
+    robotPosition: "bottom-right",
   },
-  /* 3 — Wat doet het */
+  {
+    type: "how-it-works",
+    title: "Hoe werkt het?",
+    subtitle: "Van briefing tot optimaal rooster in drie stappen",
+    steps: [
+      { num: "01", title: "Briefing", desc: "Beschrijf voorkeuren in natuurlijke taal. De AI vertaalt dit automatisch naar constraints voor de solver." },
+      { num: "02", title: "AI Solver", desc: "De solver optimaliseert het rooster met kwalificaties, contracturen, ATW-regels en voorkeuren." },
+      { num: "03", title: "Wijzigen", desc: "Bij verstoringen vindt de AI direct alternatieven. Shift swaps, ziekte — in seconden opgelost." },
+    ],
+    robotPosition: "bottom-right",
+  },
   {
     type: "items",
     title: "Wat doet Planbition X?",
-    subtitle: "Van briefing tot optimaal rooster in drie stappen",
+    subtitle: "De volledige planning lifecycle",
     items: [
-      { name: "1. Briefing in natuurlijke taal", desc: "Beschrijf voorkeuren en beperkingen in gewone taal — de AI vertaalt dit naar constraints" },
-      { name: "2. AI Solver optimaliseert", desc: "De solver weegt kwalificaties, contracturen, ATW-regels en voorkeuren af voor het beste rooster" },
-      { name: "3. Verstoringen afhandelen", desc: "Bij ziekte of wijzigingsverzoeken vindt de AI direct concrete alternatieven en informeert medewerkers" },
-      { name: "4. Uitleg per toewijzing", desc: "Elke shift-toewijzing krijgt een score (0-100) met uitleg waarom deze medewerker is gekozen" },
-      { name: "5. Real-time analytics", desc: "Bezettingsgraad heatmaps, fill rate trends, loonkosten en kwalificatieverdeling in één dashboard" },
+      { name: "Briefing in natuurlijke taal", desc: "Beschrijf voorkeuren en beperkingen in gewone taal — de AI vertaalt dit naar constraints" },
+      { name: "AI Solver optimaliseert", desc: "De solver weegt kwalificaties, contracturen, ATW-regels en voorkeuren af voor het beste rooster" },
+      { name: "Verstoringen afhandelen", desc: "Bij ziekte of wijzigingsverzoeken vindt de AI direct concrete alternatieven" },
+      { name: "Uitleg per toewijzing", desc: "Elke shift-toewijzing krijgt een score (0-100) met uitleg waarom deze medewerker is gekozen" },
+      { name: "Real-time analytics", desc: "Bezettingsgraad heatmaps, fill rate trends, loonkosten en kwalificatieverdeling" },
     ],
   },
-  /* 4 — Kerncijfers */
   {
     type: "stats",
     title: "Planbition X in cijfers",
     subtitle: "Meetbare resultaten vanaf dag één",
     stats: [
       { val: "<1 min", label: "Typische oplostijd" },
-      { val: "100%", label: "ATW-nalevingsgraad" },
-      { val: "73%", label: "Minder planningsinspanning" },
-      { val: "8", label: "Ondersteunde talen" },
-      { val: "€5k+", label: "Bespaard per jaar" },
+      { val: "100%", label: "ATW-compliance" },
+      { val: "73%", label: "Minder handwerk" },
+      { val: "8", label: "Talen" },
+      { val: "€5k+", label: "Bespaard / jaar" },
     ],
   },
-  /* 5 — Moderne AI technieken */
   {
     type: "items",
     title: "Moderne AI in Planbition X",
     subtitle: "Machine Learning & Deep Learning technieken",
     items: [
-      { name: "TFT Demand Forecaster", desc: "Temporal Fusion Transformer — Deep Learning model dat personeelsvraag voorspelt op basis van historische patronen" },
+      { name: "TFT Demand Forecaster", desc: "Temporal Fusion Transformer — Deep Learning voor personeelsvraag op basis van historische patronen" },
       { name: "Bayesian Weight Optimizer", desc: "Automatisch afstellen van constraint-gewichten op basis van plannergedrag en resultaten" },
       { name: "Medewerkervoorkeur-Learner", desc: "Herkent patronen in voorkeuren en gedrag van medewerkers voor betere toewijzingen" },
       { name: "Planner-Correctie Learner", desc: "Leert van handmatige wijzigingen door planners om toekomstige roosters te verbeteren" },
       { name: "ML Warm-Start Generator", desc: "Machine Learning model dat een kwalitatief startrooster genereert voor snellere optimalisatie" },
     ],
+    robotPosition: "bottom-right",
   },
-  /* 6 — Klassieke AI technieken */
   {
     type: "items",
     title: "Klassieke AI in Planbition X",
     subtitle: "Metaheuristieken & optimalisatie-algoritmen",
     items: [
-      { name: "Large Neighborhood Search (LNS)", desc: "Adaptieve operatorselectie die grote delen van het rooster tegelijk herstructureert" },
+      { name: "Large Neighborhood Search", desc: "Adaptieve operatorselectie die grote delen van het rooster tegelijk herstructureert" },
       { name: "GRASP Reactive Alpha", desc: "Greedy Randomized Adaptive Search — combineert greedy constructie met gecontroleerde randomness" },
       { name: "Tabu Search", desc: "Lokaal zoekalgoritme dat cycli voorkomt door eerder bezochte oplossingen te onthouden" },
       { name: "SA-Hybride in Tabu", desc: "Simulated Annealing acceptatiecriterium geïntegreerd in Tabu Search voor betere exploratie" },
       { name: "Heuristische Warm-Start", desc: "Snelle initialisatie via domain-specifieke heuristieken als alternatief voor ML warm-start" },
     ],
   },
-  /* 7 — Slimme engineering */
   {
     type: "two-col",
     title: "Slimme Optimalisatie & Engineering",
@@ -115,7 +125,6 @@ const slides: PptxSlide[] = [
       ],
     },
   },
-  /* 8 — Voordelen */
   {
     type: "items",
     title: "Voordelen van Planbition X",
@@ -129,7 +138,6 @@ const slides: PptxSlide[] = [
       { name: "Microservice architectuur", desc: "REST API integratie in elk WFM/ERP systeem — white-label ready, multi-tenant" },
     ],
   },
-  /* 9 — Microservice */
   {
     type: "two-col",
     title: "Microservice & Integratie",
@@ -149,222 +157,385 @@ const slides: PptxSlide[] = [
         "Embed de solver in uw eigen product",
         "Geïsoleerde tenant-data met SLA-garanties",
         "Schaalbare infrastructuur per klant",
-        "Gebruikt door WFM, logistiek en zorg in heel Europa",
+        "Gebruikt door WFM, logistiek en zorg in Europa",
       ],
     },
+    robotPosition: "bottom-right",
   },
-  /* 10 — Closing */
   {
     type: "closing",
     title: "Klaar om te starten met Planbition X?",
     subtitle: "Neem contact op voor een demo of API-toegang",
+    robotPosition: "right",
   },
 ];
 
 /* ══════════════════════════════════════════
-   PPTX GENERATOR
+   HELPER — image to base64
+   ══════════════════════════════════════════ */
+
+async function imgToBase64(src: string): Promise<string> {
+  const res = await fetch(src);
+  const blob = await res.blob();
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve((reader.result as string).split(",")[1]);
+    reader.readAsDataURL(blob);
+  });
+}
+
+/* ══════════════════════════════════════════
+   PPTX GENERATOR — app-style
    ══════════════════════════════════════════ */
 
 async function downloadPptx() {
   const PptxGenJS = (await import("pptxgenjs")).default;
   const prs = new PptxGenJS();
-  prs.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
+  prs.layout = "LAYOUT_WIDE";
   prs.author = "Planbition";
   prs.title = "Planbition X — AI-gedreven roosterplanning";
 
-  const PRIMARY = "2563EB";
-  const ACCENT = "E8842C";
-  const BG = "F8F9FC";
-  const DARK = "111827";
-  const MUTED = "6B7280";
-  const WHITE = "FFFFFF";
-  const LIGHT_PRIMARY = "EFF6FF";
+  // App design tokens (from index.css)
+  const PRIMARY = "2563EB";     // --primary
+  const PRIMARY_DARK = "1D4ED8";
+  const ACCENT = "E8842C";      // --brand-accent (orange)
+  const BG = "EFF1F5";          // --background
+  const CARD = "FFFFFF";        // --card
+  const DARK = "1E293B";        // --foreground
+  const MUTED = "64748B";       // --muted-foreground
+  const BORDER = "E2E8F0";      // --border
+  const SHIFT_EARLY = "34D399"; // green
+  const SHIFT_DAY = "F59E0B";   // amber
+  const SHIFT_LATE = "3B82F6";  // blue
+  const SHIFT_NIGHT = "8B5CF6"; // purple
 
-  const addFooter = (sl: any, label: string) => {
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 6.95, w: 13.33, h: 0.55, fill: { color: WHITE } });
-    sl.addText(`Planbition X  ·  ${label}`, {
-      x: 0.5, y: 7.0, w: 6, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial",
+  // Load robot image
+  let robotB64 = "";
+  try {
+    robotB64 = await imgToBase64(robotImg);
+  } catch { /* fallback: no robot */ }
+
+  const addRobot = (sl: any, position: string) => {
+    if (!robotB64) return;
+    const opts: any = { data: `image/png;base64,${robotB64}`, sizing: { type: "contain" as const, w: 1.8, h: 1.8 } };
+    if (position === "right") {
+      Object.assign(opts, { x: 10.8, y: 1.2, w: 1.8, h: 1.8 });
+    } else if (position === "bottom-right") {
+      Object.assign(opts, { x: 11.0, y: 5.2, w: 1.5, h: 1.5 });
+    } else if (position === "left") {
+      Object.assign(opts, { x: 0.5, y: 2.5, w: 1.8, h: 1.8 });
+    }
+    sl.addImage(opts);
+  };
+
+  // App-style footer with mini roster aesthetic
+  const addFooter = (sl: any, slideNum: number) => {
+    // Footer bar mimicking app sidebar bottom
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 6.9, w: 13.33, h: 0.6, fill: { color: CARD } });
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 6.9, w: 13.33, h: 0.02, fill: { color: BORDER } });
+    // Shift-colored dots (like the app's shift badges)
+    const dots = [SHIFT_EARLY, SHIFT_DAY, SHIFT_LATE, SHIFT_NIGHT];
+    dots.forEach((c, i) => {
+      sl.addShape(prs.ShapeType.ellipse, {
+        x: 0.5 + i * 0.35, y: 7.08, w: 0.18, h: 0.18, fill: { color: c },
+      });
     });
-    sl.addText("planbition.com", {
-      x: 9, y: 7.0, w: 3.83, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial", align: "right",
+    sl.addText("Planbition X", {
+      x: 2.0, y: 7.0, w: 4, h: 0.4, fontSize: 9, bold: true, color: DARK, fontFace: "Arial",
+    });
+    sl.addText(`${slideNum} / ${slides.length}`, {
+      x: 10, y: 7.0, w: 2.83, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial", align: "right",
     });
   };
 
-  const addAccentBar = (sl: any) => {
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 0.12, h: 7.5, fill: { color: PRIMARY } });
+  // App-style left accent bar (like sidebar indicator)
+  const addSideIndicator = (sl: any) => {
+    sl.addShape(prs.ShapeType.roundRect, {
+      x: 0, y: 0, w: 0.08, h: 7.5, rectRadius: 0, fill: { color: PRIMARY },
+    });
   };
 
-  for (const s of slides) {
+  for (let idx = 0; idx < slides.length; idx++) {
+    const s = slides[idx];
     const sl = prs.addSlide();
     sl.background = { color: BG };
 
+    /* ── TITLE SLIDE ── */
     if (s.type === "title") {
+      // Full primary background with gradient effect
       sl.background = { color: PRIMARY };
-      // Accent gradient stripe
-      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.08, fill: { color: ACCENT } });
-      sl.addText("PLANBITION", {
-        x: 1, y: 1.5, w: 11, h: 0.6, fontSize: 18, color: "FFFFFF80", fontFace: "Arial", charSpacing: 8, bold: true,
-      });
-      sl.addText("X", {
-        x: 1, y: 2.2, w: 11, h: 1.8, fontSize: 96, bold: true, color: WHITE, fontFace: "Arial",
-      });
-      sl.addText(s.subtitle || "", {
-        x: 1, y: 4.2, w: 9, h: 0.8, fontSize: 22, color: "FFFFFFCC", fontFace: "Arial",
-      });
-      sl.addText(s.tagline || "", {
-        x: 1, y: 5.3, w: 9, h: 0.5, fontSize: 13, color: "FFFFFF80", fontFace: "Arial",
-      });
-      // Bottom bar
-      sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.0, w: 13.33, h: 0.5, fill: { color: "1E40AF" } });
-      sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
-        x: 1, y: 7.05, w: 11, h: 0.4, fontSize: 10, color: "FFFFFF99", fontFace: "Arial", align: "center",
-      });
-      continue;
-    }
-
-    if (s.type === "closing") {
-      sl.background = { color: PRIMARY };
-      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.08, fill: { color: ACCENT } });
-      sl.addText(s.title, {
-        x: 1.5, y: 2.0, w: 10.33, h: 1.4, fontSize: 40, bold: true, color: WHITE, fontFace: "Arial", align: "center",
-      });
-      sl.addText(s.subtitle || "", {
-        x: 2, y: 3.6, w: 9.33, h: 0.8, fontSize: 20, color: "FFFFFFCC", fontFace: "Arial", align: "center",
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.06, fill: { color: ACCENT } });
+      // Decorative card shapes (mimicking roster cards)
+      sl.addShape(prs.ShapeType.roundRect, {
+        x: 9.5, y: 4.0, w: 3.0, h: 1.8, rectRadius: 0.15, fill: { color: "FFFFFF18" },
       });
       sl.addShape(prs.ShapeType.roundRect, {
-        x: 4.5, y: 4.8, w: 4.33, h: 0.7, rectRadius: 0.35, fill: { color: ACCENT },
+        x: 10.0, y: 4.4, w: 2.5, h: 1.0, rectRadius: 0.1, fill: { color: "FFFFFF10" },
+      });
+
+      sl.addText("PLANBITION", {
+        x: 1, y: 1.2, w: 8, h: 0.5, fontSize: 16, color: "FFFFFF60", fontFace: "Arial", charSpacing: 10, bold: true,
+      });
+      sl.addText("X", {
+        x: 1, y: 1.8, w: 3, h: 2.2, fontSize: 120, bold: true, color: "FFFFFF", fontFace: "Arial",
+      });
+      sl.addText(s.subtitle || "", {
+        x: 1, y: 4.0, w: 7.5, h: 0.8, fontSize: 20, color: "FFFFFFCC", fontFace: "Arial", lineSpacing: 28,
+      });
+      sl.addText(s.tagline || "", {
+        x: 1, y: 5.2, w: 7.5, h: 0.5, fontSize: 12, color: "FFFFFF80", fontFace: "Arial",
+      });
+      // Shift badge row
+      const badges = [
+        { label: "Early", color: SHIFT_EARLY },
+        { label: "Day", color: SHIFT_DAY },
+        { label: "Late", color: SHIFT_LATE },
+        { label: "Night", color: SHIFT_NIGHT },
+      ];
+      badges.forEach((b, i) => {
+        sl.addShape(prs.ShapeType.roundRect, {
+          x: 1 + i * 1.6, y: 6.0, w: 1.4, h: 0.35, rectRadius: 0.17, fill: { color: b.color + "40" },
+        });
+        sl.addText(b.label, {
+          x: 1 + i * 1.6, y: 6.0, w: 1.4, h: 0.35, fontSize: 9, color: "FFFFFFCC", fontFace: "Arial", align: "center",
+        });
+      });
+      // Footer
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.0, w: 13.33, h: 0.5, fill: { color: PRIMARY_DARK } });
+      sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
+        x: 1, y: 7.05, w: 11, h: 0.4, fontSize: 10, color: "FFFFFF80", fontFace: "Arial", align: "center",
+      });
+      // Robot
+      if (robotB64) {
+        sl.addImage({
+          data: `image/png;base64,${robotB64}`, x: 9.5, y: 0.8, w: 2.8, h: 2.8,
+          sizing: { type: "contain" as const, w: 2.8, h: 2.8 },
+        });
+      }
+      continue;
+    }
+
+    /* ── CLOSING SLIDE ── */
+    if (s.type === "closing") {
+      sl.background = { color: PRIMARY };
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.06, fill: { color: ACCENT } });
+      if (robotB64) {
+        sl.addImage({
+          data: `image/png;base64,${robotB64}`, x: 5.5, y: 0.8, w: 2.2, h: 2.2,
+          sizing: { type: "contain" as const, w: 2.2, h: 2.2 },
+        });
+      }
+      sl.addText(s.title, {
+        x: 1.5, y: 3.2, w: 10.33, h: 1.2, fontSize: 36, bold: true, color: "FFFFFF", fontFace: "Arial", align: "center",
+      });
+      sl.addText(s.subtitle || "", {
+        x: 2, y: 4.4, w: 9.33, h: 0.6, fontSize: 18, color: "FFFFFFCC", fontFace: "Arial", align: "center",
+      });
+      // CTA button shape
+      sl.addShape(prs.ShapeType.roundRect, {
+        x: 4.5, y: 5.4, w: 4.33, h: 0.65, rectRadius: 0.32, fill: { color: ACCENT },
       });
       sl.addText("Vraag een demo aan →", {
-        x: 4.5, y: 4.8, w: 4.33, h: 0.7, fontSize: 16, bold: true, color: WHITE, fontFace: "Arial", align: "center",
+        x: 4.5, y: 5.4, w: 4.33, h: 0.65, fontSize: 15, bold: true, color: "FFFFFF", fontFace: "Arial", align: "center",
       });
       sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
-        x: 2, y: 6.0, w: 9.33, h: 0.5, fontSize: 13, color: "FFFFFF99", fontFace: "Arial", align: "center",
+        x: 2, y: 6.4, w: 9.33, h: 0.5, fontSize: 12, color: "FFFFFF80", fontFace: "Arial", align: "center",
       });
       continue;
     }
 
-    // All other slides
-    addAccentBar(sl);
-    addFooter(sl, s.title);
+    // ── All content slides ──
+    addSideIndicator(sl);
+    addFooter(sl, idx + 1);
+    if (s.robotPosition) addRobot(sl, s.robotPosition);
 
+    /* ── HOW IT WORKS ── */
+    if (s.type === "how-it-works") {
+      sl.addText(s.title, {
+        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 32, bold: true, color: DARK, fontFace: "Arial",
+      });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 1.5, h: 0.05, fill: { color: PRIMARY } });
+      sl.addText(s.subtitle || "", {
+        x: 0.8, y: 1.4, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
+      });
+      (s.steps || []).forEach((step, i) => {
+        const x = 0.6 + i * 3.8;
+        // Card
+        sl.addShape(prs.ShapeType.roundRect, {
+          x, y: 2.2, w: 3.5, h: 3.8, rectRadius: 0.15,
+          fill: { color: CARD }, shadow: { type: "outer", blur: 8, opacity: 0.08, offset: 3 },
+        });
+        // Top accent bar
+        sl.addShape(prs.ShapeType.rect, { x, y: 2.2, w: 3.5, h: 0.06, fill: { color: i === 0 ? SHIFT_EARLY : i === 1 ? PRIMARY : ACCENT } });
+        // Step number circle
+        const circleColor = i === 0 ? SHIFT_EARLY : i === 1 ? PRIMARY : ACCENT;
+        sl.addShape(prs.ShapeType.ellipse, {
+          x: x + 1.35, y: 2.6, w: 0.8, h: 0.8, fill: { color: circleColor },
+        });
+        sl.addText(step.num, {
+          x: x + 1.35, y: 2.6, w: 0.8, h: 0.8, fontSize: 20, bold: true, color: "FFFFFF", fontFace: "Arial", align: "center",
+        });
+        // Title
+        sl.addText(step.title, {
+          x: x + 0.3, y: 3.6, w: 2.9, h: 0.5, fontSize: 18, bold: true, color: DARK, fontFace: "Arial", align: "center",
+        });
+        // Description
+        sl.addText(step.desc, {
+          x: x + 0.3, y: 4.2, w: 2.9, h: 1.4, fontSize: 12, color: MUTED, fontFace: "Arial", align: "center", lineSpacing: 18,
+        });
+        // Arrow between cards
+        if (i < 2) {
+          sl.addText("→", {
+            x: x + 3.5, y: 3.5, w: 0.3, h: 0.6, fontSize: 20, color: PRIMARY, fontFace: "Arial", align: "center",
+          });
+        }
+      });
+    }
+
+    /* ── INTRO ── */
     if (s.type === "intro") {
       sl.addText(s.title, {
-        x: 0.8, y: 0.5, w: 11, h: 0.9, fontSize: 34, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.4, w: 10, h: 0.8, fontSize: 32, bold: true, color: DARK, fontFace: "Arial",
       });
-      // Accent underline
-      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.35, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 1.5, h: 0.05, fill: { color: PRIMARY } });
+      // Subtitle in a card
+      sl.addShape(prs.ShapeType.roundRect, {
+        x: 0.6, y: 1.5, w: 10, h: 1.5, rectRadius: 0.12,
+        fill: { color: CARD }, shadow: { type: "outer", blur: 4, opacity: 0.06, offset: 2 },
+      });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.7, w: 11, h: 1.4, fontSize: 15, color: MUTED, fontFace: "Arial", lineSpacing: 24,
+        x: 1.0, y: 1.6, w: 9.2, h: 1.3, fontSize: 14, color: MUTED, fontFace: "Arial", lineSpacing: 22,
       });
       if (s.bullets) {
         s.bullets.forEach((b, i) => {
-          const y = 3.5 + i * 0.7;
+          const y = 3.4 + i * 0.65;
+          // Alternating row style (like roster grid)
           sl.addShape(prs.ShapeType.roundRect, {
-            x: 0.8, y, w: 11.5, h: 0.58, rectRadius: 0.08, fill: { color: LIGHT_PRIMARY },
+            x: 0.6, y, w: 10, h: 0.55, rectRadius: 0.06,
+            fill: { color: i % 2 === 0 ? CARD : BG },
           });
-          sl.addText(`✓   ${b}`, {
-            x: 1.1, y, w: 11, h: 0.58, fontSize: 14, color: DARK, fontFace: "Arial", valign: "middle",
+          sl.addShape(prs.ShapeType.roundRect, {
+            x: 0.6, y, w: 0.05, h: 0.55, rectRadius: 0, fill: { color: PRIMARY },
+          });
+          sl.addText(`✓  ${b}`, {
+            x: 1.0, y, w: 9.5, h: 0.55, fontSize: 13, color: DARK, fontFace: "Arial", valign: "middle",
           });
         });
       }
     }
 
+    /* ── STATS ── */
     if (s.type === "stats") {
       sl.addText(s.title, {
-        x: 0.8, y: 0.6, w: 11, h: 0.9, fontSize: 34, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.5, w: 11, h: 0.8, fontSize: 32, bold: true, color: DARK, fontFace: "Arial",
       });
-      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.45, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.25, w: 1.5, h: 0.05, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.8, w: 10, h: 0.5, fontSize: 14, color: MUTED, fontFace: "Arial",
+        x: 0.8, y: 1.6, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
       });
+      // KPI cards (like the app's KpiCards component)
+      const kpiColors = [PRIMARY, SHIFT_EARLY, ACCENT, SHIFT_LATE, SHIFT_NIGHT];
       const count = (s.stats || []).length;
-      const cardW = 2.2;
-      const gap = 0.3;
+      const cardW = 2.15;
+      const gap = 0.25;
       const totalW = count * cardW + (count - 1) * gap;
       const startX = (13.33 - totalW) / 2;
       (s.stats || []).forEach((st, i) => {
         const x = startX + i * (cardW + gap);
+        const kpiColor = kpiColors[i % kpiColors.length];
+        // Card shadow
         sl.addShape(prs.ShapeType.roundRect, {
-          x, y: 3.0, w: cardW, h: 2.8, rectRadius: 0.18,
-          fill: { color: WHITE }, shadow: { type: "outer", blur: 8, opacity: 0.1, offset: 3 },
+          x, y: 2.8, w: cardW, h: 3.0, rectRadius: 0.15,
+          fill: { color: CARD }, shadow: { type: "outer", blur: 10, opacity: 0.1, offset: 3 },
         });
-        sl.addShape(prs.ShapeType.rect, { x, y: 3.0, w: cardW, h: 0.06, fill: { color: PRIMARY } });
+        // Top color bar (like KPI card accent)
+        sl.addShape(prs.ShapeType.rect, { x, y: 2.8, w: cardW, h: 0.06, fill: { color: kpiColor } });
+        // Value
         sl.addText(st.val, {
-          x, y: 3.4, w: cardW, h: 1.2, fontSize: 36, bold: true, color: PRIMARY,
+          x, y: 3.3, w: cardW, h: 1.0, fontSize: 34, bold: true, color: kpiColor,
           fontFace: "Arial", align: "center",
         });
+        // Label
         sl.addText(st.label, {
-          x, y: 4.7, w: cardW, h: 0.8, fontSize: 12, color: MUTED,
-          fontFace: "Arial", align: "center", lineSpacing: 18,
+          x, y: 4.5, w: cardW, h: 0.8, fontSize: 11, color: MUTED,
+          fontFace: "Arial", align: "center", lineSpacing: 16,
         });
       });
     }
 
+    /* ── ITEMS ── */
     if (s.type === "items") {
       sl.addText(s.title, {
-        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 30, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.3, w: 10, h: 0.7, fontSize: 28, bold: true, color: DARK, fontFace: "Arial",
       });
-      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 0.95, w: 1.5, h: 0.05, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.4, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
+        x: 0.8, y: 1.15, w: 10, h: 0.35, fontSize: 12, color: MUTED, fontFace: "Arial",
       });
+      const maxW = s.robotPosition ? 10.0 : 11.8;
       (s.items || []).forEach((item, i) => {
-        const y = 2.2 + i * 0.88;
+        const y = 1.8 + i * 0.85;
+        // Roster-style alternating rows
         sl.addShape(prs.ShapeType.roundRect, {
-          x: 0.6, y, w: 12, h: 0.75, rectRadius: 0.1,
-          fill: { color: i % 2 === 0 ? WHITE : LIGHT_PRIMARY },
+          x: 0.5, y, w: maxW, h: 0.72, rectRadius: 0.08,
+          fill: { color: i % 2 === 0 ? CARD : BG },
+          shadow: i % 2 === 0 ? { type: "outer", blur: 3, opacity: 0.05, offset: 1 } : undefined,
         });
+        // Left accent pip
         sl.addShape(prs.ShapeType.roundRect, {
-          x: 0.6, y, w: 0.06, h: 0.75, rectRadius: 0, fill: { color: PRIMARY },
+          x: 0.5, y, w: 0.05, h: 0.72, rectRadius: 0, fill: { color: PRIMARY },
         });
+        // Name
         sl.addText(item.name, {
-          x: 1.0, y, w: 3.8, h: 0.75, fontSize: 14, bold: true, color: DARK, fontFace: "Arial", valign: "middle",
+          x: 0.9, y, w: 3.5, h: 0.72, fontSize: 13, bold: true, color: DARK, fontFace: "Arial", valign: "middle",
         });
+        // Desc
         sl.addText(item.desc, {
-          x: 5.0, y, w: 7.4, h: 0.75, fontSize: 12, color: MUTED, fontFace: "Arial", valign: "middle",
+          x: 4.5, y, w: maxW - 4.2, h: 0.72, fontSize: 11, color: MUTED, fontFace: "Arial", valign: "middle",
         });
       });
     }
 
+    /* ── TWO-COL ── */
     if (s.type === "two-col") {
       sl.addText(s.title, {
-        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 30, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.3, w: 11, h: 0.7, fontSize: 28, bold: true, color: DARK, fontFace: "Arial",
       });
-      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 0.95, w: 1.5, h: 0.05, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.4, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
+        x: 0.8, y: 1.15, w: 10, h: 0.35, fontSize: 12, color: MUTED, fontFace: "Arial",
       });
+      const colW = s.robotPosition ? 5.0 : 5.8;
+      const rightX = s.robotPosition ? 5.8 : 6.9;
 
-      // Left column
       if (s.left) {
         sl.addShape(prs.ShapeType.roundRect, {
-          x: 0.6, y: 2.2, w: 5.8, h: 4.2, rectRadius: 0.15,
-          fill: { color: WHITE }, shadow: { type: "outer", blur: 6, opacity: 0.08, offset: 2 },
+          x: 0.5, y: 1.8, w: colW, h: 4.5, rectRadius: 0.15,
+          fill: { color: CARD }, shadow: { type: "outer", blur: 8, opacity: 0.08, offset: 3 },
         });
-        sl.addShape(prs.ShapeType.rect, { x: 0.6, y: 2.2, w: 5.8, h: 0.06, fill: { color: PRIMARY } });
+        sl.addShape(prs.ShapeType.rect, { x: 0.5, y: 1.8, w: colW, h: 0.06, fill: { color: PRIMARY } });
         sl.addText(s.left.heading, {
-          x: 1.0, y: 2.5, w: 5, h: 0.5, fontSize: 18, bold: true, color: PRIMARY, fontFace: "Arial",
+          x: 0.9, y: 2.1, w: colW - 0.8, h: 0.5, fontSize: 17, bold: true, color: PRIMARY, fontFace: "Arial",
         });
         s.left.points.forEach((p, i) => {
           sl.addText(`●  ${p}`, {
-            x: 1.2, y: 3.2 + i * 0.7, w: 4.8, h: 0.6, fontSize: 13, color: DARK, fontFace: "Arial", lineSpacing: 20,
+            x: 1.1, y: 2.8 + i * 0.75, w: colW - 1.0, h: 0.65, fontSize: 12, color: DARK, fontFace: "Arial", lineSpacing: 18,
           });
         });
       }
 
-      // Right column
       if (s.right) {
         sl.addShape(prs.ShapeType.roundRect, {
-          x: 6.9, y: 2.2, w: 5.8, h: 4.2, rectRadius: 0.15,
-          fill: { color: WHITE }, shadow: { type: "outer", blur: 6, opacity: 0.08, offset: 2 },
+          x: rightX, y: 1.8, w: colW, h: 4.5, rectRadius: 0.15,
+          fill: { color: CARD }, shadow: { type: "outer", blur: 8, opacity: 0.08, offset: 3 },
         });
-        sl.addShape(prs.ShapeType.rect, { x: 6.9, y: 2.2, w: 5.8, h: 0.06, fill: { color: ACCENT } });
+        sl.addShape(prs.ShapeType.rect, { x: rightX, y: 1.8, w: colW, h: 0.06, fill: { color: ACCENT } });
         sl.addText(s.right.heading, {
-          x: 7.3, y: 2.5, w: 5, h: 0.5, fontSize: 18, bold: true, color: ACCENT, fontFace: "Arial",
+          x: rightX + 0.4, y: 2.1, w: colW - 0.8, h: 0.5, fontSize: 17, bold: true, color: ACCENT, fontFace: "Arial",
         });
         s.right.points.forEach((p, i) => {
           sl.addText(`●  ${p}`, {
-            x: 7.5, y: 3.2 + i * 0.7, w: 4.8, h: 0.6, fontSize: 13, color: DARK, fontFace: "Arial", lineSpacing: 20,
+            x: rightX + 0.6, y: 2.8 + i * 0.75, w: colW - 1.0, h: 0.65, fontSize: 12, color: DARK, fontFace: "Arial", lineSpacing: 18,
           });
         });
       }
@@ -375,7 +546,7 @@ async function downloadPptx() {
 }
 
 /* ══════════════════════════════════════════
-   PAGE COMPONENT — download-focused
+   PAGE COMPONENT
    ══════════════════════════════════════════ */
 
 export default function Presentation() {
@@ -392,9 +563,7 @@ export default function Presentation() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
       <div className="text-center space-y-6 p-8">
-        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-          <Download className="w-8 h-8 text-primary" />
-        </div>
+        <img src={robotImg} alt="Planbition X" className="w-24 h-24 object-contain mx-auto robot-float" />
         <h1 className="text-2xl font-bold">Planbition X Presentatie</h1>
         <p className="text-muted-foreground max-w-md">
           De PowerPoint wordt automatisch gedownload. Klik hieronder als de download niet start.
