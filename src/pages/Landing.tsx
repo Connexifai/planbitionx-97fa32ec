@@ -110,7 +110,7 @@ export default function Landing() {
 
   const stats = [
     { value: "16s", label: t("landing.statSolveTime") },
-    { value: "99.8%", label: t("landing.statCompliance") },
+    { value: "100%", label: t("landing.statCompliance") },
     { value: "73%", label: t("landing.statEffort") },
     { value: "8", label: t("landing.statLanguages") },
   ];
