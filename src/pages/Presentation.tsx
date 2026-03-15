@@ -274,16 +274,16 @@ async function downloadPptx() {
       });
 
       sl.addText("PLANBITION", {
-        x: 1, y: 1.2, w: 8, h: 0.5, fontSize: 16, color: "FFFFFF60", fontFace: "Arial", charSpacing: 10, bold: true,
+        x: 1, y: 1.2, w: 8, h: 0.5, fontSize: 18, color: "FFFFFFDD", fontFace: "Arial", charSpacing: 10, bold: true,
       });
       sl.addText("X", {
         x: 1, y: 1.8, w: 3, h: 2.2, fontSize: 120, bold: true, color: "FFFFFF", fontFace: "Arial",
       });
       sl.addText(s.subtitle || "", {
-        x: 1, y: 4.0, w: 7.5, h: 0.8, fontSize: 20, color: "FFFFFFCC", fontFace: "Arial", lineSpacing: 28,
+        x: 1, y: 4.0, w: 7.5, h: 0.8, fontSize: 22, bold: true, color: "FFFFFF", fontFace: "Arial", lineSpacing: 30,
       });
       sl.addText(s.tagline || "", {
-        x: 1, y: 5.2, w: 7.5, h: 0.5, fontSize: 12, color: "FFFFFF80", fontFace: "Arial",
+        x: 1, y: 5.2, w: 7.5, h: 0.5, fontSize: 13, bold: true, color: "FFFFFFCC", fontFace: "Arial",
       });
       // Shift badge row
       const badges = [
