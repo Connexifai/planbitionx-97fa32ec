@@ -122,7 +122,8 @@ export default function PlanbitionHome() {
           <div className="flex-1 text-white">
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
               De online oplossing voor uw{" "}
-              <span className="text-blue-200">workforce management</span>
+              <span className="text-brand-accent">workforce management</span>
+            </h1>
             </h1>
             <p className="text-lg md:text-xl text-blue-100 max-w-xl mb-8 leading-relaxed">
               Planbition is een uitermate flexibel systeem dat vrijwel elk planningsproces kan
