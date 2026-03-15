@@ -337,8 +337,8 @@ async function downloadPptx() {
       const col = i < 2 ? 0 : 1;
       const row = i % 2;
       const cx = 0.5 + col * 6.2;
-      const cy = 1.7 + row * 2.6;
-      addTechCard(sl, cx, cy, 5.8, 2.4, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.7 + row * 2.75;
+      addTechCard(sl, cx, cy, 5.8, 2.55, NO_AI, c.name, c.desc, c.detail);
     });
 
     addRobot(sl, 11.3, 5.2, 1.2);
