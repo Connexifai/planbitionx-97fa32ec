@@ -472,10 +472,10 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 9 — DOELGROEPEN & USE CASES (Sales)
+  // SLIDE 10 — DOELGROEPEN & USE CASES (Sales)
   // ═══════════════════════════════════════
   {
-    const sl = contentSlide(9);
+    const sl = contentSlide(10);
     addHeading(sl, "Doelgroepen & use cases", "Voor wie is Planbition X?");
 
     const segments = [
