@@ -9,6 +9,7 @@ import Login from "./pages/Login.tsx";
 import Landing from "./pages/Landing.tsx";
 import PlanbitionHome from "./pages/PlanbitionHome.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Presentation from "./pages/Presentation.tsx";
 import robotImg from "@/assets/robot-assistant.png";
 
 const queryClient = new QueryClient();
@@ -69,6 +70,7 @@ const App = () => (
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
             <Route path="/" element={<HomeOrPlanner />} />
+            <Route path="/presentation" element={<Presentation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
