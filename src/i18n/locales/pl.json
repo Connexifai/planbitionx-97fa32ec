@@ -373,6 +373,24 @@
     "kpiFulfillment": "Realizacja",
     "contactTitle": "Kontakt",
     "contactDesc": "Masz pytania o nasz produkt lub usługi? Skontaktuj się z nami.",
-    "copyright": "Wszelkie prawa zastrzeżone."
+    "copyright": "Wszelkie prawa zastrzeżone.",
+    "showcaseAiGreeting": "Cześć! Powiedz mi swoje wymagania dotyczące grafiku.",
+    "showcaseUserMsg": "Jan nie może pracować na nocne zmiany. Minimum 3 pracowników w sobotę.",
+    "showcaseAiConfirm": "Zrozumiałem! Uwzględnię to jako ograniczenie.",
+    "showcaseSolveBtn": "▶ Rozwiąż",
+    "showcaseSolving": "Rozwiązywanie grafiku...",
+    "showcaseStep1": "Ograniczenia załadowane",
+    "showcaseStep2": "Pracownicy przypisani",
+    "showcaseStep3": "Reguły sprawdzone",
+    "showcaseRosterReady": "Grafik gotowy!",
+    "showcaseKpiFill": "Obsadzenie",
+    "showcaseKpiShifts": "Zmiany",
+    "showcasePostSolve": "Asystent AI",
+    "showcaseSwapRequest": "Franz-Xaver chce mieć wolny czwartek. Kto może przejąć jego poranną zmianę?",
+    "showcaseAnalyzing": "Analiza grafiku...",
+    "showcaseSwapResult": "Pieter J. może przejąć poranną zmianę w czwartek. Grafik zaktualizowany!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Rozwiąż",
+    "showcasePhase3": "Zmień"
   }
 }

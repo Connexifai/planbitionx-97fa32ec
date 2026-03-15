@@ -383,6 +383,24 @@
     "kpiFulfillment": "Vervulling",
     "contactTitle": "Contact",
     "contactDesc": "Heeft u vragen over ons product of onze diensten? Neem contact met ons op.",
-    "copyright": "Alle rechten voorbehouden."
+    "copyright": "Alle rechten voorbehouden.",
+    "showcaseAiGreeting": "Hallo! Vertel me je wensen voor het rooster.",
+    "showcaseUserMsg": "Jan mag geen nachtdiensten draaien. Minimaal 3 medewerkers op zaterdag.",
+    "showcaseAiConfirm": "Begrepen! Ik neem dit mee als constraint.",
+    "showcaseSolveBtn": "▶ Oplossen",
+    "showcaseSolving": "Rooster wordt opgelost...",
+    "showcaseStep1": "Constraints ingeladen",
+    "showcaseStep2": "Medewerkers toegewezen",
+    "showcaseStep3": "ATW-regels gecontroleerd",
+    "showcaseRosterReady": "Rooster klaar!",
+    "showcaseKpiFill": "Bezetting",
+    "showcaseKpiShifts": "Diensten",
+    "showcasePostSolve": "AI Assistent",
+    "showcaseSwapRequest": "Franz-Xaver wil donderdag vrij. Wie kan zijn vroege dienst overnemen?",
+    "showcaseAnalyzing": "Rooster analyseren...",
+    "showcaseSwapResult": "Pieter J. kan de vroege dienst op donderdag overnemen. Rooster aangepast!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Oplossen",
+    "showcasePhase3": "Wijzigen"
   }
 }

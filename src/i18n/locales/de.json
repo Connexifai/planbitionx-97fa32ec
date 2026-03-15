@@ -373,6 +373,24 @@
     "kpiFulfillment": "Erfüllung",
     "contactTitle": "Kontakt",
     "contactDesc": "Haben Sie Fragen zu unserem Produkt oder unseren Dienstleistungen? Kontaktieren Sie uns.",
-    "copyright": "Alle Rechte vorbehalten."
+    "copyright": "Alle Rechte vorbehalten.",
+    "showcaseAiGreeting": "Hallo! Sagen Sie mir Ihre Anforderungen für den Dienstplan.",
+    "showcaseUserMsg": "Jan darf keine Nachtschichten machen. Mindestens 3 Mitarbeiter am Samstag.",
+    "showcaseAiConfirm": "Verstanden! Ich berücksichtige dies als Constraint.",
+    "showcaseSolveBtn": "▶ Lösen",
+    "showcaseSolving": "Dienstplan wird gelöst...",
+    "showcaseStep1": "Constraints geladen",
+    "showcaseStep2": "Mitarbeiter zugewiesen",
+    "showcaseStep3": "AZG-Regeln geprüft",
+    "showcaseRosterReady": "Dienstplan fertig!",
+    "showcaseKpiFill": "Belegung",
+    "showcaseKpiShifts": "Schichten",
+    "showcasePostSolve": "KI-Assistent",
+    "showcaseSwapRequest": "Franz-Xaver möchte Donnerstag frei. Wer kann seine Frühschicht übernehmen?",
+    "showcaseAnalyzing": "Dienstplan analysieren...",
+    "showcaseSwapResult": "Pieter J. kann die Frühschicht am Donnerstag übernehmen. Dienstplan aktualisiert!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Lösen",
+    "showcasePhase3": "Ändern"
   }
 }

@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import robotImg from "@/assets/robot-assistant.png";
+import SolverShowcase from "@/components/home/SolverShowcase";
 
 const clients = [
   { name: "Timing", src: "/images/clients/timing.png" },
@@ -178,38 +179,9 @@ export default function PlanbitionHome() {
             </Section>
           </div>
 
-          {/* Dashboard mockup */}
-          <Section className="flex-1 max-w-lg">
-            <div className="relative">
-              <div className="rounded-2xl bg-primary-foreground/10 backdrop-blur-md border border-primary-foreground/20 p-6 shadow-2xl">
-                <div className="rounded-lg bg-background/90 p-4 space-y-3">
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-destructive/60" />
-                    <div className="w-3 h-3 rounded-full bg-brand-accent/60" />
-                    <div className="w-3 h-3 rounded-full bg-shift-early/60" />
-                    <span className="text-xs text-muted-foreground ml-2">Dashboard</span>
-                  </div>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { label: t("home.kpiEmployees"), val: "619", change: "+36%" },
-                      { label: t("home.kpiTurnover"), val: "89", change: "-12%" },
-                      { label: t("home.kpiFulfillment"), val: "94%", change: "+8%" },
-                    ].map((kpi) => (
-                      <div key={kpi.label} className="rounded-md bg-muted/50 p-3">
-                        <div className="text-[10px] text-muted-foreground">{kpi.label}</div>
-                        <div className="text-lg font-bold text-foreground">{kpi.val}</div>
-                        <div className="text-[10px] text-brand-accent font-medium">{kpi.change}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="h-20 rounded-md bg-muted/30 flex items-end px-2 pb-2 gap-1">
-                    {[40, 55, 35, 70, 60, 80, 75, 90, 65, 85, 78, 92].map((h, i) => (
-                      <div key={i} className="flex-1 rounded-t bg-primary/60" style={{ height: `${h}%` }} />
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Solver Showcase Animation */}
+          <Section className="flex-1 max-w-md">
+            <SolverShowcase />
           </Section>
         </div>
       </section>

@@ -373,6 +373,24 @@
     "kpiFulfillment": "Remplissage",
     "contactTitle": "Contact",
     "contactDesc": "Des questions sur notre produit ou nos services ? Contactez-nous.",
-    "copyright": "Tous droits réservés."
+    "copyright": "Tous droits réservés.",
+    "showcaseAiGreeting": "Bonjour ! Dites-moi vos exigences pour le planning.",
+    "showcaseUserMsg": "Jan ne peut pas travailler de nuit. Au moins 3 employés le samedi.",
+    "showcaseAiConfirm": "Compris ! Je l'inclurai comme contrainte.",
+    "showcaseSolveBtn": "▶ Résoudre",
+    "showcaseSolving": "Résolution du planning...",
+    "showcaseStep1": "Contraintes chargées",
+    "showcaseStep2": "Employés assignés",
+    "showcaseStep3": "Règles vérifiées",
+    "showcaseRosterReady": "Planning prêt !",
+    "showcaseKpiFill": "Occupation",
+    "showcaseKpiShifts": "Postes",
+    "showcasePostSolve": "Assistant IA",
+    "showcaseSwapRequest": "Franz-Xaver veut être libre jeudi. Qui peut prendre son poste du matin ?",
+    "showcaseAnalyzing": "Analyse du planning...",
+    "showcaseSwapResult": "Pieter J. peut prendre le poste du matin jeudi. Planning mis à jour !",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Résoudre",
+    "showcasePhase3": "Modifier"
   }
 }
