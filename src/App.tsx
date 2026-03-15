@@ -51,11 +51,11 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function LandingOrIndex() {
+function HomeOrPlanner() {
   const { session, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (session) return <Index />;
-  return <Landing />;
+  return <PlanbitionHome />;
 }
 
 const App = () => (
