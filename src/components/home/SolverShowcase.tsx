@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { MessageSquare, Sparkles, CheckCircle2, ArrowRight, Bot, User, Loader2 } from "lucide-react";
 
-const PHASE_DURATION = 4500; // ms per phase
+const PHASE_DURATION = 6500; // ms per phase (longer for phase 2 animation)
 const PHASES = 3;
 
 /* Mini roster data */
