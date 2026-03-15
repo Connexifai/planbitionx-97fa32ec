@@ -312,12 +312,12 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 6 — SOLVER TECHNIEKEN: Metaheuristieken
+  // SLIDE 6 — KLASSIEKE AI: Metaheuristieken & Optimalisatie
   // ═══════════════════════════════════════
   {
     const sl = contentSlide(6);
-    addHeading(sl, "Solver — Metaheuristieken", "Zoektechnieken die het optimale rooster vinden");
-    pill(sl, 0.7, 1.55, 2.6, "🔧  Operations Research", NO_AI, "FFFFFF");
+    addHeading(sl, "Klassieke AI — Metaheuristieken & Optimalisatie", "Bewezen AI-zoektechnieken die het optimale rooster vinden");
+    pill(sl, 0.7, 1.55, 2.4, "⚙️  Klassieke AI", CLASSIC_AI, "FFFFFF");
 
     const cards = [
       {
@@ -347,19 +347,19 @@ async function downloadPptx() {
       const row = i % 2;
       const cx = 0.5 + col * 6.2;
       const cy = 1.95 + row * 2.45;
-      addTechCard(sl, cx, cy, 5.8, 2.3, NO_AI, c.name, c.desc, c.detail);
+      addTechCard(sl, cx, cy, 5.8, 2.3, CLASSIC_AI, c.name, c.desc, c.detail);
     });
 
     addRobot(sl, 11.3, 5.15, 1.2);
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 7 — SOLVER TECHNIEKEN: Constraints & Scoring
+  // SLIDE 7 — DOMAIN LOGIC: Constraints & Compliance
   // ═══════════════════════════════════════
   {
     const sl = contentSlide(7);
-    addHeading(sl, "Solver — Constraints & Scoring Engine", "De motor die elk rooster valideert en scoort");
-    pill(sl, 0.7, 1.55, 2.6, "🔧  Deterministische engine", NO_AI, "FFFFFF");
+    addHeading(sl, "Domain Logic — Constraints & Compliance", "Deterministische engines die elk rooster valideren en scoren");
+    pill(sl, 0.7, 1.55, 2.6, "📐  Domain Logic", NO_AI, "FFFFFF");
 
     const cards = [
       {
