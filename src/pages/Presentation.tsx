@@ -65,11 +65,7 @@ async function downloadPptx() {
     [S_E, S_D, S_L, S_N].forEach((c, i) => {
       sl.addShape(prs.ShapeType.ellipse, { x: 0.5 + i * 0.28, y: 7.17, w: 0.13, h: 0.13, fill: { color: c } });
     });
-    if (logoB64) {
-      sl.addImage({ data: `image/png;base64,${logoB64}`, x: 1.7, y: 7.08, w: 1.6, h: 0.32, sizing: { type: "contain" as const, w: 1.6, h: 0.32 } });
-    } else {
-      sl.addText("Planbition X", { x: 1.7, y: 7.08, w: 2, h: 0.3, fontSize: 8, bold: true, color: FG, fontFace: "Arial" });
-    }
+    sl.addText("Planbition X", { x: 1.7, y: 7.08, w: 2, h: 0.3, fontSize: 8, bold: true, color: FG, fontFace: "Arial" });
     sl.addText(`${num} / ${TOTAL}`, { x: 11, y: 7.1, w: 1.8, h: 0.25, fontSize: 8, color: MUT, fontFace: "Arial", align: "right" });
   };
 
