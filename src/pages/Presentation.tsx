@@ -528,7 +528,7 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 10 — CLOSING
+  // SLIDE 11 — CLOSING
   // ═══════════════════════════════════════
   {
     const sl = prs.addSlide();
