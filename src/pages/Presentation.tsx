@@ -1,145 +1,61 @@
-import { useState, useEffect, useCallback } from "react";
-import {
-  Brain,
-  Cpu,
-  Zap,
-  Trophy,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  TrendingUp,
-  RefreshCw,
-  Target,
-  Lightbulb,
-  BarChart3,
-  Clock,
-  ShieldCheck,
-  Layers,
-  Gauge,
-  Calendar,
-  Users,
-  Handshake,
-  UserCheck,
-  Building2,
-  Plug,
-  Download,
-  Globe,
-  CheckCircle2,
-  ArrowRight,
-} from "lucide-react";
-import robotImg from "@/assets/robot-assistant.png";
+import { useEffect, useRef } from "react";
+import { Download, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 /* ══════════════════════════════════════════
-   SLIDE DEFINITIONS
+   SLIDE DATA — 100% Planbition X
    ══════════════════════════════════════════ */
 
-type SlideType = "title" | "intro" | "features-grid" | "stats" | "clients" | "items" | "closing";
-
-interface SlideItem {
-  icon: any;
-  name: string;
-  desc: string;
-}
-
-interface SlideData {
-  id: string;
-  type: SlideType;
+interface PptxSlide {
+  type: "title" | "intro" | "stats" | "items" | "two-col" | "closing";
   title: string;
   subtitle?: string;
   tagline?: string;
-  icon?: any;
-  items?: SlideItem[];
-  stats?: { val: string; label: string }[];
   bullets?: string[];
-  clientLogos?: { name: string; src: string }[];
-  features?: { icon: any; title: string; desc: string }[];
+  stats?: { val: string; label: string }[];
+  items?: { name: string; desc: string }[];
+  left?: { heading: string; points: string[] };
+  right?: { heading: string; points: string[] };
 }
 
-const slides: SlideData[] = [
-  /* ── 1. Title ── */
+const slides: PptxSlide[] = [
+  /* 1 — Title */
   {
-    id: "title",
     type: "title",
-    title: "Planbition",
-    subtitle: "De online oplossing voor uw workforce management",
-    tagline: "Planning • HR • Rapportage • AI",
-  },
-  /* ── 2. Wat is Planbition ── */
-  {
-    id: "what-is",
-    type: "intro",
-    title: "Wat is Planbition?",
-    subtitle:
-      "Planbition is een uitermate flexibel online workforce management systeem dat vrijwel elk planningsproces kan ondersteunen — van onboarding tot tijdregistratie. De juiste mensen, op het juiste moment, op de juiste plaats.",
-    bullets: [
-      "100% web gebaseerd — bruikbaar op elk apparaat",
-      "Pay as you use — alle modules inbegrepen",
-      "Meerdere vestigingen binnen één installatie",
-      "Open platform met 18 standaard API's",
-    ],
-  },
-  /* ── 3. Kernfunctionaliteit ── */
-  {
-    id: "capabilities",
-    type: "features-grid",
-    title: "Kernfunctionaliteit",
-    subtitle: "Eén platform voor de volledige personeelscyclus",
-    features: [
-      { icon: Calendar, title: "Planning & Roosteren", desc: "Operationele planningsmodule — het hart van de applicatie" },
-      { icon: Users, title: "HR Management", desc: "Contracten, kwalificaties en dossiers — altijd actueel" },
-      { icon: Handshake, title: "CRM", desc: "Klantbeheer met SLA's en KPI's per klant" },
-      { icon: UserCheck, title: "Werknemer Zelf Service", desc: "Eigen rooster, beschikbaarheid en verlofaanvragen" },
-      { icon: Building2, title: "Master / Vendor", desc: "Vraagverdeling over meerdere leveranciers" },
-      { icon: BarChart3, title: "Rapportage & BI", desc: "Power BI integratie en draaitabellen" },
-      { icon: Clock, title: "Tijdregistratie", desc: "Terminals, geofencing of handmatige invoer" },
-      { icon: Plug, title: "Interfacing", desc: "18 standaard API's voor import en export" },
-    ],
-  },
-  /* ── 4. Voordelen ── */
-  {
-    id: "benefits",
-    type: "stats",
-    title: "Waarom Planbition?",
-    subtitle: "Bewezen resultaten bij onze klanten",
-    stats: [
-      { val: "85%", label: "Besparing op planningstijd" },
-      { val: "70%", label: "Minder communicatietijd" },
-      { val: "100%", label: "Web gebaseerd" },
-      { val: "∞", label: "Onbeperkt aantal gebruikers" },
-    ],
-  },
-  /* ── 5. Klanten ── */
-  {
-    id: "clients",
-    type: "clients",
-    title: "Onze klanten",
-    subtitle: "Vertrouwd door toonaangevende organisaties in Nederland en daarbuiten",
-    clientLogos: [
-      { name: "Timing", src: "/images/clients/timing.png" },
-      { name: "Adecco", src: "/images/clients/adecco.png" },
-      { name: "Stork", src: "/images/clients/stork.png" },
-      { name: "Consolid", src: "/images/clients/consolid.png" },
-      { name: "YoungCapital", src: "/images/clients/yc.png" },
-    ],
-  },
-  /* ── 6. Planbition X intro ── */
-  {
-    id: "x-intro",
-    type: "intro",
     title: "Planbition X",
+    subtitle: "AI-gedreven roosterplanning — de volgende generatie",
+    tagline: "Solver  •  AI  •  Compliance  •  Microservice",
+  },
+  /* 2 — Wat is Planbition X */
+  {
+    type: "intro",
+    title: "Wat is Planbition X?",
     subtitle:
-      "De volgende generatie roosterplanning. Met AI-optimalisatie genereert Planbition X ATW-conforme roosters in minder dan een minuut — inclusief automatische verstoringenafhandeling en slimme alternatieven.",
+      "Planbition X is een AI-gedreven rooster-solver die in seconden volledig ATW-conforme personeelsroosters genereert. Het systeem combineert moderne AI-technieken met constraint-based optimalisatie om de beste planning te creëren — met uitleg, verstoringsafhandeling en een REST API voor naadloze integratie.",
     bullets: [
-      "AI-optimizer lost roosters op in seconden",
-      "100% ATW-compliance ingebouwd",
-      "Verstoringen afhandelen met concrete alternatieven",
-      "Beschikbaar als standalone microservice (REST API)",
+      "Genereert optimale roosters in minder dan 1 minuut",
+      "100% ATW-compliance automatisch geborgd",
+      "Natuurlijke taal briefing — beschrijf voorkeuren, de AI begrijpt het",
+      "Slimme verstoringsafhandeling bij ziekte of verzoeken",
+      "Beschikbaar als standalone microservice met REST API",
     ],
   },
-  /* ── 7. X Stats ── */
+  /* 3 — Wat doet het */
   {
-    id: "x-stats",
+    type: "items",
+    title: "Wat doet Planbition X?",
+    subtitle: "Van briefing tot optimaal rooster in drie stappen",
+    items: [
+      { name: "1. Briefing in natuurlijke taal", desc: "Beschrijf voorkeuren en beperkingen in gewone taal — de AI vertaalt dit naar constraints" },
+      { name: "2. AI Solver optimaliseert", desc: "De solver weegt kwalificaties, contracturen, ATW-regels en voorkeuren af voor het beste rooster" },
+      { name: "3. Verstoringen afhandelen", desc: "Bij ziekte of wijzigingsverzoeken vindt de AI direct concrete alternatieven en informeert medewerkers" },
+      { name: "4. Uitleg per toewijzing", desc: "Elke shift-toewijzing krijgt een score (0-100) met uitleg waarom deze medewerker is gekozen" },
+      { name: "5. Real-time analytics", desc: "Bezettingsgraad heatmaps, fill rate trends, loonkosten en kwalificatieverdeling in één dashboard" },
+    ],
+  },
+  /* 4 — Kerncijfers */
+  {
     type: "stats",
     title: "Planbition X in cijfers",
     subtitle: "Meetbare resultaten vanaf dag één",
@@ -147,638 +63,353 @@ const slides: SlideData[] = [
       { val: "<1 min", label: "Typische oplostijd" },
       { val: "100%", label: "ATW-nalevingsgraad" },
       { val: "73%", label: "Minder planningsinspanning" },
+      { val: "8", label: "Ondersteunde talen" },
       { val: "€5k+", label: "Bespaard per jaar" },
     ],
   },
-  /* ── 8. Moderne AI ── */
+  /* 5 — Moderne AI technieken */
   {
-    id: "modern-ai",
     type: "items",
-    title: "Moderne AI",
-    subtitle: "in Planbition X",
-    icon: Brain,
+    title: "Moderne AI in Planbition X",
+    subtitle: "Machine Learning & Deep Learning technieken",
     items: [
-      { icon: TrendingUp, name: "TFT Demand Forecaster", desc: "Deep Learning voor personeelsvraag" },
-      { icon: Target, name: "Bayesian Weight Optimizer", desc: "Automatisch afstellen van gewichten" },
-      { icon: Lightbulb, name: "Medewerkervoorkeur-Learner", desc: "Voorkeuren en gedrag herkennen" },
-      { icon: RefreshCw, name: "Planner-Correctie Learner", desc: "Leert van wijzigingen door planners" },
-      { icon: Sparkles, name: "Warm-Start Generator", desc: "ML-variant voor snelle initialisatie" },
+      { name: "TFT Demand Forecaster", desc: "Temporal Fusion Transformer — Deep Learning model dat personeelsvraag voorspelt op basis van historische patronen" },
+      { name: "Bayesian Weight Optimizer", desc: "Automatisch afstellen van constraint-gewichten op basis van plannergedrag en resultaten" },
+      { name: "Medewerkervoorkeur-Learner", desc: "Herkent patronen in voorkeuren en gedrag van medewerkers voor betere toewijzingen" },
+      { name: "Planner-Correctie Learner", desc: "Leert van handmatige wijzigingen door planners om toekomstige roosters te verbeteren" },
+      { name: "ML Warm-Start Generator", desc: "Machine Learning model dat een kwalitatief startrooster genereert voor snellere optimalisatie" },
     ],
   },
-  /* ── 9. Klassieke AI ── */
+  /* 6 — Klassieke AI technieken */
   {
-    id: "classic-ai",
     type: "items",
-    title: "Klassieke AI",
-    subtitle: "in Planbition X",
-    icon: Cpu,
+    title: "Klassieke AI in Planbition X",
+    subtitle: "Metaheuristieken & optimalisatie-algoritmen",
     items: [
-      { icon: Layers, name: "LNS Adaptive Weights", desc: "Adaptieve operatorselectie" },
-      { icon: Target, name: "GRASP Reactive Alpha", desc: "Greedy + randomness" },
-      { icon: RefreshCw, name: "Tabu Search", desc: "Voorkomen van cycli, lokaal zoeken" },
-      { icon: Gauge, name: "SA-Hybride in Tabu", desc: "Simulated Annealing acceptatie" },
-      { icon: Sparkles, name: "Warm-Start Generator", desc: "Heuristisch voor snelle initialisatie" },
+      { name: "Large Neighborhood Search (LNS)", desc: "Adaptieve operatorselectie die grote delen van het rooster tegelijk herstructureert" },
+      { name: "GRASP Reactive Alpha", desc: "Greedy Randomized Adaptive Search — combineert greedy constructie met gecontroleerde randomness" },
+      { name: "Tabu Search", desc: "Lokaal zoekalgoritme dat cycli voorkomt door eerder bezochte oplossingen te onthouden" },
+      { name: "SA-Hybride in Tabu", desc: "Simulated Annealing acceptatiecriterium geïntegreerd in Tabu Search voor betere exploratie" },
+      { name: "Heuristische Warm-Start", desc: "Snelle initialisatie via domain-specifieke heuristieken als alternatief voor ML warm-start" },
     ],
   },
-  /* ── 10. Slimme Optimalisatie ── */
+  /* 7 — Slimme engineering */
   {
-    id: "optimization",
+    type: "two-col",
+    title: "Slimme Optimalisatie & Engineering",
+    subtitle: "Geen AI — pure performance engineering",
+    left: {
+      heading: "Performance",
+      points: [
+        "Incremental Scoring — alleen gewijzigde delen herberekenen",
+        "Delta-evaluatie caching voor milliseconde-snelle moves",
+        "Multi-threaded solving met parallelle neighborhood search",
+      ],
+    },
+    right: {
+      heading: "Compliance Engine",
+      points: [
+        "Volledige ATW-regelset als harde constraints",
+        "Rusttijden, nachtdienst-limieten, pauzeregels",
+        "36-uur rust per 7 dagen, 46-uur na nachtreeks",
+      ],
+    },
+  },
+  /* 8 — Voordelen */
+  {
     type: "items",
-    title: "Slimme Optimalisatie",
-    subtitle: "geen AI — pure engineering",
-    icon: Zap,
+    title: "Voordelen van Planbition X",
+    subtitle: "Waarom klanten kiezen voor AI-gedreven planning",
     items: [
-      { icon: Gauge, name: "Incremental Scoring", desc: "Snelle caching & performance-layer" },
-      { icon: Layers, name: "Pure Engineering", desc: "Geen leerproces, optimale snelheid" },
+      { name: "Betere roosters", desc: "Combinatie van moderne en klassieke AI-technieken levert aantoonbaar betere resultaten" },
+      { name: "73% minder handwerk", desc: "Planners besteden drastisch minder tijd aan handmatige aanpassingen en correcties" },
+      { name: "5–10× sneller", desc: "Wat uren kostte duurt nu seconden — door slimme optimalisatie en caching" },
+      { name: "Volledige uitlegbaarheid", desc: "AI-gedreven uitleg van elke beslissing — transparant en controleerbaar voor planners" },
+      { name: "ATW-garantie", desc: "100% compliance met arbeidstijdenwet, automatisch geborgd — geen handmatige controle nodig" },
+      { name: "Microservice architectuur", desc: "REST API integratie in elk WFM/ERP systeem — white-label ready, multi-tenant" },
     ],
   },
-  /* ── 11. Voordelen AI ── */
+  /* 9 — Microservice */
   {
-    id: "ai-benefits",
-    type: "items",
-    title: "Voordelen",
-    subtitle: "voor klanten",
-    icon: Trophy,
-    items: [
-      { icon: Sparkles, name: "Betere roosters", desc: "Door combinatie van AI-technieken" },
-      { icon: Clock, name: "Minder handwerk", desc: "Minder handmatige aanpassingen door planners" },
-      { icon: Zap, name: "5–10× sneller", desc: "Snellere solving door slimme optimalisatie" },
-      { icon: BarChart3, name: "Meer uitlegbaarheid", desc: "AI-gedreven uitleg van beslissingen" },
-      { icon: ShieldCheck, name: "Betrouwbaar", desc: "Stabiele constraint-based planning" },
-    ],
+    type: "two-col",
+    title: "Microservice & Integratie",
+    subtitle: "Een standalone solver voor elk platform",
+    left: {
+      heading: "REST API",
+      points: [
+        "Stuur JSON met medewerkers, diensten en constraints",
+        "Ontvang een geoptimaliseerd rooster terug",
+        "Webhook callbacks bij asynchroon oplossen",
+        "Volledige API documentatie beschikbaar",
+      ],
+    },
+    right: {
+      heading: "White-Label & Multi-Tenant",
+      points: [
+        "Embed de solver in uw eigen product",
+        "Geïsoleerde tenant-data met SLA-garanties",
+        "Schaalbare infrastructuur per klant",
+        "Gebruikt door WFM, logistiek en zorg in heel Europa",
+      ],
+    },
   },
-  /* ── 12. Closing ── */
+  /* 10 — Closing */
   {
-    id: "closing",
     type: "closing",
-    title: "Klaar om te starten?",
-    subtitle: "Neem contact op voor een demo of start direct met Planbition X.",
+    title: "Klaar om te starten met Planbition X?",
+    subtitle: "Neem contact op voor een demo of API-toegang",
   },
 ];
 
 /* ══════════════════════════════════════════
-   PPTX EXPORT
+   PPTX GENERATOR
    ══════════════════════════════════════════ */
 
 async function downloadPptx() {
   const PptxGenJS = (await import("pptxgenjs")).default;
   const prs = new PptxGenJS();
-  prs.layout = "LAYOUT_WIDE";
+  prs.layout = "LAYOUT_WIDE"; // 13.33 x 7.5
   prs.author = "Planbition";
-  prs.title = "Planbition X — AI Overview";
+  prs.title = "Planbition X — AI-gedreven roosterplanning";
 
   const PRIMARY = "2563EB";
   const ACCENT = "E8842C";
-  const BG = "F5F6FA";
-  const DARK = "1A2236";
+  const BG = "F8F9FC";
+  const DARK = "111827";
   const MUTED = "6B7280";
   const WHITE = "FFFFFF";
+  const LIGHT_PRIMARY = "EFF6FF";
+
+  const addFooter = (sl: any, label: string) => {
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 6.95, w: 13.33, h: 0.55, fill: { color: WHITE } });
+    sl.addText(`Planbition X  ·  ${label}`, {
+      x: 0.5, y: 7.0, w: 6, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial",
+    });
+    sl.addText("planbition.com", {
+      x: 9, y: 7.0, w: 3.83, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial", align: "right",
+    });
+  };
+
+  const addAccentBar = (sl: any) => {
+    sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 0.12, h: 7.5, fill: { color: PRIMARY } });
+  };
 
   for (const s of slides) {
     const sl = prs.addSlide();
     sl.background = { color: BG };
 
-    // Bottom bar on every slide
-    sl.addShape(prs.ShapeType.rect, { x: 0, y: 6.9, w: 13.33, h: 0.6, fill: { color: WHITE } });
-    sl.addText(`Planbition  ·  ${s.title}`, {
-      x: 0.5, y: 7.0, w: 5, h: 0.4, fontSize: 9, color: MUTED, fontFace: "Arial",
-    });
-
     if (s.type === "title") {
       sl.background = { color: PRIMARY };
-      sl.addText("Planbition", {
-        x: 1, y: 2.0, w: 11, h: 1.2, fontSize: 54, bold: true, color: WHITE, fontFace: "Arial",
+      // Accent gradient stripe
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.08, fill: { color: ACCENT } });
+      sl.addText("PLANBITION", {
+        x: 1, y: 1.5, w: 11, h: 0.6, fontSize: 18, color: "FFFFFF80", fontFace: "Arial", letterSpacing: 8, bold: true,
+      });
+      sl.addText("X", {
+        x: 1, y: 2.2, w: 11, h: 1.8, fontSize: 96, bold: true, color: WHITE, fontFace: "Arial",
       });
       sl.addText(s.subtitle || "", {
-        x: 1, y: 3.4, w: 9, h: 0.8, fontSize: 22, color: "FFFFFFCC", fontFace: "Arial",
+        x: 1, y: 4.2, w: 9, h: 0.8, fontSize: 22, color: "FFFFFFCC", fontFace: "Arial",
       });
       sl.addText(s.tagline || "", {
-        x: 1, y: 4.6, w: 9, h: 0.5, fontSize: 14, color: "FFFFFF99", fontFace: "Arial",
+        x: 1, y: 5.3, w: 9, h: 0.5, fontSize: 13, color: "FFFFFF80", fontFace: "Arial",
       });
+      // Bottom bar
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 7.0, w: 13.33, h: 0.5, fill: { color: "1E40AF" } });
+      sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
+        x: 1, y: 7.05, w: 11, h: 0.4, fontSize: 10, color: "FFFFFF99", fontFace: "Arial", align: "center",
+      });
+      continue;
     }
+
+    if (s.type === "closing") {
+      sl.background = { color: PRIMARY };
+      sl.addShape(prs.ShapeType.rect, { x: 0, y: 0, w: 13.33, h: 0.08, fill: { color: ACCENT } });
+      sl.addText(s.title, {
+        x: 1.5, y: 2.0, w: 10.33, h: 1.4, fontSize: 40, bold: true, color: WHITE, fontFace: "Arial", align: "center",
+      });
+      sl.addText(s.subtitle || "", {
+        x: 2, y: 3.6, w: 9.33, h: 0.8, fontSize: 20, color: "FFFFFFCC", fontFace: "Arial", align: "center",
+      });
+      sl.addShape(prs.ShapeType.roundRect, {
+        x: 4.5, y: 4.8, w: 4.33, h: 0.7, rectRadius: 0.35, fill: { color: ACCENT },
+      });
+      sl.addText("Vraag een demo aan →", {
+        x: 4.5, y: 4.8, w: 4.33, h: 0.7, fontSize: 16, bold: true, color: WHITE, fontFace: "Arial", align: "center",
+      });
+      sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
+        x: 2, y: 6.0, w: 9.33, h: 0.5, fontSize: 13, color: "FFFFFF99", fontFace: "Arial", align: "center",
+      });
+      continue;
+    }
+
+    // All other slides
+    addAccentBar(sl);
+    addFooter(sl, s.title);
 
     if (s.type === "intro") {
       sl.addText(s.title, {
-        x: 0.8, y: 0.5, w: 11, h: 0.9, fontSize: 36, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.5, w: 11, h: 0.9, fontSize: 34, bold: true, color: DARK, fontFace: "Arial",
       });
+      // Accent underline
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.35, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.5, w: 10, h: 1.2, fontSize: 16, color: MUTED, fontFace: "Arial",
-        lineSpacing: 26,
+        x: 0.8, y: 1.7, w: 11, h: 1.4, fontSize: 15, color: MUTED, fontFace: "Arial", lineSpacing: 24,
       });
       if (s.bullets) {
         s.bullets.forEach((b, i) => {
-          sl.addText(`✓  ${b}`, {
-            x: 1.0, y: 3.2 + i * 0.65, w: 10, h: 0.5, fontSize: 16, color: DARK, fontFace: "Arial",
+          const y = 3.5 + i * 0.7;
+          sl.addShape(prs.ShapeType.roundRect, {
+            x: 0.8, y, w: 11.5, h: 0.58, rectRadius: 0.08, fill: { color: LIGHT_PRIMARY },
+          });
+          sl.addText(`✓   ${b}`, {
+            x: 1.1, y, w: 11, h: 0.58, fontSize: 14, color: DARK, fontFace: "Arial", valign: "middle",
           });
         });
       }
     }
 
-    if (s.type === "features-grid") {
-      sl.addText(s.title, {
-        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 32, bold: true, color: DARK, fontFace: "Arial",
-      });
-      sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.1, w: 10, h: 0.5, fontSize: 14, color: MUTED, fontFace: "Arial",
-      });
-      (s.features || []).forEach((f, i) => {
-        const col = i % 4;
-        const row = Math.floor(i / 4);
-        const x = 0.6 + col * 3.1;
-        const y = 2.0 + row * 2.4;
-        sl.addShape(prs.ShapeType.roundRect, {
-          x, y, w: 2.9, h: 2.1, rectRadius: 0.15,
-          fill: { color: WHITE }, shadow: { type: "outer", blur: 6, opacity: 0.1, offset: 2 },
-        });
-        sl.addText(f.title, {
-          x: x + 0.2, y: y + 0.3, w: 2.5, h: 0.4, fontSize: 14, bold: true, color: DARK, fontFace: "Arial",
-        });
-        sl.addText(f.desc, {
-          x: x + 0.2, y: y + 0.8, w: 2.5, h: 0.9, fontSize: 11, color: MUTED, fontFace: "Arial",
-          lineSpacing: 16,
-        });
-      });
-    }
-
     if (s.type === "stats") {
       sl.addText(s.title, {
-        x: 0.8, y: 1.0, w: 11, h: 0.9, fontSize: 36, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.6, w: 11, h: 0.9, fontSize: 34, bold: true, color: DARK, fontFace: "Arial",
       });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.45, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 0.8, y: 1.9, w: 10, h: 0.5, fontSize: 14, color: MUTED, fontFace: "Arial",
+        x: 0.8, y: 1.8, w: 10, h: 0.5, fontSize: 14, color: MUTED, fontFace: "Arial",
       });
+      const count = (s.stats || []).length;
+      const cardW = 2.2;
+      const gap = 0.3;
+      const totalW = count * cardW + (count - 1) * gap;
+      const startX = (13.33 - totalW) / 2;
       (s.stats || []).forEach((st, i) => {
-        const x = 0.8 + i * 3.1;
+        const x = startX + i * (cardW + gap);
         sl.addShape(prs.ShapeType.roundRect, {
-          x, y: 3.0, w: 2.8, h: 2.5, rectRadius: 0.2,
+          x, y: 3.0, w: cardW, h: 2.8, rectRadius: 0.18,
           fill: { color: WHITE }, shadow: { type: "outer", blur: 8, opacity: 0.1, offset: 3 },
         });
+        sl.addShape(prs.ShapeType.rect, { x, y: 3.0, w: cardW, h: 0.06, fill: { color: PRIMARY } });
         sl.addText(st.val, {
-          x, y: 3.3, w: 2.8, h: 1, fontSize: 40, bold: true, color: PRIMARY,
+          x, y: 3.4, w: cardW, h: 1.2, fontSize: 36, bold: true, color: PRIMARY,
           fontFace: "Arial", align: "center",
         });
         sl.addText(st.label, {
-          x, y: 4.4, w: 2.8, h: 0.6, fontSize: 13, color: MUTED,
-          fontFace: "Arial", align: "center",
-        });
-      });
-    }
-
-    if (s.type === "clients") {
-      sl.addText(s.title, {
-        x: 0.8, y: 2.0, w: 11, h: 0.9, fontSize: 36, bold: true, color: DARK, fontFace: "Arial",
-        align: "center",
-      });
-      sl.addText(s.subtitle || "", {
-        x: 1, y: 2.9, w: 11, h: 0.5, fontSize: 14, color: MUTED, fontFace: "Arial",
-        align: "center",
-      });
-      // Note: logos would need to be embedded as images - showing names instead
-      (s.clientLogos || []).forEach((c, i) => {
-        sl.addText(c.name, {
-          x: 1.2 + i * 2.3, y: 4.2, w: 2, h: 0.6, fontSize: 16, color: MUTED,
-          fontFace: "Arial", align: "center", bold: true,
+          x, y: 4.7, w: cardW, h: 0.8, fontSize: 12, color: MUTED,
+          fontFace: "Arial", align: "center", lineSpacing: 18,
         });
       });
     }
 
     if (s.type === "items") {
-      sl.addShape(prs.ShapeType.roundRect, {
-        x: 0.5, y: 0.3, w: 0.6, h: 0.6, rectRadius: 0.15, fill: { color: `${PRIMARY}15` },
-      });
       sl.addText(s.title, {
-        x: 1.3, y: 0.3, w: 8, h: 0.5, fontSize: 30, bold: true, color: DARK, fontFace: "Arial",
+        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 30, bold: true, color: DARK, fontFace: "Arial",
       });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 1.3, y: 0.85, w: 8, h: 0.4, fontSize: 15, color: MUTED, fontFace: "Arial",
+        x: 0.8, y: 1.4, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
       });
       (s.items || []).forEach((item, i) => {
-        const y = 1.8 + i * 1.0;
+        const y = 2.2 + i * 0.88;
         sl.addShape(prs.ShapeType.roundRect, {
-          x: 0.8, y, w: 11.5, h: 0.85, rectRadius: 0.12,
-          fill: { color: WHITE }, shadow: { type: "outer", blur: 4, opacity: 0.08, offset: 2 },
+          x: 0.6, y, w: 12, h: 0.75, rectRadius: 0.1,
+          fill: { color: i % 2 === 0 ? WHITE : LIGHT_PRIMARY },
+        });
+        sl.addShape(prs.ShapeType.roundRect, {
+          x: 0.6, y, w: 0.06, h: 0.75, rectRadius: 0, fill: { color: PRIMARY },
         });
         sl.addText(item.name, {
-          x: 1.6, y, w: 4, h: 0.85, fontSize: 15, bold: true, color: DARK, fontFace: "Arial",
-          valign: "middle",
+          x: 1.0, y, w: 3.8, h: 0.75, fontSize: 14, bold: true, color: DARK, fontFace: "Arial", valign: "middle",
         });
         sl.addText(item.desc, {
-          x: 5.5, y, w: 6, h: 0.85, fontSize: 13, color: MUTED, fontFace: "Arial",
-          valign: "middle",
+          x: 5.0, y, w: 7.4, h: 0.75, fontSize: 12, color: MUTED, fontFace: "Arial", valign: "middle",
         });
       });
     }
 
-    if (s.type === "closing") {
-      sl.background = { color: PRIMARY };
+    if (s.type === "two-col") {
       sl.addText(s.title, {
-        x: 1, y: 2.2, w: 11, h: 1.2, fontSize: 44, bold: true, color: WHITE,
-        fontFace: "Arial", align: "center",
+        x: 0.8, y: 0.4, w: 11, h: 0.8, fontSize: 30, bold: true, color: DARK, fontFace: "Arial",
       });
+      sl.addShape(prs.ShapeType.rect, { x: 0.8, y: 1.15, w: 2.0, h: 0.06, fill: { color: PRIMARY } });
       sl.addText(s.subtitle || "", {
-        x: 2, y: 3.6, w: 9, h: 0.8, fontSize: 18, color: "FFFFFFCC",
-        fontFace: "Arial", align: "center",
+        x: 0.8, y: 1.4, w: 10, h: 0.4, fontSize: 13, color: MUTED, fontFace: "Arial",
       });
-      sl.addText("info@planbition.com  ·  +31-(0)24-3529629  ·  planbition.com", {
-        x: 2, y: 5.0, w: 9, h: 0.5, fontSize: 14, color: "FFFFFF99",
-        fontFace: "Arial", align: "center",
-      });
+
+      // Left column
+      if (s.left) {
+        sl.addShape(prs.ShapeType.roundRect, {
+          x: 0.6, y: 2.2, w: 5.8, h: 4.2, rectRadius: 0.15,
+          fill: { color: WHITE }, shadow: { type: "outer", blur: 6, opacity: 0.08, offset: 2 },
+        });
+        sl.addShape(prs.ShapeType.rect, { x: 0.6, y: 2.2, w: 5.8, h: 0.06, fill: { color: PRIMARY } });
+        sl.addText(s.left.heading, {
+          x: 1.0, y: 2.5, w: 5, h: 0.5, fontSize: 18, bold: true, color: PRIMARY, fontFace: "Arial",
+        });
+        s.left.points.forEach((p, i) => {
+          sl.addText(`●  ${p}`, {
+            x: 1.2, y: 3.2 + i * 0.7, w: 4.8, h: 0.6, fontSize: 13, color: DARK, fontFace: "Arial", lineSpacing: 20,
+          });
+        });
+      }
+
+      // Right column
+      if (s.right) {
+        sl.addShape(prs.ShapeType.roundRect, {
+          x: 6.9, y: 2.2, w: 5.8, h: 4.2, rectRadius: 0.15,
+          fill: { color: WHITE }, shadow: { type: "outer", blur: 6, opacity: 0.08, offset: 2 },
+        });
+        sl.addShape(prs.ShapeType.rect, { x: 6.9, y: 2.2, w: 5.8, h: 0.06, fill: { color: ACCENT } });
+        sl.addText(s.right.heading, {
+          x: 7.3, y: 2.5, w: 5, h: 0.5, fontSize: 18, bold: true, color: ACCENT, fontFace: "Arial",
+        });
+        s.right.points.forEach((p, i) => {
+          sl.addText(`●  ${p}`, {
+            x: 7.5, y: 3.2 + i * 0.7, w: 4.8, h: 0.6, fontSize: 13, color: DARK, fontFace: "Arial", lineSpacing: 20,
+          });
+        });
+      }
     }
   }
 
-  prs.writeFile({ fileName: "Planbition_X_Presentatie.pptx" });
+  prs.writeFile({ fileName: "PlanbitionX_Presentatie.pptx" });
 }
 
 /* ══════════════════════════════════════════
-   SLIDE COMPONENTS
+   PAGE COMPONENT — download-focused
    ══════════════════════════════════════════ */
-
-function TitleSlide({ slide }: { slide: SlideData }) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full relative">
-      <div className="pulsating-x pointer-events-none">
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-      </div>
-      <div className="relative z-10 flex flex-col items-center">
-        <img src={robotImg} alt="Planbition AI" className="w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-2xl robot-float mb-6" />
-        <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight mb-3">
-          {slide.title}
-        </h1>
-        <p className="text-xl md:text-2xl text-muted-foreground font-light mb-8 max-w-3xl text-center px-8">
-          {slide.subtitle}
-        </p>
-        {slide.tagline && (
-          <div className="flex items-center gap-3 text-sm md:text-base text-muted-foreground/70">
-            {slide.tagline.split("•").map((part, i) => (
-              <span key={i} className="flex items-center gap-2">
-                {i > 0 && <span className="text-border">•</span>}
-                <span className="px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
-                  {part.trim()}
-                </span>
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-function IntroSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  return (
-    <div className="flex flex-col justify-center h-full px-8 md:px-20 max-w-5xl mx-auto w-full">
-      <h2
-        className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 transition-all duration-500"
-        style={{ opacity: active ? 1 : 0, transform: active ? "translateY(0)" : "translateY(20px)" }}
-      >
-        {slide.id === "x-intro" ? (
-          <>Planbition <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">X</span></>
-        ) : slide.title}
-      </h2>
-      <p
-        className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-3xl mb-10 transition-all duration-500 delay-100"
-        style={{ opacity: active ? 1 : 0, transform: active ? "translateY(0)" : "translateY(20px)" }}
-      >
-        {slide.subtitle}
-      </p>
-      {slide.bullets && (
-        <div className="space-y-4">
-          {slide.bullets.map((b, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-4 transition-all duration-500"
-              style={{
-                opacity: active ? 1 : 0,
-                transform: active ? "translateX(0)" : "translateX(30px)",
-                transitionDelay: `${200 + i * 100}ms`,
-              }}
-            >
-              <CheckCircle2 className="w-6 h-6 text-primary flex-shrink-0" />
-              <span className="text-base md:text-lg">{b}</span>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function FeaturesGridSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  return (
-    <div className="flex flex-col justify-center h-full px-8 md:px-16 max-w-7xl mx-auto w-full">
-      <div className="mb-10">
-        <h2
-          className="text-3xl md:text-5xl font-extrabold tracking-tight mb-2 transition-all duration-500"
-          style={{ opacity: active ? 1 : 0, transform: active ? "translateY(0)" : "translateY(20px)" }}
-        >
-          {slide.title}
-        </h2>
-        <p className="text-muted-foreground text-lg">{slide.subtitle}</p>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-        {(slide.features || []).map((f, i) => {
-          const Icon = f.icon;
-          return (
-            <div
-              key={f.title}
-              className="p-5 rounded-2xl bg-card border border-border/60 hover:border-primary/30 hover:shadow-lg transition-all group"
-              style={{
-                opacity: active ? 1 : 0,
-                transform: active ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
-                transitionDelay: `${i * 60}ms`,
-                transitionDuration: "500ms",
-              }}
-            >
-              <div className="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center mb-3 group-hover:bg-brand-accent/20 transition-colors">
-                <Icon className="w-5 h-5 text-brand-accent" />
-              </div>
-              <div className="font-semibold text-sm mb-1">{f.title}</div>
-              <div className="text-xs text-muted-foreground leading-relaxed">{f.desc}</div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function StatsSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full px-8">
-      <h2
-        className="text-3xl md:text-5xl font-extrabold tracking-tight mb-2 transition-all duration-500"
-        style={{ opacity: active ? 1 : 0, transform: active ? "translateY(0)" : "translateY(20px)" }}
-      >
-        {slide.title}
-      </h2>
-      <p className="text-muted-foreground text-lg mb-16">{slide.subtitle}</p>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10 max-w-5xl">
-        {(slide.stats || []).map((st, i) => (
-          <div
-            key={st.label}
-            className="flex flex-col items-center p-6 md:p-8 rounded-2xl bg-card border border-border/60 shadow-sm transition-all duration-500"
-            style={{
-              opacity: active ? 1 : 0,
-              transform: active ? "translateY(0) scale(1)" : "translateY(30px) scale(0.9)",
-              transitionDelay: `${i * 120}ms`,
-            }}
-          >
-            <div className="text-4xl md:text-5xl font-extrabold text-primary mb-2">{st.val}</div>
-            <div className="text-sm text-muted-foreground text-center">{st.label}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ClientsSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full px-8">
-      <h2
-        className="text-3xl md:text-5xl font-extrabold tracking-tight mb-2 transition-all duration-500"
-        style={{ opacity: active ? 1 : 0 }}
-      >
-        {slide.title}
-      </h2>
-      <p className="text-muted-foreground text-lg mb-16 max-w-2xl text-center">{slide.subtitle}</p>
-      <div className="flex items-center justify-center gap-12 md:gap-20 flex-wrap">
-        {(slide.clientLogos || []).map((c, i) => (
-          <img
-            key={c.name}
-            src={c.src}
-            alt={c.name}
-            className="h-10 md:h-14 object-contain transition-all duration-500"
-            style={{
-              opacity: active ? 0.7 : 0,
-              transform: active ? "translateY(0)" : "translateY(20px)",
-              transitionDelay: `${i * 100}ms`,
-            }}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function ItemsSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  const Icon = slide.icon!;
-  return (
-    <div className="flex flex-col justify-center h-full px-8 md:px-20 max-w-6xl mx-auto w-full">
-      <div className="flex items-center gap-4 mb-12">
-        <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center">
-          <Icon className="w-7 h-7 text-primary" />
-        </div>
-        <div>
-          <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight">{slide.title}</h2>
-          <p className="text-lg md:text-xl text-muted-foreground font-light">{slide.subtitle}</p>
-        </div>
-      </div>
-      <div className="grid gap-4 md:gap-5">
-        {(slide.items || []).map((item, i) => {
-          const ItemIcon = item.icon;
-          return (
-            <div
-              key={item.name}
-              className="flex items-start gap-5 p-5 md:p-6 rounded-2xl bg-card/80 border border-border/60 backdrop-blur-sm transition-all duration-500 hover:border-primary/30 hover:shadow-lg group"
-              style={{
-                opacity: active ? 1 : 0,
-                transform: active ? "translateX(0)" : "translateX(40px)",
-                transitionDelay: active ? `${i * 100}ms` : "0ms",
-              }}
-            >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                <ItemIcon className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <div className="font-semibold text-base md:text-lg mb-1">{item.name}</div>
-                <div className="text-sm md:text-base text-muted-foreground leading-relaxed">{item.desc}</div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-function ClosingSlide({ slide, active }: { slide: SlideData; active: boolean }) {
-  return (
-    <div className="flex flex-col items-center justify-center h-full relative">
-      <div className="pulsating-x pointer-events-none">
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-        <div className="pulsating-x-blob" />
-      </div>
-      <div className="relative z-10 flex flex-col items-center text-center px-8">
-        <img src={robotImg} alt="Planbition AI" className="w-20 h-20 object-contain drop-shadow-2xl robot-float mb-8" />
-        <h2
-          className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 transition-all duration-500"
-          style={{ opacity: active ? 1 : 0, transform: active ? "translateY(0)" : "translateY(20px)" }}
-        >
-          {slide.title}
-        </h2>
-        <p
-          className="text-lg md:text-xl text-muted-foreground mb-10 max-w-xl transition-all duration-500 delay-150"
-          style={{ opacity: active ? 1 : 0 }}
-        >
-          {slide.subtitle}
-        </p>
-        <div
-          className="flex flex-col sm:flex-row items-center gap-4 text-sm text-muted-foreground transition-all duration-500 delay-300"
-          style={{ opacity: active ? 1 : 0 }}
-        >
-          <span>info@planbition.com</span>
-          <span className="hidden sm:inline text-border">·</span>
-          <span>+31-(0)24-3529629</span>
-          <span className="hidden sm:inline text-border">·</span>
-          <span>planbition.com</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════
-   MAIN PRESENTATION
-   ══════════════════════════════════════════ */
-
-function useAnimatedIndex(current: number) {
-  const [displayed, setDisplayed] = useState(current);
-  const [dir, setDir] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  useEffect(() => {
-    if (current === displayed) return;
-    setDir(current > displayed ? 1 : -1);
-    setAnimating(true);
-    const t = setTimeout(() => {
-      setDisplayed(current);
-      setAnimating(false);
-    }, 280);
-    return () => clearTimeout(t);
-  }, [current, displayed]);
-
-  return { displayed, dir, animating };
-}
 
 export default function Presentation() {
-  const [current, setCurrent] = useState(0);
-  const { displayed, dir, animating } = useAnimatedIndex(current);
-
-  const go = useCallback(
-    (d: number) => {
-      if (animating) return;
-      const next = current + d;
-      if (next >= 0 && next < slides.length) setCurrent(next);
-    },
-    [current, animating],
-  );
+  const navigate = useNavigate();
+  const hasTriggered = useRef(false);
 
   useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); go(1); }
-      if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [go]);
-
-  const slide = slides[displayed];
-
-  const renderSlide = () => {
-    const active = !animating;
-    switch (slide.type) {
-      case "title": return <TitleSlide slide={slide} />;
-      case "intro": return <IntroSlide slide={slide} active={active} />;
-      case "features-grid": return <FeaturesGridSlide slide={slide} active={active} />;
-      case "stats": return <StatsSlide slide={slide} active={active} />;
-      case "clients": return <ClientsSlide slide={slide} active={active} />;
-      case "items": return <ItemsSlide slide={slide} active={active} />;
-      case "closing": return <ClosingSlide slide={slide} active={active} />;
-      default: return null;
+    if (!hasTriggered.current) {
+      hasTriggered.current = true;
+      downloadPptx();
     }
-  };
+  }, []);
 
   return (
-    <div
-      className="fixed inset-0 bg-background text-foreground select-none overflow-hidden cursor-default"
-      onClick={(e) => {
-        const w = window.innerWidth;
-        if ((e.target as HTMLElement).closest("button")) return;
-        if (e.clientX > w * 0.65) go(1);
-        else if (e.clientX < w * 0.35) go(-1);
-      }}
-    >
-      {/* Slide content */}
-      <div
-        className="absolute inset-0 transition-all duration-280 ease-out"
-        style={{
-          opacity: animating ? 0 : 1,
-          transform: animating ? `translateX(${dir * -60}px)` : "translateX(0)",
-        }}
-      >
-        {renderSlide()}
-      </div>
-
-      {/* Top bar with download */}
-      <div className="absolute top-0 right-0 z-20 p-4">
-        <Button
-          size="sm"
-          variant="ghost"
-          className="text-muted-foreground/50 hover:text-foreground gap-2"
-          onClick={(e) => {
-            e.stopPropagation();
-            downloadPptx();
-          }}
-        >
-          <Download className="w-4 h-4" />
-          <span className="hidden md:inline text-xs">PPTX</span>
-        </Button>
-      </div>
-
-      {/* Bottom bar */}
-      <div className="absolute bottom-0 inset-x-0 z-20 flex items-center justify-between px-6 py-4">
-        <img src="/images/planbition-logo.png" alt="Planbition" className="h-5 opacity-40" />
-        <div className="flex items-center gap-2">
-          {slides.map((s, i) => (
-            <button
-              key={s.id}
-              onClick={(e) => { e.stopPropagation(); if (!animating) setCurrent(i); }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current ? "w-8 bg-primary" : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
-              }`}
-            />
-          ))}
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="text-center space-y-6 p-8">
+        <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
+          <Download className="w-8 h-8 text-primary" />
         </div>
-        <div className="text-xs text-muted-foreground/50 font-mono">
-          {current + 1} / {slides.length}
+        <h1 className="text-2xl font-bold">Planbition X Presentatie</h1>
+        <p className="text-muted-foreground max-w-md">
+          De PowerPoint wordt automatisch gedownload. Klik hieronder als de download niet start.
+        </p>
+        <div className="flex gap-3 justify-center">
+          <Button variant="outline" onClick={() => navigate(-1)}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Terug
+          </Button>
+          <Button onClick={downloadPptx}>
+            <Download className="w-4 h-4 mr-2" />
+            Download PPTX
+          </Button>
         </div>
       </div>
-
-      {/* Nav arrows */}
-      {current > 0 && (
-        <button
-          onClick={(e) => { e.stopPropagation(); go(-1); }}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
-        >
-          <ChevronLeft className="w-5 h-5 text-muted-foreground" />
-        </button>
-      )}
-      {current < slides.length - 1 && (
-        <button
-          onClick={(e) => { e.stopPropagation(); go(1); }}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-card/80 border border-border flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
-        >
-          <ChevronRight className="w-5 h-5 text-muted-foreground" />
-        </button>
-      )}
     </div>
   );
 }
