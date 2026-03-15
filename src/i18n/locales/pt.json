@@ -373,6 +373,24 @@
     "kpiFulfillment": "Preenchimento",
     "contactTitle": "Contacto",
     "contactDesc": "Tem questões sobre o nosso produto ou serviços? Contacte-nos.",
-    "copyright": "Todos os direitos reservados."
+    "copyright": "Todos os direitos reservados.",
+    "showcaseAiGreeting": "Olá! Diga-me os seus requisitos para a escala.",
+    "showcaseUserMsg": "Jan não pode fazer turnos noturnos. Pelo menos 3 funcionários ao sábado.",
+    "showcaseAiConfirm": "Entendido! Vou incluir isto como restrição.",
+    "showcaseSolveBtn": "▶ Resolver",
+    "showcaseSolving": "A resolver escala...",
+    "showcaseStep1": "Restrições carregadas",
+    "showcaseStep2": "Funcionários atribuídos",
+    "showcaseStep3": "Regras verificadas",
+    "showcaseRosterReady": "Escala pronta!",
+    "showcaseKpiFill": "Ocupação",
+    "showcaseKpiShifts": "Turnos",
+    "showcasePostSolve": "Assistente IA",
+    "showcaseSwapRequest": "Franz-Xaver quer folga na quinta. Quem pode fazer o turno matinal dele?",
+    "showcaseAnalyzing": "A analisar escala...",
+    "showcaseSwapResult": "Pieter J. pode fazer o turno matinal na quinta. Escala atualizada!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Resolver",
+    "showcasePhase3": "Modificar"
   }
 }

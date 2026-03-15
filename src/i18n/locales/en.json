@@ -383,6 +383,24 @@
     "kpiFulfillment": "Fulfillment",
     "contactTitle": "Contact",
     "contactDesc": "Have questions about our product or services? Get in touch with us.",
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "showcaseAiGreeting": "Hello! Tell me your requirements for the roster.",
+    "showcaseUserMsg": "Jan cannot work night shifts. At least 3 employees on Saturday.",
+    "showcaseAiConfirm": "Understood! I'll include this as a constraint.",
+    "showcaseSolveBtn": "▶ Solve",
+    "showcaseSolving": "Solving roster...",
+    "showcaseStep1": "Constraints loaded",
+    "showcaseStep2": "Employees assigned",
+    "showcaseStep3": "WTA rules checked",
+    "showcaseRosterReady": "Roster ready!",
+    "showcaseKpiFill": "Occupancy",
+    "showcaseKpiShifts": "Shifts",
+    "showcasePostSolve": "AI Assistant",
+    "showcaseSwapRequest": "Franz-Xaver wants Thursday off. Who can take his early shift?",
+    "showcaseAnalyzing": "Analyzing roster...",
+    "showcaseSwapResult": "Pieter J. can take the early shift on Thursday. Roster updated!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Solve",
+    "showcasePhase3": "Modify"
   }
 }

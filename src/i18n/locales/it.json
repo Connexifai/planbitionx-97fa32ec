@@ -373,6 +373,24 @@
     "kpiFulfillment": "Completamento",
     "contactTitle": "Contatti",
     "contactDesc": "Avete domande sul nostro prodotto o servizi? Contattateci.",
-    "copyright": "Tutti i diritti riservati."
+    "copyright": "Tutti i diritti riservati.",
+    "showcaseAiGreeting": "Ciao! Dimmi i tuoi requisiti per i turni.",
+    "showcaseUserMsg": "Jan non può fare turni notturni. Almeno 3 dipendenti il sabato.",
+    "showcaseAiConfirm": "Capito! Lo includerò come vincolo.",
+    "showcaseSolveBtn": "▶ Risolvere",
+    "showcaseSolving": "Risoluzione turni...",
+    "showcaseStep1": "Vincoli caricati",
+    "showcaseStep2": "Dipendenti assegnati",
+    "showcaseStep3": "Regole verificate",
+    "showcaseRosterReady": "Turni pronti!",
+    "showcaseKpiFill": "Occupazione",
+    "showcaseKpiShifts": "Turni",
+    "showcasePostSolve": "Assistente IA",
+    "showcaseSwapRequest": "Franz-Xaver vuole giovedì libero. Chi può prendere il suo turno mattutino?",
+    "showcaseAnalyzing": "Analisi turni...",
+    "showcaseSwapResult": "Pieter J. può prendere il turno mattutino giovedì. Turni aggiornati!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Risolvere",
+    "showcasePhase3": "Modificare"
   }
 }

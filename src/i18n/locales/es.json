@@ -373,6 +373,24 @@
     "kpiFulfillment": "Cumplimiento",
     "contactTitle": "Contacto",
     "contactDesc": "¿Tiene preguntas sobre nuestro producto o servicios? Contáctenos.",
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "showcaseAiGreeting": "¡Hola! Dime tus requisitos para el horario.",
+    "showcaseUserMsg": "Jan no puede trabajar turnos nocturnos. Al menos 3 empleados el sábado.",
+    "showcaseAiConfirm": "¡Entendido! Lo incluiré como restricción.",
+    "showcaseSolveBtn": "▶ Resolver",
+    "showcaseSolving": "Resolviendo horario...",
+    "showcaseStep1": "Restricciones cargadas",
+    "showcaseStep2": "Empleados asignados",
+    "showcaseStep3": "Reglas verificadas",
+    "showcaseRosterReady": "¡Horario listo!",
+    "showcaseKpiFill": "Ocupación",
+    "showcaseKpiShifts": "Turnos",
+    "showcasePostSolve": "Asistente IA",
+    "showcaseSwapRequest": "Franz-Xaver quiere libre el jueves. ¿Quién puede tomar su turno de mañana?",
+    "showcaseAnalyzing": "Analizando horario...",
+    "showcaseSwapResult": "Pieter J. puede tomar el turno de mañana el jueves. ¡Horario actualizado!",
+    "showcasePhase1": "Briefing",
+    "showcasePhase2": "Resolver",
+    "showcasePhase3": "Modificar"
   }
 }
