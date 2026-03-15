@@ -140,7 +140,7 @@ export default function PlanbitionHome() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-base px-8 h-12 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                className="text-base px-8 h-12 border-white/60 text-white bg-white/15 hover:bg-white/25 backdrop-blur-sm font-semibold"
                 asChild
               >
                 <a href="#features">
