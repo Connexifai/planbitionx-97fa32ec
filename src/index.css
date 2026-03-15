@@ -69,6 +69,10 @@
 
     --radius: 0.625rem;
 
+    /* Brand accent (orange from logo) */
+    --brand-accent: 28 90% 52%;
+    --brand-accent-foreground: 0 0% 100%;
+
     /* Shift colors */
     --shift-early: 152 60% 46%;
     --shift-early-bg: 152 60% 95%;
