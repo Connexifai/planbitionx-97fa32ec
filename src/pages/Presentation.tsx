@@ -376,8 +376,8 @@ async function downloadPptx() {
 
     cards.forEach((c, i) => {
       const cx = 0.5;
-      const cy = 1.7 + i * 1.8;
-      addTechCard(sl, cx, cy, 11.5, 1.65, NO_AI, c.name, c.desc, c.detail);
+      const cy = 1.7 + i * 1.85;
+      addTechCard(sl, cx, cy, 11.5, 1.7, NO_AI, c.name, c.desc, c.detail);
     });
 
     addRobot(sl, 11.3, 5.5, 1.2);
