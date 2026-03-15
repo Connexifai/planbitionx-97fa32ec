@@ -44,7 +44,7 @@ async function downloadPptx() {
   const MODERN_AI = "7C3AED";
   const CLASSIC_AI = "0891B2";
   const NO_AI = "475569";
-  const TOTAL = 10;
+  const TOTAL = 11;
 
   let robotB64 = "";
   try { robotB64 = await imgToBase64(robotImg); } catch { /* */ }
@@ -299,14 +299,14 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 6 — SOLVER TECHNIEKEN (Geen AI)
+  // SLIDE 6 — SOLVER TECHNIEKEN: Metaheuristieken
   // ═══════════════════════════════════════
   {
     const sl = contentSlide(6);
-    addHeading(sl, "Solver-technieken — Operations Research");
-    pill(sl, 0.7, 1.25, 2.6, "🔧  Geen AI (deterministische solver)", NO_AI, "FFFFFF");
+    addHeading(sl, "Solver — Metaheuristieken", "Zoektechnieken die het optimale rooster vinden");
+    pill(sl, 0.7, 1.25, 2.6, "🔧  Operations Research", NO_AI, "FFFFFF");
 
-    sl.addText("Wiskundige optimalisatie en heuristische methoden — de motor achter elk rooster.", {
+    sl.addText("Geavanceerde zoekalgoritmen die grote, complexe roosterproblemen efficiënt oplossen.", {
       x: 3.6, y: 1.2, w: 8, h: 0.4, fontSize: 10, color: MUT, fontFace: "Arial",
     });
 
@@ -317,19 +317,19 @@ async function downloadPptx() {
         detail: "Destroy operators selecteren 20-40% van toewijzingen. Repair operators herbouwen via greedy heuristieken met constraint-verificatie. Levert structureel betere oplossingen dan lokale zoektechnieken.",
       },
       {
+        name: "Simulated Annealing (SA)",
+        desc: "Accepteert tijdelijk slechtere oplossingen om uit lokale optima te ontsnappen.",
+        detail: "Start met hoge 'temperatuur' (accepteert veel verslechteringen) en koelt geleidelijk af. Voorkomt dat de solver vastloopt in suboptimale roosters. Gecombineerd met LNS voor maximale diversificatie.",
+      },
+      {
         name: "GRASP + Tabu Hybride",
         desc: "Combineert greedy randomized constructie met geheugen-gestuurde lokale zoektechnieken.",
         detail: "GRASP bouwt diverse startoplossingen; Tabu Search verfijnt deze met een korte-termijn geheugen dat cyclisch gedrag voorkomt. Meerdere threads werken parallel aan verschillende startpunten.",
       },
       {
-        name: "Incremental Constraint Scoring",
-        desc: "Evalueert de impact van een enkele wijziging in O(1) i.p.v. het hele rooster opnieuw.",
-        detail: "Delta-evaluatie voor alle harde en zachte constraints. Maakt het mogelijk om >100.000 moves per seconde te evalueren. Essentieel voor de snelheid van LNS en Tabu Search.",
-      },
-      {
-        name: "ATW Compliance Engine",
-        desc: "Volledige implementatie van de Arbeidstijdenwet als harde constraints.",
-        detail: "Max uren per dag/week/periode, minimale rust, nachtdienst-limieten, consignatieregels. Elke toewijzing wordt real-time gevalideerd — 100% compliance gegarandeerd.",
+        name: "Late Acceptance Hill Climbing (LAHC)",
+        desc: "Vergelijkt moves met een historische fitness in plaats van alleen de huidige oplossing.",
+        detail: "Houdt een buffer van eerdere scores bij. Een move wordt geaccepteerd als hij beter is dan de score van N stappen geleden. Simpel, parameterarm en zeer effectief als diversificatiestrategie naast LNS.",
       },
     ];
 
@@ -345,10 +345,49 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 7 — ARCHITECTUUR & INTEGRATIE
+  // SLIDE 7 — SOLVER TECHNIEKEN: Constraints & Scoring
   // ═══════════════════════════════════════
   {
     const sl = contentSlide(7);
+    addHeading(sl, "Solver — Constraints & Scoring Engine", "De motor die elk rooster valideert en scoort");
+    pill(sl, 0.7, 1.25, 2.6, "🔧  Deterministische engine", NO_AI, "FFFFFF");
+
+    sl.addText("Wiskundige validatie en scoring — garantie voor correctheid en compliance.", {
+      x: 3.6, y: 1.2, w: 8, h: 0.4, fontSize: 10, color: MUT, fontFace: "Arial",
+    });
+
+    const cards = [
+      {
+        name: "Constraint Propagation",
+        desc: "Domeinfiltering die onmogelijke toewijzingen vooraf elimineert.",
+        detail: "Voordat de solver begint te zoeken, worden onhaalbare combinaties verwijderd op basis van beschikbaarheid, kwalificaties, rusttijden en contractregels. Verkleint de zoekruimte met 60-80%, waardoor de solver sneller convergeert.",
+      },
+      {
+        name: "Incremental Constraint Scoring",
+        desc: "Evalueert de impact van een enkele wijziging in O(1) i.p.v. het hele rooster opnieuw.",
+        detail: "Delta-evaluatie voor alle harde en zachte constraints. Maakt het mogelijk om >100.000 moves per seconde te evalueren. Essentieel voor de snelheid van LNS, SA en Tabu Search.",
+      },
+      {
+        name: "ATW Compliance Engine",
+        desc: "Volledige implementatie van de Arbeidstijdenwet als harde constraints.",
+        detail: "Max uren per dag/week/periode, minimale rust (11u/36u/46u), nachtdienst-limieten, verkorte rust, pauzeregels, consignatieregels. Elke toewijzing wordt real-time gevalideerd — 100% compliance gegarandeerd.",
+      },
+    ];
+
+    cards.forEach((c, i) => {
+      const cx = 0.5;
+      const cy = 1.7 + i * 1.8;
+      addTechCard(sl, cx, cy, 11.5, 1.65, NO_AI, c.name, c.desc, c.detail);
+    });
+
+    addRobot(sl, 11.3, 5.5, 1.2);
+  }
+
+  // ═══════════════════════════════════════
+  // SLIDE 8 — ARCHITECTUUR & INTEGRATIE
+  // ═══════════════════════════════════════
+  {
+    const sl = contentSlide(8);
     addHeading(sl, "Architectuur & Integratie");
 
     const colW = 5.6;
@@ -394,10 +433,10 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 8 — WAAROM PLANBITION X (Marketing)
+  // SLIDE 9 — WAAROM PLANBITION X (Marketing)
   // ═══════════════════════════════════════
   {
-    const sl = contentSlide(8);
+    const sl = contentSlide(9);
     addHeading(sl, "Waarom Planbition X?", "De voordelen voor uw organisatie");
 
     const benefits = [
@@ -433,10 +472,10 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 9 — DOELGROEPEN & USE CASES (Sales)
+  // SLIDE 10 — DOELGROEPEN & USE CASES (Sales)
   // ═══════════════════════════════════════
   {
-    const sl = contentSlide(9);
+    const sl = contentSlide(10);
     addHeading(sl, "Doelgroepen & use cases", "Voor wie is Planbition X?");
 
     const segments = [
@@ -489,7 +528,7 @@ async function downloadPptx() {
   }
 
   // ═══════════════════════════════════════
-  // SLIDE 10 — CLOSING
+  // SLIDE 11 — CLOSING
   // ═══════════════════════════════════════
   {
     const sl = prs.addSlide();
