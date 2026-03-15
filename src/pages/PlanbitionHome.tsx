@@ -130,7 +130,7 @@ export default function PlanbitionHome() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button
                 size="lg"
-                className="text-base px-8 h-12 bg-white text-blue-700 hover:bg-blue-50"
+                className="text-base px-8 h-12 bg-accent-orange text-accent-orange-foreground hover:bg-accent-orange/90"
                 onClick={() => navigate("/login")}
               >
                 Start nu <ArrowRight className="ml-2 w-5 h-5" />
