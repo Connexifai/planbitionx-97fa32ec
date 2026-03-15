@@ -112,7 +112,7 @@ export default function Landing() {
     { value: "<1min", label: t("landing.statSolveTime") },
     { value: "100%", label: t("landing.statCompliance") },
     { value: "73%", label: t("landing.statEffort") },
-    { value: "8", label: t("landing.statLanguages") },
+    { value: "€5k+", label: t("landing.statCostSaving") },
   ];
 
   return (
@@ -183,25 +183,12 @@ export default function Landing() {
       {/* Stats bar */}
       <section className="border-y border-border bg-card/50">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 divide-x divide-border">
-          {stats.map((s, idx) => {
-            // Special styling for the languages stat (last one)
-            const isLanguages = idx === stats.length - 1;
-            return (
-              <div key={s.label} className="py-8 md:py-10 text-center">
-                <div className={`text-3xl md:text-4xl font-extrabold ${isLanguages ? "bg-gradient-to-r from-primary via-purple-500 to-blue-500 bg-clip-text text-transparent" : "text-primary"}`}>
-                  {isLanguages ? (
-                    <div className="flex items-center justify-center gap-2">
-                      <Globe className="w-8 h-8 text-primary" />
-                      <span>{s.value}</span>
-                    </div>
-                  ) : (
-                    s.value
-                  )}
-                </div>
-                <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
-              </div>
-            );
-          })}
+          {stats.map((s) => (
+            <div key={s.label} className="py-8 md:py-10 text-center">
+              <div className="text-3xl md:text-4xl font-extrabold text-primary">{s.value}</div>
+              <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
+            </div>
+          ))}
         </div>
       </section>
 
