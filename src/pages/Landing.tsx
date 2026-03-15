@@ -203,7 +203,7 @@ export default function Landing() {
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">Features</a>
-            <a href="#testimonials" className="hover:text-foreground transition-colors">Testimonials</a>
+            <a href="#microservice" className="hover:text-foreground transition-colors">Microservice</a>
             <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
           </div>
           <Button onClick={() => navigate("/login")} size="sm">
