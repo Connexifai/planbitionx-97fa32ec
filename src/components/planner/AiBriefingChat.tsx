@@ -19,10 +19,17 @@ export interface EmployeeConstraint {
   };
 }
 
+interface CandidateEmployee {
+  id: string;
+  name: string;
+}
+
 interface Message {
   id: number;
   role: "user" | "assistant";
   content: string;
+  candidates?: CandidateEmployee[];
+  originalMessage?: string;
 }
 
 interface AiBriefingChatProps {
@@ -80,9 +87,10 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
     }
   }, [messages, loading]);
 
-  const handleSend = async () => {
-    if (!input.trim() || loading) return;
-    const userMsg: Message = { id: Date.now(), role: "user", content: input };
+  const handleSend = async (text?: string) => {
+    const msg = text || input;
+    if (!msg.trim() || loading) return;
+    const userMsg: Message = { id: Date.now(), role: "user", content: msg };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
@@ -116,17 +124,29 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
 
       const data = await res.json();
 
-      // Add AI response
-      const aiMsg: Message = {
-        id: Date.now() + 1,
-        role: "assistant",
-        content: data.message || t("chat.constraintConfirm"),
-      };
-      setMessages((prev) => [...prev, aiMsg]);
+      // Check for disambiguation candidates
+      if (data.needsClarification && data.candidates?.length > 0) {
+        const aiMsg: Message = {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: data.message || "🤔 Er zijn meerdere medewerkers met die naam. Wie bedoel je?",
+          candidates: data.candidates,
+          originalMessage: msg,
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+      } else {
+        // Add AI response
+        const aiMsg: Message = {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: data.message || t("chat.constraintConfirm"),
+        };
+        setMessages((prev) => [...prev, aiMsg]);
 
-      // Add new constraints
-      if (data.constraints && data.constraints.length > 0) {
-        onConstraintsChange([...constraints, ...data.constraints]);
+        // Add new constraints
+        if (data.constraints && data.constraints.length > 0) {
+          onConstraintsChange([...constraints, ...data.constraints]);
+        }
       }
     } catch (error) {
       console.error("Parse constraints error:", error);
@@ -174,19 +194,53 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
 
         <div ref={scrollRef} className="flex-1 overflow-y-auto roster-scroll space-y-4 px-2 min-h-0">
           {messages.map((msg) => (
-            <div key={msg.id} className={cn("flex gap-3 max-w-[85%]", msg.role === "user" ? "ml-auto flex-row-reverse" : "")}>
-              <div className={cn("flex items-center justify-center w-10 h-10 rounded-lg shrink-0 mt-0.5 overflow-hidden", msg.role === "assistant" ? "bg-primary/10" : "bg-accent")}>
-                {msg.role === "assistant" ? <img src={robotImg} alt="AI" className="h-full w-full object-cover" /> : <User className="h-4 w-4 text-muted-foreground" />}
+            <div key={msg.id} className={cn("flex flex-col", msg.role === "user" ? "items-end" : "items-start")}>
+              <div className={cn("flex gap-3 max-w-[85%]", msg.role === "user" ? "flex-row-reverse" : "")}>
+                <div className={cn("flex items-center justify-center w-10 h-10 rounded-lg shrink-0 mt-0.5 overflow-hidden", msg.role === "assistant" ? "bg-primary/10" : "bg-accent")}>
+                  {msg.role === "assistant" ? <img src={robotImg} alt="AI" className="h-full w-full object-cover" /> : <User className="h-4 w-4 text-muted-foreground" />}
+                </div>
+                <div className={cn("rounded-xl px-4 py-3 text-sm leading-relaxed", msg.role === "assistant" ? "bg-card border shadow-sm" : "bg-primary text-primary-foreground")}>
+                  {msg.role === "assistant" ? (
+                    <div className="prose prose-sm dark:prose-invert max-w-none [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1">
+                      <ReactMarkdown>{msg.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p>{msg.content}</p>
+                  )}
+                </div>
               </div>
-              <div className={cn("rounded-xl px-4 py-3 text-sm leading-relaxed", msg.role === "assistant" ? "bg-card border shadow-sm" : "bg-primary text-primary-foreground")}>
-                {msg.role === "assistant" ? (
-                  <div className="prose prose-sm dark:prose-invert max-w-none [&>p]:my-1 [&>ul]:my-1 [&>ol]:my-1">
-                    <ReactMarkdown>{msg.content}</ReactMarkdown>
-                  </div>
-                ) : (
-                  <p>{msg.content}</p>
-                )}
-              </div>
+
+              {/* Disambiguation candidates */}
+              {msg.candidates && msg.candidates.length > 0 && (
+                <div className="mt-3 ml-11 flex flex-wrap gap-2">
+                  {msg.candidates.map((c) => (
+                    <Button
+                      key={c.id}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 text-xs"
+                      disabled={loading}
+                      onClick={() => {
+                        const original = msg.originalMessage || "";
+                        const clarified = original.replace(
+                          /\b\w+\b/i,
+                          (match) => {
+                            if (c.name.toLowerCase().includes(match.toLowerCase())) return c.name;
+                            return match;
+                          }
+                        );
+                        const finalMsg = clarified === original ? `${c.name}: ${original}` : clarified;
+                        setMessages((prev) =>
+                          prev.map((m) => m.id === msg.id ? { ...m, candidates: undefined } : m)
+                        );
+                        handleSend(finalMsg);
+                      }}
+                    >
+                      👤 {c.name}
+                    </Button>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
           {loading && (
@@ -217,7 +271,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60"
               disabled={loading}
             />
-            <Button size="sm" className="shrink-0 gap-1.5" onClick={handleSend} disabled={!input.trim() || loading}>
+            <Button size="sm" className="shrink-0 gap-1.5" onClick={() => handleSend()} disabled={!input.trim() || loading}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendHorizontal className="h-4 w-4" />}
               {t("chat.send")}
             </Button>
