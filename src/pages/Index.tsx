@@ -193,16 +193,28 @@ function ChatPanel({
   const { t } = useTranslation();
   const [width, setWidth] = useState(CHAT_DEFAULT_W);
   const isDragging = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const startX = useRef(0);
   const startW = useRef(0);
+  const rafId = useRef(0);
 
   useEffect(() => {
     const onMove = (e: MouseEvent) => {
-      if (!isDragging.current) return;
-      const delta = startX.current - e.clientX;
-      setWidth(Math.min(CHAT_MAX_W, Math.max(CHAT_MIN_W, startW.current + delta)));
+      if (!isDragging.current || !containerRef.current) return;
+      cancelAnimationFrame(rafId.current);
+      rafId.current = requestAnimationFrame(() => {
+        const delta = startX.current - e.clientX;
+        const newW = Math.min(CHAT_MAX_W, Math.max(CHAT_MIN_W, startW.current + delta));
+        containerRef.current!.style.width = `${newW}px`;
+      });
     };
-    const onUp = () => { isDragging.current = false; document.body.style.cursor = ""; document.body.style.userSelect = ""; };
+    const onUp = () => {
+      if (!isDragging.current) return;
+      isDragging.current = false;
+      document.body.style.cursor = "";
+      document.body.style.userSelect = "";
+      cancelAnimationFrame(rafId.current);
+    };
     window.addEventListener("mousemove", onMove);
     window.addEventListener("mouseup", onUp);
     return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
@@ -212,18 +224,20 @@ function ChatPanel({
     e.preventDefault();
     isDragging.current = true;
     startX.current = e.clientX;
-    startW.current = width;
+    startW.current = containerRef.current?.offsetWidth ?? CHAT_DEFAULT_W;
     document.body.style.cursor = "col-resize";
     document.body.style.userSelect = "none";
   };
 
   return (
     <div
+      ref={containerRef}
       className={cn(
-        "flex shrink-0 transition-[width] duration-300 overflow-hidden",
-        chatOpen ? "" : "w-0"
+        "flex shrink-0 overflow-hidden",
+        chatOpen ? "" : "w-0",
+        !isDragging.current && "transition-[width] duration-300"
       )}
-      style={chatOpen ? { width } : undefined}
+      style={chatOpen ? { width: CHAT_DEFAULT_W } : undefined}
     >
       {chatOpen && (
         <>
