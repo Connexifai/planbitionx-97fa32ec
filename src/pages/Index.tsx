@@ -28,8 +28,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Download, Moon, Sun, MessageCircle, PanelRightClose, LogOut, User, Menu } from "lucide-react";
-import { useEffect, useState, useCallback } from "react";
+import { Download, Moon, Sun, MessageCircle, PanelRightClose, LogOut, User, Menu, GripVertical } from "lucide-react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -165,6 +165,114 @@ function SolvingOverlay() {
 
         <span className="text-xl text-white font-mono drop-shadow font-bold">{formatTime(elapsed)}</span>
       </div>
+    </div>
+  );
+}
+
+const CHAT_MIN_W = 360;
+const CHAT_MAX_W = 900;
+const CHAT_DEFAULT_W = 560;
+
+function ChatPanel({
+  chatOpen, onClose, solved, requestData, solverAssignments, solverExplanations,
+  handleApplyAlternative, handleNavigateToEmployee, handleFilterRoster,
+  employeeConstraints, setEmployeeConstraints,
+}: {
+  chatOpen: boolean;
+  onClose: () => void;
+  solved: boolean;
+  requestData: any;
+  solverAssignments: any[];
+  solverExplanations: any[];
+  handleApplyAlternative: (alt: any) => void;
+  handleNavigateToEmployee: (name: string) => void;
+  handleFilterRoster: (filter: any) => void;
+  employeeConstraints: import("@/components/planner/AiBriefingChat").EmployeeConstraint[];
+  setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>>;
+}) {
+  const { t } = useTranslation();
+  const [width, setWidth] = useState(CHAT_DEFAULT_W);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const startW = useRef(0);
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      if (!isDragging.current) return;
+      const delta = startX.current - e.clientX;
+      setWidth(Math.min(CHAT_MAX_W, Math.max(CHAT_MIN_W, startW.current + delta)));
+    };
+    const onUp = () => { isDragging.current = false; document.body.style.cursor = ""; document.body.style.userSelect = ""; };
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+    return () => { window.removeEventListener("mousemove", onMove); window.removeEventListener("mouseup", onUp); };
+  }, []);
+
+  const onDragStart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    isDragging.current = true;
+    startX.current = e.clientX;
+    startW.current = width;
+    document.body.style.cursor = "col-resize";
+    document.body.style.userSelect = "none";
+  };
+
+  return (
+    <div
+      className={cn(
+        "flex shrink-0 transition-[width] duration-300 overflow-hidden",
+        chatOpen ? "" : "w-0"
+      )}
+      style={chatOpen ? { width } : undefined}
+    >
+      {chatOpen && (
+        <>
+          <div
+            className="w-1.5 shrink-0 cursor-col-resize group flex items-center justify-center hover:bg-primary/10 active:bg-primary/20 transition-colors border-l border-border"
+            onMouseDown={onDragStart}
+          >
+            <GripVertical className="h-5 w-5 text-muted-foreground/50 group-hover:text-primary transition-colors" />
+          </div>
+          <div className="flex-1 flex flex-col min-w-0 bg-sidebar">
+            <div className="flex items-center justify-between px-4 py-3 border-b">
+              <div className="flex items-center gap-2">
+                <MessageCircle className="h-4 w-4 text-primary" />
+                <h3 className="text-sm font-semibold">{solved ? t("chat.aiAssistant") : t("chat.aiBriefing")}</h3>
+              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={onClose}
+                    className="flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-all"
+                  >
+                    <PanelRightClose className="h-4 w-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent side="left">{t("sidebar.closePanel")}</TooltipContent>
+              </Tooltip>
+            </div>
+            <div className="flex-1 min-h-0">
+              {solved ? (
+                <PostSolveChat
+                  requestData={requestData}
+                  solverAssignments={solverAssignments}
+                  solverExplanations={solverExplanations}
+                  onApplyAlternative={handleApplyAlternative}
+                  onNavigateToEmployee={handleNavigateToEmployee}
+                  onFilterRoster={handleFilterRoster}
+                />
+              ) : (
+                <AiBriefingChat
+                  employees={requestData?.Employees || []}
+                  schedulePeriod={requestData ? `${requestData.Start} - ${requestData.End}` : ""}
+                  constraints={employeeConstraints}
+                  onConstraintsChange={setEmployeeConstraints}
+                />
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
@@ -618,53 +726,19 @@ export default function Index() {
                   </SheetContent>
                 </Sheet>
               ) : (
-                <div
-                  className={cn(
-                    "flex flex-col border-l bg-sidebar shrink-0 transition-all duration-300 overflow-hidden",
-                    chatOpen ? "w-[800px]" : "w-0"
-                  )}
-                >
-                  {chatOpen && (
-                    <>
-                      <div className="flex items-center justify-between px-4 py-3 border-b">
-                        <div className="flex items-center gap-2">
-                          <MessageCircle className="h-4 w-4 text-primary" />
-                          <h3 className="text-sm font-semibold">{solved ? t("chat.aiAssistant") : t("chat.aiBriefing")}</h3>
-                        </div>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={() => setChatOpen(false)}
-                              className="flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-all"
-                            >
-                              <PanelRightClose className="h-4 w-4" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="left">{t("sidebar.closePanel")}</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <div className="flex-1 min-h-0">
-                        {solved ? (
-                          <PostSolveChat
-                            requestData={requestData}
-                            solverAssignments={solverAssignments}
-                            solverExplanations={solverExplanations}
-                            onApplyAlternative={handleApplyAlternative}
-                            onNavigateToEmployee={handleNavigateToEmployee}
-                            onFilterRoster={handleFilterRoster}
-                          />
-                        ) : (
-                          <AiBriefingChat
-                            employees={requestData?.Employees || []}
-                            schedulePeriod={requestData ? `${requestData.Start} - ${requestData.End}` : ""}
-                            constraints={employeeConstraints}
-                            onConstraintsChange={setEmployeeConstraints}
-                          />
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
+                <ChatPanel
+                  chatOpen={chatOpen}
+                  onClose={() => setChatOpen(false)}
+                  solved={solved}
+                  requestData={requestData}
+                  solverAssignments={solverAssignments}
+                  solverExplanations={solverExplanations}
+                  handleApplyAlternative={handleApplyAlternative}
+                  handleNavigateToEmployee={handleNavigateToEmployee}
+                  handleFilterRoster={handleFilterRoster}
+                  employeeConstraints={employeeConstraints}
+                  setEmployeeConstraints={setEmployeeConstraints}
+                />
               )}
             </>
           )}
