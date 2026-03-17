@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, employees, schedulePeriod } = await req.json();
+    const { message, conversationHistory, employees, schedulePeriod } = await req.json();
 
     const empList = (employees || []).map((e: any) => 
       `- ${e.Name} (Id: ${e.PersonId ?? e.Id})`
