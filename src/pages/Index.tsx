@@ -191,7 +191,6 @@ function ChatPanel({
   setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>>;
 }) {
   const { t } = useTranslation();
-  const [width, setWidth] = useState(CHAT_DEFAULT_W);
   const isDragging = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const startX = useRef(0);
