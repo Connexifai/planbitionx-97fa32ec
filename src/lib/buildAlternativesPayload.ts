@@ -14,7 +14,7 @@ import { format, getDay, parseISO } from "date-fns";
 export interface AlternativeConstraint {
   employeeId: string;
   employeeName: string;
-  type: "avoid_day" | "avoid_date" | "avoid_shift_kind";
+  type: "avoid_day" | "avoid_date" | "avoid_shift_kind" | "add_date";
   dayOfWeek?: number; // 0=ma, 1=di, 2=wo, 3=do, 4=vr, 5=za, 6=zo (ISO convention)
   date?: string; // YYYY-MM-DD
   shiftKind?: string; // "early","day","late","night"
