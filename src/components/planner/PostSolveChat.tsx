@@ -1002,7 +1002,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         },
       ]);
 
-      const altResponse = await fetchAlternatives(constraint, "narrow");
+      // Use "full" search scope for add_date — solver needs to search broadly
+      const altResponse = await fetchAlternatives(constraint, "full");
       const prepared = prepareAlternatives(altResponse.Alternatives || []);
 
       if (prepared.visibleAlts.length === 0) {
