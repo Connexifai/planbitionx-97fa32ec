@@ -265,7 +265,7 @@ function SolverSection({ solver, setSolver }: { solver: SolverSettings; setSolve
           <p className="text-sm font-medium">{t("sidebar.aiExplanation")}</p>
           <p className="text-xs text-muted-foreground">{t("sidebar.aiExplanationSub")}</p>
         </div>
-        <Switch checked={solver.aiExplanation} onCheckedChange={(v) => update({ aiExplanation: v })} />
+        <Switch checked={true} disabled className="opacity-60" />
       </div>
       
     </div>

@@ -63,6 +63,7 @@ export interface RosterFilterState {
 export interface PostSolveChatProps {
   requestData: any;
   solverAssignments: any[];
+  solverExplanations?: any[];
   onApplyAlternative?: (alternative: Alternative) => void;
   onNavigateToEmployee?: (employeeName: string) => void;
   onFilterRoster?: (filter: RosterFilterState | null) => void;
@@ -302,7 +303,7 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
 
 // ─── Main component ────────────────────────────────────────────
 
-export function PostSolveChat({ requestData, solverAssignments, onApplyAlternative, onNavigateToEmployee, onFilterRoster }: PostSolveChatProps) {
+export function PostSolveChat({ requestData, solverAssignments, solverExplanations, onApplyAlternative, onNavigateToEmployee, onFilterRoster }: PostSolveChatProps) {
   const { t } = useTranslation();
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -454,6 +455,9 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
               employee: empObj || null,
               shifts: requestData?.Shifts || [],
               schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+              solverExplanations: (solverExplanations || []).filter(
+                (e: any) => String(e.EmployeeId) === String(intent.employeeId)
+              ),
             }),
           }
         );
