@@ -22,6 +22,13 @@ interface SwapOption {
   label: string;
 }
 
+interface AddDayOption {
+  dayOfWeek: number;
+  date: string;
+  label: string;
+  currentEmployees: { id: string; name: string; shiftName: string }[];
+}
+
 interface Message {
   id: number;
   role: "user" | "assistant";
