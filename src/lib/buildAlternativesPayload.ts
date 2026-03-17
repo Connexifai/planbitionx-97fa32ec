@@ -171,6 +171,37 @@ export function buildAlternativesPayload(
 
   const targetEmployeeId = String(constraint.employeeId);
 
+  // For add_date: find a suitable shift on the target date to assign to the target employee
+  let addDateShiftCompositeId: string | undefined;
+  if (constraint.type === "add_date" && constraint.date) {
+    const targetDate = constraint.date; // YYYY-MM-DD
+    // Find shifts on that date
+    const shiftsOnDate = sourceShifts.filter((s: any) => 
+      String(s.Start || "").startsWith(targetDate)
+    );
+    // Try to find a shift the employee qualifies for
+    const targetEmp = sourceEmployees.find((e: any) => 
+      getEmployeeIdCandidates(e).includes(targetEmployeeId)
+    );
+    const empQuals = (targetEmp?.Qualifications || [])
+      .filter((q: any) => q.Type === "Qualification")
+      .map((q: any) => q.Value);
+    
+    // Prefer qualified shifts, fallback to no-qualification shifts, fallback to any
+    const qualifiedShift = shiftsOnDate.find((s: any) => {
+      const allOf = s.Qualifications?.AllOf || [];
+      return allOf.length > 0 && allOf.every((q: any) => empQuals.includes(q.Value));
+    });
+    const noQualShift = shiftsOnDate.find((s: any) => {
+      const allOf = s.Qualifications?.AllOf || [];
+      return allOf.length === 0;
+    });
+    const selectedShift = qualifiedShift || noQualShift || shiftsOnDate[0];
+    if (selectedShift) {
+      addDateShiftCompositeId = makeUniqueShiftId(String(selectedShift.Id), String(selectedShift.Start));
+    }
+  }
+
   const employees = sourceEmployees.map((emp: any) => {
     const employeeIds = getEmployeeIdCandidates(emp);
     const isTarget = employeeIds.includes(targetEmployeeId);
@@ -188,11 +219,16 @@ export function buildAlternativesPayload(
 
     const assignedShifts = Array.from(new Set([...existingAssigned, ...solverAssigned]));
 
-    // Constraints
+    // For add_date: add the selected shift to the target employee's AssignedShifts
+    if (isTarget && addDateShiftCompositeId && !assignedShifts.includes(addDateShiftCompositeId)) {
+      assignedShifts.push(addDateShiftCompositeId);
+    }
+
+    // Constraints — don't add avoid-style constraints for add_date
     const existingConstraints = Array.isArray(emp.Constraints) ? [...emp.Constraints] : [];
     const constraints = [...existingConstraints];
 
-    if (isTarget) {
+    if (isTarget && constraint.type !== "add_date") {
       const newConstraint: any = {
         type: constraint.type,
         strength: constraint.strength,

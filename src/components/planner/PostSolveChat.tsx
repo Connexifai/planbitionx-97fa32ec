@@ -976,38 +976,28 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
     setIsTyping(true);
 
     try {
-      if (option.currentEmployees.length === 0) {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: Date.now() + 1,
-            role: "assistant",
-            content: `ℹ️ Er is op **${option.label}** niemand ingepland. ${targetEmployeeName} kan direct worden toegevoegd via een herberekening.`,
-          },
-        ]);
-        setIsTyping(false);
-        return;
-      }
-
-      // For each employee currently scheduled on that date, try to find alternatives
-      // by creating an avoid_date constraint on them, which should free up the slot
-      const firstOther = option.currentEmployees[0];
+      // Create a constraint targeting the employee to ADD on this date
+      // The solver will find alternatives that include this employee on this day
       const constraint: AlternativeConstraint = {
-        employeeId: firstOther.id,
-        employeeName: firstOther.name,
-        type: "avoid_date",
+        employeeId: targetEmployeeId,
+        employeeName: targetEmployeeName,
+        type: "add_date",
         date: option.date,
         strength: "hard",
       };
 
       setLastConstraint(constraint);
 
+      const othersText = option.currentEmployees.length > 0
+        ? `Op **${option.label}** werkt o.a. **${option.currentEmployees.map(e => e.name).join(", ")}**.\n\n`
+        : "";
+
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `⏳ Op **${option.label}** werkt o.a. **${option.currentEmployees.map(e => e.name).join(", ")}**.\n\nIk zoek alternatieven waarbij ${targetEmployeeName} deze dag overneemt...`,
+          content: `⏳ ${othersText}Ik zoek alternatieven waarbij ${targetEmployeeName} deze dag overneemt...`,
         },
       ]);
 
