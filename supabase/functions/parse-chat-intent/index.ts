@@ -31,6 +31,7 @@ Constraint types:
 - "avoid_day": employee wants a specific weekday off. Use dayOfWeek (0-6).
 - "avoid_date": employee wants a specific date off. Use date as "YYYY-MM-DD".
 - "avoid_shift_kind": employee wants to avoid a shift type. Use shiftKind: "early", "day", "late", or "night".
+- "explain": the user asks WHY an employee is or isn't scheduled on a certain day/shift. Examples: "waarom werkt Piet op woensdag?", "waarom is Jan niet ingepland op vrijdag?", "waarom heeft Sarah alleen op maandag een dienst?". Use this when the user is asking for an EXPLANATION, not requesting a CHANGE.
 
 SWAP support (dienstwissel / ruilen):
 - When the user wants to SWAP or EXCHANGE a day (e.g. "ruil dinsdag met donderdag", "wissel maandag met woensdag", "ruil dinsdag met een andere dag"), detect the swap intent.
