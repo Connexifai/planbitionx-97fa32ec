@@ -81,7 +81,7 @@ export const defaultSoft: SoftConstraints = {
 export const defaultSolver: SolverSettings = {
   timeLimitIndex: 0,
   plateauStopIndex: 0,
-  aiExplanation: false,
+  aiExplanation: true,
   seed: 42,
   callbackUrl: "https://jouw-server.nl/webhook",
 };
