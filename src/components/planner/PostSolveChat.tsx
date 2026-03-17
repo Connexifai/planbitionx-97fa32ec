@@ -913,6 +913,89 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
     }
   };
 
+  /** Handle user picking a day for add_days flow */
+  const handleAddDaySelected = async (option: AddDayOption, targetEmployeeId: string, targetEmployeeName: string) => {
+    // Remove addDayOptions from the message
+    setMessages((prev) =>
+      prev.map((m) => m.addDayOptions ? { ...m, addDayOptions: undefined } : m)
+    );
+
+    // Show user "choice"
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now(), role: "user", content: option.label },
+    ]);
+    setIsTyping(true);
+
+    try {
+      if (option.currentEmployees.length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `ℹ️ Er is op **${option.label}** niemand ingepland. ${targetEmployeeName} kan direct worden toegevoegd via een herberekening.`,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
+      // For each employee currently scheduled on that date, try to find alternatives
+      // by creating an avoid_date constraint on them, which should free up the slot
+      const firstOther = option.currentEmployees[0];
+      const constraint: AlternativeConstraint = {
+        employeeId: firstOther.id,
+        employeeName: firstOther.name,
+        type: "avoid_date",
+        date: option.date,
+        strength: "hard",
+      };
+
+      setLastConstraint(constraint);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: `⏳ Op **${option.label}** werkt o.a. **${option.currentEmployees.map(e => e.name).join(", ")}**.\n\nIk zoek alternatieven waarbij ${targetEmployeeName} deze dag overneemt...`,
+        },
+      ]);
+
+      const altResponse = await fetchAlternatives(constraint, "narrow");
+      const prepared = prepareAlternatives(altResponse.Alternatives || []);
+
+      if (prepared.visibleAlts.length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 2, role: "assistant", content: `⚠️ Geen geschikte alternatieven gevonden voor ${option.label}.` },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            content: `Ik heb **${prepared.visibleAlts.length} ${prepared.visibleAlts.length === 1 ? "optie" : "opties"}** gevonden om ${targetEmployeeName} in te plannen op ${option.label}:`,
+            alternatives: prepared.visibleAlts,
+            baseline: altResponse.Baseline,
+            constraintSummary: `${targetEmployeeName} inplannen op ${option.label}`,
+            pendingConstraint: constraint,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Add day selection error:", error);
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now() + 1, role: "assistant", content: `❌ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}` },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
 
   return (
     <div className="flex h-full">
