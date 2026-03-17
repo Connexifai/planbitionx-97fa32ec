@@ -31,7 +31,7 @@ Constraint types:
 - "avoid_day": employee wants a specific weekday off. Use dayOfWeek (0-6).
 - "avoid_date": employee wants a specific date off. Use date as "YYYY-MM-DD".
 - "avoid_shift_kind": employee wants to avoid a shift type. Use shiftKind: "early", "day", "late", or "night".
-- "add_days": the user wants an employee to be scheduled for MORE days, or asks if they can work more. Examples: "kan Jan meer dagen werken?", "plan Jan ook op dinsdag in", "kan Pietje vaker ingepland worden?", "Jan zou graag meer uren willen". Use this when the intent is about ADDING shifts/days, not removing them.
+- "add_days": the user wants an employee to be scheduled for MORE days or on a SPECIFIC additional day. Examples: "kan Jan meer dagen werken?", "plan Jan ook op dinsdag in", "ik wil dat Jan op donderdag werkt", "kan Pietje vaker ingepland worden?". IMPORTANT: if a specific day is mentioned (e.g. "op donderdag", "ook op dinsdag"), include dayOfWeek (0-6) or date in the response. If no specific day is mentioned, leave dayOfWeek and date empty so the user can pick.
 - "explain": the user asks WHY an employee is or isn't scheduled on a certain day/shift. Examples: "waarom werkt Piet op woensdag?", "waarom is Jan niet ingepland op vrijdag?", "waarom heeft Sarah alleen op maandag een dienst?". Use this when the user is asking for an EXPLANATION, not requesting a CHANGE.
 
 SWAP support (dienstwissel / ruilen):
