@@ -237,7 +237,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
               className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground/60"
               disabled={loading}
             />
-            <Button size="sm" className="shrink-0 gap-1.5" onClick={handleSend} disabled={!input.trim() || loading}>
+            <Button size="sm" className="shrink-0 gap-1.5" onClick={() => handleSend()} disabled={!input.trim() || loading}>
               {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <SendHorizontal className="h-4 w-4" />}
               {t("chat.send")}
             </Button>
