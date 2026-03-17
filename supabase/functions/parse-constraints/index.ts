@@ -47,10 +47,22 @@ Antwoord ALTIJD in valid JSON met dit formaat:
       "constraint": { "type": "avoid_day", "dayOfWeek": 6, "strength": "soft" }
     }
   ],
-  "needsClarification": false
+  "needsClarification": false,
+  "candidates": []
 }
 
-Als je verduidelijking nodig hebt, zet needsClarification op true en geef een lege constraints array.
+Als een naam ambigu is (meerdere medewerkers matchen), zet needsClarification op true, geef een lege constraints array, en vul de "candidates" array met de mogelijke matches:
+{
+  "message": "Er zijn meerdere medewerkers met de naam Jan. Wie bedoel je?",
+  "constraints": [],
+  "needsClarification": true,
+  "candidates": [
+    { "id": "123", "name": "Jan, De Vries" },
+    { "id": "456", "name": "Jan, Jansen" }
+  ]
+}
+
+Als je verduidelijking nodig hebt om andere redenen, zet needsClarification op true met lege candidates.
 Als de gebruiker gewoon chat zonder constraints te benoemen, geef dan een behulpzaam antwoord in message met lege constraints.
 
 ## BELANGRIJK: Conversatiecontext
