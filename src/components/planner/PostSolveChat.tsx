@@ -406,6 +406,60 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
         return;
       }
 
+      // ── Explain intent: answer "why" questions ──
+      if (intent.constraintType === "explain") {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `🔍 Ik zoek uit waarom **${intent.employeeName}** zo is ingepland...`,
+          },
+        ]);
+
+        // Find the employee object from request data for context
+        const empObj = (requestData?.Employees || []).find(
+          (e: any) => String(e.PersonId ?? e.Id) === String(intent.employeeId)
+        );
+
+        const explainRes = await fetch(
+          `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/explain-assignment`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+            },
+            body: JSON.stringify({
+              employeeId: intent.employeeId,
+              employeeName: intent.employeeName,
+              question: msg,
+              assignments: solverAssignments || [],
+              employee: empObj || null,
+              shifts: requestData?.Shifts || [],
+              schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+            }),
+          }
+        );
+
+        if (!explainRes.ok) {
+          throw new Error("Explain API error");
+        }
+
+        const explainData = await explainRes.json();
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            content: `💡 ${explainData.explanation}`,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
       // Step 2: Build constraint
       const constraint: AlternativeConstraint = {
         employeeId: String(intent.employeeId),
