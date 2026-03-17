@@ -45,6 +45,12 @@ serve(async (req) => {
       `- ${s.Name}: ${s.Start?.split("T")[1]?.slice(0, 5) || "?"} – ${s.End?.split("T")[1]?.slice(0, 5) || "?"} (${s.QualificationRequired || "geen kwalificatie"})`
     ).join("\n");
 
+    // Build solver explanation context
+    const solverReasons = (solverExplanations || []).flatMap((e: any) => e.Reasons || []);
+    const solverContext = solverReasons.length > 0
+      ? `\n\nDe solver heeft de volgende redenen geregistreerd voor ${employeeName}:\n${solverReasons.map((r: string) => `- ${r}`).join("\n")}`
+      : "";
+
     const systemPrompt = `Je bent een AI-roosterassistent die uitlegt waarom het rooster er zo uitziet. Geef een duidelijk, beknopt antwoord in het Nederlands. Gebruik bullet points waar nuttig. Wees specifiek en verwijs naar concrete gegevens.
 
 Medewerker: ${employeeName} (ID: ${employeeId})
