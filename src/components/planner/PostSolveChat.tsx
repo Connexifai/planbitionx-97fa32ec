@@ -988,8 +988,9 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
       setLastConstraint(constraint);
 
-      const othersText = option.currentEmployees.length > 0
-        ? `Op **${option.label}** werkt o.a. **${option.currentEmployees.map(e => e.name).join(", ")}**.\n\n`
+      const othersCount = option.currentEmployees.length;
+      const othersText = othersCount > 0
+        ? `Op **${option.label}** zijn al **${othersCount} medewerkers** ingepland.\n\n`
         : "";
 
       setMessages((prev) => [
