@@ -65,10 +65,20 @@ Use the parse_scheduling_intent function to return the structured result.`;
       },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
-        messages: [
+        // Build messages with conversation history for context
+        const aiMessages: { role: string; content: string }[] = [
           { role: "system", content: systemPrompt },
-          { role: "user", content: message },
-        ],
+        ];
+        
+        // Add recent conversation history so the model understands follow-up questions
+        if (conversationHistory && Array.isArray(conversationHistory)) {
+          for (const h of conversationHistory) {
+            aiMessages.push({ role: h.role === "user" ? "user" : "assistant", content: h.content });
+          }
+        }
+        
+        // Add the current message
+        aiMessages.push({ role: "user", content: message });
         temperature: 0.1,
         tools: [
           {
