@@ -831,6 +831,109 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
     }
   };
 
+      // ── Add days intent: show which days the employee can be added to ──
+      if (intent.constraintType === "add_days") {
+        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const empId = String(intent.employeeId);
+        const empAssignments = (solverAssignments || []).filter(
+          (a: any) => String(a.PersonId) === String(empId)
+        );
+
+        // Find which ISO days the employee is already scheduled
+        const occupiedDays = new Set<number>();
+        const occupiedDates = new Map<number, string[]>(); // dayOfWeek -> dates
+        for (const a of empAssignments) {
+          const d = new Date(a.Start);
+          const solverDay = d.getDay() === 0 ? 6 : d.getDay() - 1;
+          occupiedDays.add(solverDay);
+        }
+
+        // Find ALL assignments grouped by date to see who works each day
+        const startDate = requestData?.Start ? new Date(requestData.Start) : null;
+        const endDate = requestData?.End ? new Date(requestData.End) : null;
+
+        // Build shift name lookup
+        const shiftNameMap = new Map<string, string>();
+        for (const s of (requestData?.Shifts || [])) {
+          shiftNameMap.set(String(s.Id), s.Name || "");
+        }
+
+        // Build employee name lookup
+        const empNameMap = new Map<string, string>();
+        for (const e of (requestData?.Employees || [])) {
+          empNameMap.set(String(e.PersonId ?? e.Id), e.Name || "");
+        }
+
+        // Find free days with who's currently working
+        const addDayOptions: AddDayOption[] = [];
+        if (startDate && endDate) {
+          const current = new Date(startDate);
+          while (current <= endDate) {
+            const solverDay = current.getDay() === 0 ? 6 : current.getDay() - 1;
+            const dateStr = current.toISOString().split("T")[0];
+
+            // Check if employee is NOT scheduled on this date
+            const empOnThisDate = empAssignments.some((a: any) => {
+              const aDate = a.Start?.split("T")[0];
+              return aDate === dateStr;
+            });
+
+            if (!empOnThisDate) {
+              // Find who IS scheduled on this date
+              const othersOnDate = (solverAssignments || [])
+                .filter((a: any) => a.Start?.split("T")[0] === dateStr && String(a.PersonId) !== empId)
+                .map((a: any) => ({
+                  id: String(a.PersonId),
+                  name: empNameMap.get(String(a.PersonId)) || String(a.PersonId),
+                  shiftName: shiftNameMap.get(String(a.ShiftId)) || a.ShiftName || "",
+                }));
+
+              // Deduplicate by employee
+              const uniqueOthers = Array.from(
+                new Map(othersOnDate.map((o) => [o.id, o])).values()
+              );
+
+              addDayOptions.push({
+                dayOfWeek: solverDay,
+                date: dateStr,
+                label: `${dayNamesNL[solverDay].charAt(0).toUpperCase() + dayNamesNL[solverDay].slice(1)} ${dateStr}`,
+                currentEmployees: uniqueOthers,
+              });
+            }
+            current.setDate(current.getDate() + 1);
+          }
+        }
+
+        if (addDayOptions.length === 0) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now() + 1,
+              role: "assistant",
+              content: `ℹ️ **${intent.employeeName}** is al elke dag ingepland in het huidige rooster. Er zijn geen vrije dagen meer beschikbaar.`,
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+
+        const currentDayCount = empAssignments.length;
+        const totalDays = addDayOptions.length + currentDayCount;
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `📅 **${intent.employeeName}** is momenteel **${currentDayCount} van de ${totalDays} dagen** ingepland.\n\nOp welke dag wil je ${intent.employeeName} extra inplannen? Kies een dag hieronder — ik zoek dan wie er uitgewisseld kan worden.`,
+            addDayOptions,
+            addDaysEmployeeId: empId,
+            addDaysEmployeeName: intent.employeeName,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
 
 
   return (
