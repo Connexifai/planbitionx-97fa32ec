@@ -62,8 +62,8 @@ function RobotQuoteBubble() {
   const typed = useTypingText(quote, 45);
 
   return (
-    <div className="relative bg-card/95 backdrop-blur-md border border-border shadow-2xl rounded-3xl px-6 py-4 w-[320px] md:w-[480px] animate-fade-in">
-      <p className="text-sm font-medium text-foreground leading-relaxed tracking-wide">
+    <div className="relative bg-card/95 backdrop-blur-md border border-border shadow-2xl rounded-3xl px-4 py-3 md:px-6 md:py-4 w-[220px] sm:w-[280px] md:w-[380px] lg:w-[480px] animate-fade-in">
+      <p className="text-xs sm:text-sm font-medium text-foreground leading-relaxed tracking-wide break-words">
         {typed}
         <span className="inline-block w-[2px] h-4 bg-primary ml-0.5 animate-pulse align-middle rounded-full" />
       </p>
@@ -517,11 +517,9 @@ export default function Index() {
                             height: isMobile ? 240 : 420,
                           }}
                         />
-                        {!isMobile && (
-                          <div className="absolute right-[75%] top-[15%]">
-                            <RobotQuoteBubble />
-                          </div>
-                        )}
+                        <div className="absolute right-[75%] top-[15%] max-w-[calc(100%-2rem)]">
+                          <RobotQuoteBubble />
+                        </div>
                       </div>
                       <p className="mt-2 whitespace-nowrap text-sm md:text-lg font-semibold text-muted-foreground">
                         {t("robot.uploadJson")}
