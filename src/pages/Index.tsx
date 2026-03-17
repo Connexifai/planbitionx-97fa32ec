@@ -517,11 +517,9 @@ export default function Index() {
                             height: isMobile ? 240 : 420,
                           }}
                         />
-                        {!isMobile && (
-                          <div className="absolute right-[75%] top-[15%]">
-                            <RobotQuoteBubble />
-                          </div>
-                        )}
+                        <div className="absolute right-[75%] top-[15%] max-w-[calc(100%-2rem)]">
+                          <RobotQuoteBubble />
+                        </div>
                       </div>
                       <p className="mt-2 whitespace-nowrap text-sm md:text-lg font-semibold text-muted-foreground">
                         {t("robot.uploadJson")}
