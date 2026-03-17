@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Users, Calendar, Clock, Layers, ChevronDown, ChevronUp, Upload } from "lucide-react";
+import { useState } from "react";
+import { Users, Calendar, Clock, Layers, ChevronDown, ChevronUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
@@ -301,46 +300,16 @@ function WeekGrid({ data }: { data: JsonScheduleData }) {
 
 /* ── Main Viewer ─────────────────────────── */
 
-export function JsonDataViewer({ data, onNewUpload }: { data: JsonScheduleData; onNewUpload?: (rawJson: string) => void }) {
+export function JsonDataViewer({ data }: { data: JsonScheduleData }) {
   const { t } = useTranslation();
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
-
-  const handleFile = (file: File) => {
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const text = ev.target?.result as string;
-      onNewUpload?.(text);
-    };
-    reader.readAsText(file);
-  };
 
   return (
     <div className="space-y-4 animate-fade-in">
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".json,application/json"
-        className="hidden"
-        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
-      />
-      <div className="flex items-center justify-between mb-1">
-        <div className="flex items-center gap-2">
-          <div className="h-2 w-2 rounded-full bg-kpi-assignments animate-pulse" />
-          <p className="text-sm font-medium text-muted-foreground">
-            {t("json.loaded")} · {data.start.split("T")[0]} {t("json.toDate")} {data.end.split("T")[0]}
-          </p>
-        </div>
-        {onNewUpload && (
-          <Button
-            variant="outline"
-            size="sm"
-            className="gap-1.5 text-xs"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <Upload className="h-3.5 w-3.5" />
-            {t("json.newUpload", "Nieuwe JSON laden")}
-          </Button>
-        )}
+      <div className="flex items-center gap-2 mb-1">
+        <div className="h-2 w-2 rounded-full bg-kpi-assignments animate-pulse" />
+        <p className="text-sm font-medium text-muted-foreground">
+          {t("json.loaded")} · {data.start.split("T")[0]} {t("json.toDate")} {data.end.split("T")[0]}
+        </p>
       </div>
       <SummaryCards data={data} />
       <EmployeeTable data={data} />
