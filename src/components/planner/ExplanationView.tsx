@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   CheckCircle2,
   Clock,
@@ -11,6 +12,8 @@ import {
   TrendingUp,
   Info,
   ChevronDown,
+  Sparkles,
+  Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { toTitleCase } from "@/lib/utils";
@@ -75,11 +78,15 @@ function buildFromSolverExplanations(
     grouped.get(exp.EmployeeId)!.push(exp);
   }
 
-  const employeeMap = new Map(data.employees.map(e => [e.contractId, e]));
+  // Build multiple lookup maps: contractId → employee AND id (PersonId) → employee
+  const byContractId = new Map(data.employees.map(e => [e.contractId, e]));
+  const byPersonId = new Map(data.employees.map(e => [String(e.id), e]));
+
   const results: EmployeeExplanation[] = [];
 
   for (const [empId, explanations] of grouped) {
-    const emp = employeeMap.get(empId);
+    // Try contractId first, then PersonId (numeric)
+    const emp = byContractId.get(empId) || byPersonId.get(empId);
     const name = emp ? `${emp.lastName}, ${emp.firstName}` : empId;
     const uniqueReasons = new Set<string>();
     for (const exp of explanations) {
@@ -200,11 +207,17 @@ const EmployeeRow = memo(function EmployeeRow({
   isOpen,
   onToggle,
   weightLabel,
+  onAskAi,
+  aiLoading,
+  aiExplanation,
 }: {
   emp: EmployeeExplanation;
   isOpen: boolean;
   onToggle: () => void;
   weightLabel: Record<string, string>;
+  onAskAi: (empId: string, empName: string) => void;
+  aiLoading: boolean;
+  aiExplanation?: string;
 }) {
   return (
     <div className="border border-border/50 rounded-xl bg-card overflow-hidden">
@@ -242,6 +255,35 @@ const EmployeeRow = memo(function EmployeeRow({
               </div>
             </div>
           ))}
+
+          {/* AI Explanation button & result */}
+          {aiExplanation ? (
+            <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5">
+              <div className="flex items-center gap-2 mb-1">
+                <Sparkles className="h-3.5 w-3.5 text-primary shrink-0" />
+                <span className="text-xs font-semibold text-primary">AI Uitleg</span>
+              </div>
+              <p className="text-[11px] text-foreground leading-relaxed whitespace-pre-line">{aiExplanation}</p>
+            </div>
+          ) : (
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full gap-2 text-xs h-8 mt-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                onAskAi(emp.id, emp.name);
+              }}
+              disabled={aiLoading}
+            >
+              {aiLoading ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Sparkles className="h-3.5 w-3.5" />
+              )}
+              {aiLoading ? "AI analyseert..." : "Vraag AI waarom deze keuze is gemaakt"}
+            </Button>
+          )}
         </div>
       )}
     </div>
@@ -254,11 +296,15 @@ export interface ExplanationViewProps {
   data?: RosterData;
   solverExplanations?: SolverExplanation[];
   solverStatistics?: SolverStatistics | null;
+  solverAssignments?: any[];
+  requestData?: any;
 }
 
-export function ExplanationView({ data, solverExplanations, solverStatistics }: ExplanationViewProps) {
+export function ExplanationView({ data, solverExplanations, solverStatistics, solverAssignments, requestData }: ExplanationViewProps) {
   const { t } = useTranslation();
   const [openIds, setOpenIds] = useState<Set<string>>(new Set());
+  const [aiExplanations, setAiExplanations] = useState<Map<string, string>>(new Map());
+  const [aiLoadingId, setAiLoadingId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const explanations = useMemo(() => {
@@ -286,10 +332,66 @@ export function ExplanationView({ data, solverExplanations, solverStatistics }: 
     });
   }, []);
 
+  const handleAskAi = useCallback(async (empId: string, empName: string) => {
+    if (aiLoadingId) return;
+    setAiLoadingId(empId);
+
+    try {
+      // Find the employee object from request data
+      const empObj = (requestData?.Employees || []).find(
+        (e: any) => String(e.PersonId ?? e.Id) === empId || String(e.ContractId) === empId
+      );
+
+      const empExplanations = (solverExplanations || []).filter(
+        (e: any) => String(e.EmployeeId) === empId
+      );
+
+      const res = await fetch(
+        `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/explain-assignment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+          },
+          body: JSON.stringify({
+            employeeId: empId,
+            employeeName: empName,
+            question: `Waarom heeft de solver ${empName} zo ingepland? Leg de belangrijkste redenen uit.`,
+            assignments: solverAssignments || [],
+            employee: empObj || null,
+            shifts: requestData?.Shifts || [],
+            schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+            solverExplanations: empExplanations,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || `HTTP ${res.status}`);
+      }
+
+      const result = await res.json();
+      setAiExplanations((prev) => new Map(prev).set(empId, result.explanation));
+    } catch (error) {
+      console.error("AI explanation error:", error);
+      setAiExplanations((prev) =>
+        new Map(prev).set(empId, `❌ Kon geen AI-uitleg ophalen: ${error instanceof Error ? error.message : "Onbekende fout"}`)
+      );
+    } finally {
+      setAiLoadingId(null);
+    }
+  }, [aiLoadingId, requestData, solverAssignments, solverExplanations]);
+
   const virtualizer = useVirtualizer({
     count: explanations.length,
     getScrollElement: () => scrollRef.current,
-    estimateSize: (i) => openIds.has(explanations[i].id) ? 200 : 68,
+    estimateSize: (i) => {
+      const id = explanations[i].id;
+      if (!openIds.has(id)) return 68;
+      return aiExplanations.has(id) ? 280 : 240;
+    },
     overscan: 5,
   });
 
@@ -361,6 +463,9 @@ export function ExplanationView({ data, solverExplanations, solverStatistics }: 
                   isOpen={openIds.has(emp.id)}
                   onToggle={() => toggleId(emp.id)}
                   weightLabel={weightLabel}
+                  onAskAi={handleAskAi}
+                  aiLoading={aiLoadingId === emp.id}
+                  aiExplanation={aiExplanations.get(emp.id)}
                 />
               </div>
             );
