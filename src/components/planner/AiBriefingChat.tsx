@@ -87,9 +87,10 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
     }
   }, [messages, loading]);
 
-  const handleSend = async () => {
-    if (!input.trim() || loading) return;
-    const userMsg: Message = { id: Date.now(), role: "user", content: input };
+  const handleSend = async (text?: string) => {
+    const msg = text || input;
+    if (!msg.trim() || loading) return;
+    const userMsg: Message = { id: Date.now(), role: "user", content: msg };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setLoading(true);
@@ -123,17 +124,29 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
 
       const data = await res.json();
 
-      // Add AI response
-      const aiMsg: Message = {
-        id: Date.now() + 1,
-        role: "assistant",
-        content: data.message || t("chat.constraintConfirm"),
-      };
-      setMessages((prev) => [...prev, aiMsg]);
+      // Check for disambiguation candidates
+      if (data.needsClarification && data.candidates?.length > 0) {
+        const aiMsg: Message = {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: data.message || "🤔 Er zijn meerdere medewerkers met die naam. Wie bedoel je?",
+          candidates: data.candidates,
+          originalMessage: msg,
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+      } else {
+        // Add AI response
+        const aiMsg: Message = {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: data.message || t("chat.constraintConfirm"),
+        };
+        setMessages((prev) => [...prev, aiMsg]);
 
-      // Add new constraints
-      if (data.constraints && data.constraints.length > 0) {
-        onConstraintsChange([...constraints, ...data.constraints]);
+        // Add new constraints
+        if (data.constraints && data.constraints.length > 0) {
+          onConstraintsChange([...constraints, ...data.constraints]);
+        }
       }
     } catch (error) {
       console.error("Parse constraints error:", error);
