@@ -498,14 +498,14 @@ export default function Index() {
                 {activeTab === "uitleg" && <ExplanationView data={rosterData ?? undefined} solverExplanations={solverExplanations} solverStatistics={solverStatistics} />}
               </main>
             ) : (
-              <div className="flex-1 flex flex-col min-h-0">
-                <div className="flex-1 overflow-y-auto roster-scroll p-3 md:p-5 space-y-3 md:space-y-5">
+              <div className="flex-1 flex flex-col min-h-0 relative">
+                <div className="overflow-y-auto roster-scroll p-3 md:p-5 space-y-3 md:space-y-5">
                   <KpiCards solved={false} data={undefined} />
                   {jsonLoaded && scheduleData && <JsonDataViewer data={scheduleData} />}
                 </div>
 
                 {!chatOpen && !jsonLoaded && (
-                  <div className="flex-1 flex flex-col items-center justify-center pointer-events-none">
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none" style={{ top: isMobile ? 80 : 100 }}>
                     <div className="flex flex-col items-center">
                       <div className="relative pointer-events-auto">
                         <img
