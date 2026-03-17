@@ -533,6 +533,49 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           }
         }
 
+        // If a specific day was mentioned, skip the picker and directly process
+        const targetDayOfWeek = intent.dayOfWeek;
+        const targetDate = intent.date;
+        
+        if (targetDayOfWeek !== undefined || targetDate) {
+          // Find the matching option
+          const matchingOption = addDayOptions.find((opt) => {
+            if (targetDate) return opt.date === targetDate;
+            return opt.dayOfWeek === targetDayOfWeek;
+          });
+
+          if (!matchingOption) {
+            // Employee is already scheduled on that day or day doesn't exist
+            const dayLabel = targetDate || (targetDayOfWeek !== undefined ? dayNamesNL[targetDayOfWeek] : "");
+            const alreadyScheduled = empAssignments.some((a: any) => {
+              if (targetDate) return a.Start?.split("T")[0] === targetDate;
+              if (targetDayOfWeek !== undefined) {
+                const d = new Date(a.Start);
+                const sd = d.getDay() === 0 ? 6 : d.getDay() - 1;
+                return sd === targetDayOfWeek;
+              }
+              return false;
+            });
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: Date.now() + 1,
+                role: "assistant",
+                content: alreadyScheduled
+                  ? `ℹ️ **${intent.employeeName}** is al ingepland op ${dayLabel}. Kies een andere dag.`
+                  : `⚠️ ${dayLabel} valt niet binnen de planningsperiode.`,
+              },
+            ]);
+            setIsTyping(false);
+            return;
+          }
+
+          // Directly trigger the add day flow for this option
+          setIsTyping(false);
+          handleAddDaySelected(matchingOption, empId, intent.employeeName);
+          return;
+        }
+
         if (addDayOptions.length === 0) {
           setMessages((prev) => [
             ...prev,
