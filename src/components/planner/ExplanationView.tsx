@@ -104,7 +104,7 @@ function buildFromSolverExplanations(
     results.push({ name, id: empId, reasons, shiftCount: explanations.length });
   }
 
-  return results.sort((a, b) => b.shiftCount - a.shiftCount);
+  return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function generateFallbackExplanations(data: RosterData, t: (key: string) => string): EmployeeExplanation[] {
@@ -143,7 +143,7 @@ function generateFallbackExplanations(data: RosterData, t: (key: string) => stri
     results.push({ name: `${emp.lastName}, ${emp.firstName}`, id: emp.contractId, reasons, shiftCount: assignedShifts.length });
   }
 
-  return results.sort((a, b) => b.shiftCount - a.shiftCount);
+  return results.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
