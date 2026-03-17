@@ -455,6 +455,9 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               employee: empObj || null,
               shifts: requestData?.Shifts || [],
               schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+              solverExplanations: (solverExplanations || []).filter(
+                (e: any) => String(e.EmployeeId) === String(intent.employeeId)
+              ),
             }),
           }
         );
