@@ -507,7 +507,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           const current = new Date(startDate);
           while (current <= endDate) {
             const solverDay = current.getDay() === 0 ? 6 : current.getDay() - 1;
-            const dateStr = current.toISOString().split("T")[0];
+            // Use local date to avoid UTC timezone shift
+            const dateStr = `${current.getFullYear()}-${String(current.getMonth() + 1).padStart(2, "0")}-${String(current.getDate()).padStart(2, "0")}`;
 
             const empOnThisDate = empAssignments.some((a: any) => a.Start?.split("T")[0] === dateStr);
 
