@@ -257,10 +257,10 @@ export function buildAlternativesPayload(
     TargetEmployeeId: targetEmployeeId,
     ConstraintType: constraint.type,
   };
-  if (constraint.type === "avoid_day" && constraint.dayOfWeek !== undefined) {
+  if ((constraint.type === "avoid_day" || constraint.type === "add_date") && constraint.dayOfWeek !== undefined) {
     topLevelConstraint.DayOfWeek = constraint.dayOfWeek;
   }
-  if (constraint.type === "avoid_date" && constraint.date) {
+  if ((constraint.type === "avoid_date" || constraint.type === "add_date") && constraint.date) {
     topLevelConstraint.Date = constraint.date;
   }
   if (constraint.type === "avoid_shift_kind" && constraint.shiftKind) {
