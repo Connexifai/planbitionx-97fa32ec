@@ -517,7 +517,7 @@ export default function Index() {
                             height: isMobile ? 240 : 420,
                           }}
                         />
-                        <div className="absolute right-[75%] top-[15%] max-w-[calc(100%-2rem)]">
+                        <div className="absolute top-[10%] max-w-[calc(100%-2rem)]" style={{ right: isMobile ? '85%' : '90%' }}>
                           <RobotQuoteBubble />
                         </div>
                       </div>
