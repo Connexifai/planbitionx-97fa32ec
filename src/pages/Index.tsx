@@ -618,53 +618,19 @@ export default function Index() {
                   </SheetContent>
                 </Sheet>
               ) : (
-                <div
-                  className={cn(
-                    "flex flex-col border-l bg-sidebar shrink-0 transition-all duration-300 overflow-hidden",
-                    chatOpen ? "w-[800px]" : "w-0"
-                  )}
-                >
-                  {chatOpen && (
-                    <>
-                      <div className="flex items-center justify-between px-4 py-3 border-b">
-                        <div className="flex items-center gap-2">
-                          <MessageCircle className="h-4 w-4 text-primary" />
-                          <h3 className="text-sm font-semibold">{solved ? t("chat.aiAssistant") : t("chat.aiBriefing")}</h3>
-                        </div>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              onClick={() => setChatOpen(false)}
-                              className="flex items-center justify-center w-7 h-7 rounded-md text-muted-foreground hover:bg-accent hover:text-foreground transition-all"
-                            >
-                              <PanelRightClose className="h-4 w-4" />
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent side="left">{t("sidebar.closePanel")}</TooltipContent>
-                        </Tooltip>
-                      </div>
-                      <div className="flex-1 min-h-0">
-                        {solved ? (
-                          <PostSolveChat
-                            requestData={requestData}
-                            solverAssignments={solverAssignments}
-                            solverExplanations={solverExplanations}
-                            onApplyAlternative={handleApplyAlternative}
-                            onNavigateToEmployee={handleNavigateToEmployee}
-                            onFilterRoster={handleFilterRoster}
-                          />
-                        ) : (
-                          <AiBriefingChat
-                            employees={requestData?.Employees || []}
-                            schedulePeriod={requestData ? `${requestData.Start} - ${requestData.End}` : ""}
-                            constraints={employeeConstraints}
-                            onConstraintsChange={setEmployeeConstraints}
-                          />
-                        )}
-                      </div>
-                    </>
-                  )}
-                </div>
+                <ChatPanel
+                  chatOpen={chatOpen}
+                  onClose={() => setChatOpen(false)}
+                  solved={solved}
+                  requestData={requestData}
+                  solverAssignments={solverAssignments}
+                  solverExplanations={solverExplanations}
+                  handleApplyAlternative={handleApplyAlternative}
+                  handleNavigateToEmployee={handleNavigateToEmployee}
+                  handleFilterRoster={handleFilterRoster}
+                  employeeConstraints={employeeConstraints}
+                  setEmployeeConstraints={setEmployeeConstraints}
+                />
               )}
             </>
           )}
