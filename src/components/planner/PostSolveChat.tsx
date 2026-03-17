@@ -63,6 +63,7 @@ export interface RosterFilterState {
 export interface PostSolveChatProps {
   requestData: any;
   solverAssignments: any[];
+  solverExplanations?: any[];
   onApplyAlternative?: (alternative: Alternative) => void;
   onNavigateToEmployee?: (employeeName: string) => void;
   onFilterRoster?: (filter: RosterFilterState | null) => void;
