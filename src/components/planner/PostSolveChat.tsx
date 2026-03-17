@@ -1332,7 +1332,8 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
                 </div>
               )}
 
-
+            </div>
+          ))}
 
           {isTyping && (
             <div className="flex gap-3 max-w-[85%]">
