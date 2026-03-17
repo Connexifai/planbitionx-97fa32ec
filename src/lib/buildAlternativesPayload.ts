@@ -171,40 +171,63 @@ export function buildAlternativesPayload(
 
   const targetEmployeeId = String(constraint.employeeId);
 
-  // For add_date: find a suitable shift on the target date to assign to the target employee
+  // ─── add_date reframing ──────────────────────────────────────────
+  // The solver does NOT support "add_date" as a constraint type.
+  // Strategy: find a "donor" employee currently assigned on the target date,
+  // reframe as avoid_date for the donor, and add the shift to Kilian's
+  // AssignedShifts. The solver then removes the donor and keeps Kilian.
   let addDateShiftCompositeId: string | undefined;
+  let effectiveTargetId = targetEmployeeId;
+  let effectiveType: string = constraint.type;
+
   if (constraint.type === "add_date" && constraint.date) {
     const targetDate = constraint.date; // YYYY-MM-DD
     // Find shifts on that date
-    const shiftsOnDate = sourceShifts.filter((s: any) => 
+    const shiftsOnDate = sourceShifts.filter((s: any) =>
       String(s.Start || "").startsWith(targetDate)
     );
-    // Try to find a shift the employee qualifies for
-    const targetEmp = sourceEmployees.find((e: any) => 
+    // Find target employee qualifications
+    const targetEmp = sourceEmployees.find((e: any) =>
       getEmployeeIdCandidates(e).includes(targetEmployeeId)
     );
     const empQuals = (targetEmp?.Qualifications || [])
       .filter((q: any) => q.Type === "Qualification")
       .map((q: any) => q.Value);
-    
-    // Prefer qualified shifts, fallback to no-qualification shifts, fallback to any
-    const qualifiedShift = shiftsOnDate.find((s: any) => {
-      const allOf = s.Qualifications?.AllOf || [];
-      return allOf.length > 0 && allOf.every((q: any) => empQuals.includes(q.Value));
-    });
+
+    // Prefer no-qualification shifts (easiest to swap), then qualified, then any
     const noQualShift = shiftsOnDate.find((s: any) => {
       const allOf = s.Qualifications?.AllOf || [];
       return allOf.length === 0;
     });
-    const selectedShift = qualifiedShift || noQualShift || shiftsOnDate[0];
+    const qualifiedShift = shiftsOnDate.find((s: any) => {
+      const allOf = s.Qualifications?.AllOf || [];
+      return allOf.length > 0 && allOf.every((q: any) => empQuals.includes(q.Value));
+    });
+    const selectedShift = noQualShift || qualifiedShift || shiftsOnDate[0];
+
     if (selectedShift) {
       addDateShiftCompositeId = makeUniqueShiftId(String(selectedShift.Id), String(selectedShift.Start));
+
+      // Find a donor: someone currently assigned on this date (not the target employee)
+      const assignmentsOnDate = (solverAssignments || []).filter((a: any) =>
+        String(a.Start || "").startsWith(targetDate)
+      );
+      const donorAssignment = assignmentsOnDate.find((a: any) =>
+        !getAssignmentEmployeeIdCandidates(a as SolverAssignment & Record<string, unknown>).includes(targetEmployeeId)
+      );
+
+      if (donorAssignment) {
+        const donorId = String((donorAssignment as any).PersonId || (donorAssignment as any).EmployeeId || (donorAssignment as any).Id);
+        effectiveTargetId = donorId;
+        effectiveType = "avoid_date";
+        console.log("[buildAlternativesPayload] add_date reframed: donor =", donorId, "target (added) =", targetEmployeeId);
+      }
     }
   }
 
   const employees = sourceEmployees.map((emp: any) => {
     const employeeIds = getEmployeeIdCandidates(emp);
-    const isTarget = employeeIds.includes(targetEmployeeId);
+    const isOriginalTarget = employeeIds.includes(targetEmployeeId);
 
     const solverAssigned = employeeIds
       .flatMap((id) => assignmentsByEmployee.get(id) || [])
@@ -219,27 +242,28 @@ export function buildAlternativesPayload(
 
     const assignedShifts = Array.from(new Set([...existingAssigned, ...solverAssigned]));
 
-    // For add_date: add the selected shift to the target employee's AssignedShifts
-    if (isTarget && addDateShiftCompositeId && !assignedShifts.includes(addDateShiftCompositeId)) {
+    // For add_date: add the selected shift to the ORIGINAL target employee's AssignedShifts
+    if (isOriginalTarget && addDateShiftCompositeId && !assignedShifts.includes(addDateShiftCompositeId)) {
       assignedShifts.push(addDateShiftCompositeId);
     }
 
-    // Constraints — don't add avoid-style constraints for add_date
+    // Constraints — only add for the EFFECTIVE target (donor for add_date, original for others)
+    const isEffectiveTarget = employeeIds.includes(effectiveTargetId);
     const existingConstraints = Array.isArray(emp.Constraints) ? [...emp.Constraints] : [];
     const constraints = [...existingConstraints];
 
-    if (isTarget && constraint.type !== "add_date") {
+    if (isEffectiveTarget && effectiveType !== "add_date") {
       const newConstraint: any = {
-        type: constraint.type,
+        type: effectiveType,
         strength: constraint.strength,
       };
-      if (constraint.type === "avoid_day" && constraint.dayOfWeek !== undefined) {
+      if (effectiveType === "avoid_day" && constraint.dayOfWeek !== undefined) {
         newConstraint.dayOfWeek = constraint.dayOfWeek;
       }
-      if (constraint.type === "avoid_date" && constraint.date) {
+      if (effectiveType === "avoid_date" && constraint.date) {
         newConstraint.date = constraint.date;
       }
-      if (constraint.type === "avoid_shift_kind" && constraint.shiftKind) {
+      if (effectiveType === "avoid_shift_kind" && constraint.shiftKind) {
         newConstraint.shiftKind = constraint.shiftKind;
       }
       constraints.push(newConstraint);
@@ -254,16 +278,16 @@ export function buildAlternativesPayload(
 
   // Top-level constraint fields for v6.89w+ API
   const topLevelConstraint: Record<string, unknown> = {
-    TargetEmployeeId: targetEmployeeId,
-    ConstraintType: constraint.type,
+    TargetEmployeeId: effectiveTargetId,
+    ConstraintType: effectiveType,
   };
-  if ((constraint.type === "avoid_day" || constraint.type === "add_date") && constraint.dayOfWeek !== undefined) {
+  if ((effectiveType === "avoid_day") && constraint.dayOfWeek !== undefined) {
     topLevelConstraint.DayOfWeek = constraint.dayOfWeek;
   }
-  if ((constraint.type === "avoid_date" || constraint.type === "add_date") && constraint.date) {
+  if ((effectiveType === "avoid_date") && constraint.date) {
     topLevelConstraint.Date = constraint.date;
   }
-  if (constraint.type === "avoid_shift_kind" && constraint.shiftKind) {
+  if (effectiveType === "avoid_shift_kind" && constraint.shiftKind) {
     topLevelConstraint.ShiftKind = constraint.shiftKind;
   }
   // Swap fields for Phase 3 (dienstwissel)
