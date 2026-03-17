@@ -31,6 +31,7 @@ Constraint types:
 - "avoid_day": employee wants a specific weekday off. Use dayOfWeek (0-6).
 - "avoid_date": employee wants a specific date off. Use date as "YYYY-MM-DD".
 - "avoid_shift_kind": employee wants to avoid a shift type. Use shiftKind: "early", "day", "late", or "night".
+- "add_days": the user wants an employee to be scheduled for MORE days, or asks if they can work more. Examples: "kan Jan meer dagen werken?", "plan Jan ook op dinsdag in", "kan Pietje vaker ingepland worden?", "Jan zou graag meer uren willen". Use this when the intent is about ADDING shifts/days, not removing them.
 - "explain": the user asks WHY an employee is or isn't scheduled on a certain day/shift. Examples: "waarom werkt Piet op woensdag?", "waarom is Jan niet ingepland op vrijdag?", "waarom heeft Sarah alleen op maandag een dienst?". Use this when the user is asking for an EXPLANATION, not requesting a CHANGE.
 
 SWAP support (dienstwissel / ruilen):
@@ -104,7 +105,7 @@ Use the parse_scheduling_intent function to return the structured result.`;
                   },
                   employeeId: { type: "string", description: "PersonId of the employee (only when unambiguous)" },
                   employeeName: { type: "string", description: "Full name of the employee" },
-                  constraintType: { type: "string", enum: ["avoid_day", "avoid_date", "avoid_shift_kind", "explain"] },
+                  constraintType: { type: "string", enum: ["avoid_day", "avoid_date", "avoid_shift_kind", "explain", "add_days"] },
                   dayOfWeek: { type: "number", description: "ISO/solver convention: 0=maandag,1=dinsdag,2=woensdag,3=donderdag,4=vrijdag,5=zaterdag,6=zondag" },
                   date: { type: "string", description: "YYYY-MM-DD format" },
                   shiftKind: { type: "string", enum: ["early", "day", "late", "night"] },

@@ -22,6 +22,13 @@ interface SwapOption {
   label: string;
 }
 
+interface AddDayOption {
+  dayOfWeek: number;
+  date: string;
+  label: string;
+  currentEmployees: { id: string; name: string; shiftName: string }[];
+}
+
 interface Message {
   id: number;
   role: "user" | "assistant";
@@ -40,6 +47,11 @@ interface Message {
   swapOptions?: SwapOption[];
   /** Base constraint for open swap (missing swapDayOfWeek) */
   swapConstraintBase?: AlternativeConstraint;
+  /** Add days: available days to add the employee to */
+  addDayOptions?: AddDayOption[];
+  /** Employee info for add_days flow */
+  addDaysEmployeeId?: string;
+  addDaysEmployeeName?: string;
 }
 
 export interface RosterFilterState {
@@ -464,6 +476,88 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
         return;
       }
 
+      // ── Add days intent: find free days and show options ──
+      if (intent.constraintType === "add_days") {
+        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const empId = String(intent.employeeId);
+        const empAssignments = (solverAssignments || []).filter(
+          (a: any) => String(a.PersonId) === String(empId)
+        );
+
+        // Build shift name & employee name lookups
+        const shiftNameMap = new Map<string, string>();
+        for (const s of (requestData?.Shifts || [])) {
+          shiftNameMap.set(String(s.Id), s.Name || "");
+        }
+        const empNameMap = new Map<string, string>();
+        for (const e of (requestData?.Employees || [])) {
+          empNameMap.set(String(e.PersonId ?? e.Id), e.Name || "");
+        }
+
+        // Iterate schedule dates to find days the employee is NOT scheduled
+        const startDate = requestData?.Start ? new Date(requestData.Start) : null;
+        const endDate = requestData?.End ? new Date(requestData.End) : null;
+        const addDayOptions: AddDayOption[] = [];
+
+        if (startDate && endDate) {
+          const current = new Date(startDate);
+          while (current <= endDate) {
+            const solverDay = current.getDay() === 0 ? 6 : current.getDay() - 1;
+            const dateStr = current.toISOString().split("T")[0];
+
+            const empOnThisDate = empAssignments.some((a: any) => a.Start?.split("T")[0] === dateStr);
+
+            if (!empOnThisDate) {
+              const othersOnDate = (solverAssignments || [])
+                .filter((a: any) => a.Start?.split("T")[0] === dateStr && String(a.PersonId) !== empId)
+                .map((a: any) => ({
+                  id: String(a.PersonId),
+                  name: empNameMap.get(String(a.PersonId)) || String(a.PersonId),
+                  shiftName: shiftNameMap.get(String(a.ShiftId)) || a.ShiftName || "",
+                }));
+              const uniqueOthers = Array.from(new Map(othersOnDate.map((o) => [o.id, o])).values());
+
+              addDayOptions.push({
+                dayOfWeek: solverDay,
+                date: dateStr,
+                label: `${dayNamesNL[solverDay].charAt(0).toUpperCase() + dayNamesNL[solverDay].slice(1)} ${dateStr}`,
+                currentEmployees: uniqueOthers,
+              });
+            }
+            current.setDate(current.getDate() + 1);
+          }
+        }
+
+        if (addDayOptions.length === 0) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now() + 1,
+              role: "assistant",
+              content: `ℹ️ **${intent.employeeName}** is al elke dag ingepland. Er zijn geen vrije dagen meer beschikbaar.`,
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+
+        const currentDayCount = empAssignments.length;
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `📅 **${intent.employeeName}** is momenteel **${currentDayCount} van de ${currentDayCount + addDayOptions.length} dagen** ingepland.\n\nOp welke dag wil je ${intent.employeeName} extra inplannen? Ik zoek dan wie er uitgewisseld kan worden.`,
+            addDayOptions,
+            addDaysEmployeeId: empId,
+            addDaysEmployeeName: intent.employeeName,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
       // Step 2: Build constraint
       const constraint: AlternativeConstraint = {
         employeeId: String(intent.employeeId),
@@ -819,6 +913,88 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
     }
   };
 
+  /** Handle user picking a day for add_days flow */
+  const handleAddDaySelected = async (option: AddDayOption, targetEmployeeId: string, targetEmployeeName: string) => {
+    // Remove addDayOptions from the message
+    setMessages((prev) =>
+      prev.map((m) => m.addDayOptions ? { ...m, addDayOptions: undefined } : m)
+    );
+
+    // Show user "choice"
+    setMessages((prev) => [
+      ...prev,
+      { id: Date.now(), role: "user", content: option.label },
+    ]);
+    setIsTyping(true);
+
+    try {
+      if (option.currentEmployees.length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `ℹ️ Er is op **${option.label}** niemand ingepland. ${targetEmployeeName} kan direct worden toegevoegd via een herberekening.`,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
+      // For each employee currently scheduled on that date, try to find alternatives
+      // by creating an avoid_date constraint on them, which should free up the slot
+      const firstOther = option.currentEmployees[0];
+      const constraint: AlternativeConstraint = {
+        employeeId: firstOther.id,
+        employeeName: firstOther.name,
+        type: "avoid_date",
+        date: option.date,
+        strength: "hard",
+      };
+
+      setLastConstraint(constraint);
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: `⏳ Op **${option.label}** werkt o.a. **${option.currentEmployees.map(e => e.name).join(", ")}**.\n\nIk zoek alternatieven waarbij ${targetEmployeeName} deze dag overneemt...`,
+        },
+      ]);
+
+      const altResponse = await fetchAlternatives(constraint, "narrow");
+      const prepared = prepareAlternatives(altResponse.Alternatives || []);
+
+      if (prepared.visibleAlts.length === 0) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 2, role: "assistant", content: `⚠️ Geen geschikte alternatieven gevonden voor ${option.label}.` },
+        ]);
+      } else {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 2,
+            role: "assistant",
+            content: `Ik heb **${prepared.visibleAlts.length} ${prepared.visibleAlts.length === 1 ? "optie" : "opties"}** gevonden om ${targetEmployeeName} in te plannen op ${option.label}:`,
+            alternatives: prepared.visibleAlts,
+            baseline: altResponse.Baseline,
+            constraintSummary: `${targetEmployeeName} inplannen op ${option.label}`,
+            pendingConstraint: constraint,
+          },
+        ]);
+      }
+    } catch (error) {
+      console.error("Add day selection error:", error);
+      setMessages((prev) => [
+        ...prev,
+        { id: Date.now() + 1, role: "assistant", content: `❌ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}` },
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
+  };
 
 
   return (
@@ -1128,6 +1304,29 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
                       onClick={() => handleSwapDaySelected(msg.swapConstraintBase!, opt.dayOfWeek, opt.label)}
                     >
                       🔄 {opt.label}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+              {/* Add days picker */}
+              {msg.addDayOptions && msg.addDayOptions.length > 0 && msg.addDaysEmployeeId && (
+                <div className="mt-3 ml-11 flex flex-wrap gap-2">
+                  {msg.addDayOptions.map((opt) => (
+                    <Button
+                      key={opt.date}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 text-xs"
+                      disabled={isTyping}
+                      onClick={() => handleAddDaySelected(opt, msg.addDaysEmployeeId!, msg.addDaysEmployeeName || "")}
+                    >
+                      📅 {opt.label}
+                      {opt.currentEmployees.length > 0 && (
+                        <span className="text-muted-foreground ml-1">
+                          ({opt.currentEmployees.length} ingepland)
+                        </span>
+                      )}
                     </Button>
                   ))}
                 </div>
