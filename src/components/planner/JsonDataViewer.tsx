@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Users, Calendar, Clock, Layers, ChevronDown, ChevronUp, Upload } from "lucide-react";
+import { useState } from "react";
+import { Users, Calendar, Clock, Layers, ChevronDown, ChevronUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
 
