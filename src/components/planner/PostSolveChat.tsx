@@ -1309,8 +1309,30 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
                 </div>
               )}
 
-            </div>
-          ))}
+              {/* Add days picker */}
+              {msg.addDayOptions && msg.addDayOptions.length > 0 && msg.addDaysEmployeeId && (
+                <div className="mt-3 ml-11 flex flex-wrap gap-2">
+                  {msg.addDayOptions.map((opt) => (
+                    <Button
+                      key={opt.date}
+                      variant="outline"
+                      size="sm"
+                      className="gap-2 text-xs"
+                      disabled={isTyping}
+                      onClick={() => handleAddDaySelected(opt, msg.addDaysEmployeeId!, msg.addDaysEmployeeName || "")}
+                    >
+                      📅 {opt.label}
+                      {opt.currentEmployees.length > 0 && (
+                        <span className="text-muted-foreground ml-1">
+                          ({opt.currentEmployees.length} ingepland)
+                        </span>
+                      )}
+                    </Button>
+                  ))}
+                </div>
+              )}
+
+
 
           {isTyping && (
             <div className="flex gap-3 max-w-[85%]">
