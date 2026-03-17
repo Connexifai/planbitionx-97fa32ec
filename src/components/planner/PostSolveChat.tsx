@@ -370,6 +370,10 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
           },
           body: JSON.stringify({
             message: msg,
+            conversationHistory: messages
+              .filter((m) => m.role === "user" || (m.role === "assistant" && !m.alternatives && !m.candidates && !m.swapOptions))
+              .slice(-10)
+              .map((m) => ({ role: m.role, content: m.content })),
             employees: requestData?.Employees || [],
             schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
           }),

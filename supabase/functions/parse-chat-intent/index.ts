@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { message, employees, schedulePeriod } = await req.json();
+    const { message, conversationHistory, employees, schedulePeriod } = await req.json();
 
     const empList = (employees || []).map((e: any) => 
       `- ${e.Name} (Id: ${e.PersonId ?? e.Id})`
@@ -57,6 +57,19 @@ Use the parse_scheduling_intent function to return the structured result.`;
       throw new Error("LOVABLE_API_KEY is not configured");
     }
 
+    // Build messages with conversation history for context
+    const aiMessages: { role: string; content: string }[] = [
+      { role: "system", content: systemPrompt },
+    ];
+    
+    if (conversationHistory && Array.isArray(conversationHistory)) {
+      for (const h of conversationHistory) {
+        aiMessages.push({ role: h.role === "user" ? "user" : "assistant", content: h.content });
+      }
+    }
+    
+    aiMessages.push({ role: "user", content: message });
+
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -65,10 +78,7 @@ Use the parse_scheduling_intent function to return the structured result.`;
       },
       body: JSON.stringify({
         model: "google/gemini-3-flash-preview",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message },
-        ],
+        messages: aiMessages,
         temperature: 0.1,
         tools: [
           {
