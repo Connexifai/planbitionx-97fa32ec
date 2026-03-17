@@ -476,6 +476,88 @@ export function PostSolveChat({ requestData, solverAssignments, onApplyAlternati
         return;
       }
 
+      // ── Add days intent: find free days and show options ──
+      if (intent.constraintType === "add_days") {
+        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const empId = String(intent.employeeId);
+        const empAssignments = (solverAssignments || []).filter(
+          (a: any) => String(a.PersonId) === String(empId)
+        );
+
+        // Build shift name & employee name lookups
+        const shiftNameMap = new Map<string, string>();
+        for (const s of (requestData?.Shifts || [])) {
+          shiftNameMap.set(String(s.Id), s.Name || "");
+        }
+        const empNameMap = new Map<string, string>();
+        for (const e of (requestData?.Employees || [])) {
+          empNameMap.set(String(e.PersonId ?? e.Id), e.Name || "");
+        }
+
+        // Iterate schedule dates to find days the employee is NOT scheduled
+        const startDate = requestData?.Start ? new Date(requestData.Start) : null;
+        const endDate = requestData?.End ? new Date(requestData.End) : null;
+        const addDayOptions: AddDayOption[] = [];
+
+        if (startDate && endDate) {
+          const current = new Date(startDate);
+          while (current <= endDate) {
+            const solverDay = current.getDay() === 0 ? 6 : current.getDay() - 1;
+            const dateStr = current.toISOString().split("T")[0];
+
+            const empOnThisDate = empAssignments.some((a: any) => a.Start?.split("T")[0] === dateStr);
+
+            if (!empOnThisDate) {
+              const othersOnDate = (solverAssignments || [])
+                .filter((a: any) => a.Start?.split("T")[0] === dateStr && String(a.PersonId) !== empId)
+                .map((a: any) => ({
+                  id: String(a.PersonId),
+                  name: empNameMap.get(String(a.PersonId)) || String(a.PersonId),
+                  shiftName: shiftNameMap.get(String(a.ShiftId)) || a.ShiftName || "",
+                }));
+              const uniqueOthers = Array.from(new Map(othersOnDate.map((o) => [o.id, o])).values());
+
+              addDayOptions.push({
+                dayOfWeek: solverDay,
+                date: dateStr,
+                label: `${dayNamesNL[solverDay].charAt(0).toUpperCase() + dayNamesNL[solverDay].slice(1)} ${dateStr}`,
+                currentEmployees: uniqueOthers,
+              });
+            }
+            current.setDate(current.getDate() + 1);
+          }
+        }
+
+        if (addDayOptions.length === 0) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: Date.now() + 1,
+              role: "assistant",
+              content: `ℹ️ **${intent.employeeName}** is al elke dag ingepland. Er zijn geen vrije dagen meer beschikbaar.`,
+            },
+          ]);
+          setIsTyping(false);
+          return;
+        }
+
+        const currentDayCount = empAssignments.length;
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `📅 **${intent.employeeName}** is momenteel **${currentDayCount} van de ${currentDayCount + addDayOptions.length} dagen** ingepland.\n\nOp welke dag wil je ${intent.employeeName} extra inplannen? Ik zoek dan wie er uitgewisseld kan worden.`,
+            addDayOptions,
+            addDaysEmployeeId: empId,
+            addDaysEmployeeName: intent.employeeName,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
       // Step 2: Build constraint
       const constraint: AlternativeConstraint = {
         employeeId: String(intent.employeeId),
