@@ -300,15 +300,46 @@ function WeekGrid({ data }: { data: JsonScheduleData }) {
 
 /* ── Main Viewer ─────────────────────────── */
 
-export function JsonDataViewer({ data }: { data: JsonScheduleData }) {
+export function JsonDataViewer({ data, onNewUpload }: { data: JsonScheduleData; onNewUpload?: (rawJson: string) => void }) {
   const { t } = useTranslation();
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleFile = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const text = ev.target?.result as string;
+      onNewUpload?.(text);
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="space-y-4 animate-fade-in">
-      <div className="flex items-center gap-2 mb-1">
-        <div className="h-2 w-2 rounded-full bg-kpi-assignments animate-pulse" />
-        <p className="text-sm font-medium text-muted-foreground">
-          {t("json.loaded")} · {data.start.split("T")[0]} {t("json.toDate")} {data.end.split("T")[0]}
-        </p>
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".json,application/json"
+        className="hidden"
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); e.target.value = ""; }}
+      />
+      <div className="flex items-center justify-between mb-1">
+        <div className="flex items-center gap-2">
+          <div className="h-2 w-2 rounded-full bg-kpi-assignments animate-pulse" />
+          <p className="text-sm font-medium text-muted-foreground">
+            {t("json.loaded")} · {data.start.split("T")[0]} {t("json.toDate")} {data.end.split("T")[0]}
+          </p>
+        </div>
+        {onNewUpload && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="gap-1.5 text-xs"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="h-3.5 w-3.5" />
+            {t("json.newUpload", "Nieuwe JSON laden")}
+          </Button>
+        )}
       </div>
       <SummaryCards data={data} />
       <EmployeeTable data={data} />
