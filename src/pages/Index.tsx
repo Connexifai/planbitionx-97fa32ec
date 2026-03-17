@@ -501,7 +501,7 @@ export default function Index() {
               <div className="flex-1 flex flex-col min-h-0 relative">
                 <div className="overflow-y-auto roster-scroll p-3 md:p-5 space-y-3 md:space-y-5">
                   <KpiCards solved={false} data={undefined} />
-                  {jsonLoaded && scheduleData && <JsonDataViewer data={scheduleData} />}
+                  {jsonLoaded && scheduleData && <JsonDataViewer data={scheduleData} onNewUpload={handleJsonLoaded} />}
                 </div>
 
                 {!chatOpen && !jsonLoaded && (
