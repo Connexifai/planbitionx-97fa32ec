@@ -19,10 +19,17 @@ export interface EmployeeConstraint {
   };
 }
 
+interface CandidateEmployee {
+  id: string;
+  name: string;
+}
+
 interface Message {
   id: number;
   role: "user" | "assistant";
   content: string;
+  candidates?: CandidateEmployee[];
+  originalMessage?: string;
 }
 
 interface AiBriefingChatProps {
