@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod } = await req.json();
+    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod, solverExplanations } = await req.json();
 
     // Build context about the employee's schedule
     const empAssignments = (assignments || []).filter(
