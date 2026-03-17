@@ -601,6 +601,7 @@ export default function Index() {
                         <PostSolveChat
                           requestData={requestData}
                           solverAssignments={solverAssignments}
+                          solverExplanations={solverExplanations}
                           onApplyAlternative={handleApplyAlternative}
                           onNavigateToEmployee={handleNavigateToEmployee}
                           onFilterRoster={handleFilterRoster}
