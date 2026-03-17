@@ -504,25 +504,42 @@ export default function Index() {
                   {jsonLoaded && scheduleData && <JsonDataViewer data={scheduleData} />}
                 </div>
 
-                {!chatOpen && (
+                {!chatOpen && !jsonLoaded && (
+                  <div className="flex-1 flex flex-col items-center justify-center pointer-events-none">
+                    <div className="flex flex-col items-center">
+                      <div className="relative pointer-events-auto">
+                        <img
+                          src={robotImg}
+                          alt="AI Assistent"
+                          className="object-contain drop-shadow-2xl robot-float"
+                          style={{
+                            width: isMobile ? 240 : 420,
+                            height: isMobile ? 240 : 420,
+                          }}
+                        />
+                        {!isMobile && (
+                          <div className="absolute right-[75%] top-[15%]">
+                            <RobotQuoteBubble />
+                          </div>
+                        )}
+                      </div>
+                      <p className="mt-2 whitespace-nowrap text-sm md:text-lg font-semibold text-muted-foreground">
+                        {t("robot.uploadJson")}
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {!chatOpen && jsonLoaded && (
                   <div
                     className="fixed z-50 pointer-events-none"
                     style={{
-                      transition: 'all 3s cubic-bezier(0.4, 0, 0.2, 1)',
-                      ...(jsonLoaded
-                        ? { bottom: isMobile ? 16 : 24, right: isMobile ? 16 : 24, top: 'auto', left: 'auto' }
-                        : { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
-                      ),
+                      bottom: isMobile ? 16 : 24,
+                      right: isMobile ? 16 : 24,
                     }}
                   >
                     <div className="flex flex-col items-center">
-                      {!jsonLoaded && (
-                        <p className="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap text-sm md:text-lg font-semibold text-muted-foreground">
-                          {t("robot.uploadJson")}
-                        </p>
-                      )}
-
-                      {robotLanded && jsonLoaded && (
+                      {robotLanded && (
                         <div
                           className="relative bg-card/95 backdrop-blur-md border border-border shadow-2xl rounded-3xl px-4 md:px-5 py-2.5 md:py-3 max-w-[200px] md:max-w-[240px] mb-2 animate-fade-in cursor-pointer pointer-events-auto"
                           onClick={() => setChatOpen(true)}
@@ -531,29 +548,22 @@ export default function Index() {
                           <div className="absolute -bottom-2.5 right-6 w-5 h-5 bg-card/95 backdrop-blur-md border-b border-r border-border rotate-45 rounded-sm" />
                         </div>
                       )}
-
                       <div
                         className={cn(
                           "relative pointer-events-auto",
-                          jsonLoaded && robotLanded ? "cursor-pointer" : ""
+                          robotLanded ? "cursor-pointer" : ""
                         )}
-                        onClick={jsonLoaded && robotLanded ? () => setChatOpen(true) : undefined}
+                        onClick={robotLanded ? () => setChatOpen(true) : undefined}
                       >
                         <img
                           src={robotImg}
                           alt="AI Assistent"
                           className="object-contain drop-shadow-2xl robot-float"
                           style={{
-                            transition: 'width 3s cubic-bezier(0.4, 0, 0.2, 1), height 3s cubic-bezier(0.4, 0, 0.2, 1)',
-                            width: jsonLoaded ? (isMobile ? 140 : 224) : (isMobile ? 240 : 420),
-                            height: jsonLoaded ? (isMobile ? 140 : 224) : (isMobile ? 240 : 420),
+                            width: isMobile ? 140 : 224,
+                            height: isMobile ? 140 : 224,
                           }}
                         />
-                        {!jsonLoaded && !isMobile && (
-                          <div className="absolute right-[75%] top-[15%]">
-                            <RobotQuoteBubble />
-                          </div>
-                        )}
                       </div>
                     </div>
                   </div>
