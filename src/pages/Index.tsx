@@ -495,7 +495,7 @@ export default function Index() {
                 {activeTab === "roster" && <RosterGrid data={rosterData ?? undefined} employeeConstraints={employeeConstraints} animationState={animationState} onRegisterGridFns={registerGridFns} filter={rosterFilter} onClearFilter={() => setRosterFilter(null)} />}
                 {activeTab === "dienst" && <ServiceRosterGrid data={rosterData ?? undefined} />}
                 {activeTab === "stats" && <StatsDashboard data={rosterData ?? undefined} />}
-                {activeTab === "uitleg" && <ExplanationView data={rosterData ?? undefined} solverExplanations={solverExplanations} solverStatistics={solverStatistics} />}
+                {activeTab === "uitleg" && <ExplanationView data={rosterData ?? undefined} solverExplanations={solverExplanations} solverStatistics={solverStatistics} solverAssignments={solverAssignments} requestData={requestData} />}
               </main>
             ) : (
               <div className="flex-1 flex flex-col min-h-0 relative">
