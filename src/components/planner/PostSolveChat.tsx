@@ -47,6 +47,11 @@ interface Message {
   swapOptions?: SwapOption[];
   /** Base constraint for open swap (missing swapDayOfWeek) */
   swapConstraintBase?: AlternativeConstraint;
+  /** Add days: available days to add the employee to */
+  addDayOptions?: AddDayOption[];
+  /** Employee info for add_days flow */
+  addDaysEmployeeId?: string;
+  addDaysEmployeeName?: string;
 }
 
 export interface RosterFilterState {
