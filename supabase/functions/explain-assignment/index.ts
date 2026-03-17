@@ -62,6 +62,7 @@ Huidige planning van ${employeeName}:
 ${scheduleLines || "(geen diensten ingepland)"}
 
 ${shiftOverview ? "Beschikbare diensten:\n" + shiftOverview : ""}
+${solverContext}
 
 Totaal ingeplande diensten: ${empAssignments.length}
 
