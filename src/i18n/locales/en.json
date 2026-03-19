@@ -527,8 +527,4 @@
     "noJsonTitle": "No data loaded",
     "noJsonDesc": "First load a JSON file via the sidebar before solving."
   },
-  "grid": {
-    "filtered": "Filtered: {{count}} employee(s)",
-    "clearFilter": "Clear filter"
-  }
 }
