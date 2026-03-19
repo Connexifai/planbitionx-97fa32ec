@@ -639,11 +639,11 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           const solverDay = d.getDay() === 0 ? 6 : d.getDay() - 1; // JS→ISO
           occupiedDays.add(solverDay);
         }
-        const freeDays = dayNamesNL
+        const freeDays = dayNamesSwap
           .map((name, idx) => ({ name, idx }))
           .filter(({ idx }) => !occupiedDays.has(idx));
 
-        const conflictDay = constraint.dayOfWeek !== undefined ? dayNamesNL[constraint.dayOfWeek] : constraint.date || "";
+        const conflictDay = constraint.dayOfWeek !== undefined ? dayNamesSwap[constraint.dayOfWeek] : constraint.date || "";
 
         if (freeDays.length === 0) {
           setMessages((prev) => [
