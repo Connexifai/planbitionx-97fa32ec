@@ -281,7 +281,7 @@ const EmployeeRow = memo(function EmployeeRow({
               ) : (
                 <Sparkles className="h-3.5 w-3.5" />
               )}
-              {aiLoading ? "AI analyseert..." : "Vraag AI waarom deze keuze is gemaakt"}
+              {aiLoading ? t("explanation.aiAnalyzing") : t("explanation.askAi")}
             </Button>
           )}
         </div>
