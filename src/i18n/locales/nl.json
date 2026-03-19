@@ -158,7 +158,9 @@
     "day": "Dag",
     "late": "Laat",
     "night": "Nacht",
-    "noData": "Geen data beschikbaar"
+    "noData": "Geen data beschikbaar",
+    "filtered": "Gefilterd: {{count}} medewerker(s)",
+    "clearFilter": "Wis filter"
   },
   "json": {
     "loaded": "JSON geladen",
