@@ -416,7 +416,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `⚠️ ${intent.reason || "Ik kon je verzoek niet begrijpen. Kun je het anders formuleren?"}`,
+              content: `⚠️ ${intent.reason || t("postSolve.notUnderstood")}`,
             },
           ]);
         }
