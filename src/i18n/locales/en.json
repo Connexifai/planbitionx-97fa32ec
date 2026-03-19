@@ -526,5 +526,5 @@
   "planner": {
     "noJsonTitle": "No data loaded",
     "noJsonDesc": "First load a JSON file via the sidebar before solving."
-  },
+  }
 }
