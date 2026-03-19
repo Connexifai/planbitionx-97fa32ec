@@ -8,7 +8,7 @@ import { format, parseISO } from "date-fns";
 import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
 import i18n from "@/i18n";
 
-const dateFnsLocales: Record<string, Locale> = { nl, en: enUS, de, fr, pt, pl, it, es };
+const dateFnsLocales: Record<string, typeof nl> = { nl, en: enUS, de, fr, pt, pl, it, es };
 function getDateLocale() { return dateFnsLocales[i18n.language] || nl; }
 
 interface AffectedEmployee {
