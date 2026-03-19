@@ -158,7 +158,9 @@
     "day": "Dag",
     "late": "Laat",
     "night": "Nacht",
-    "noData": "Geen data beschikbaar"
+    "noData": "Geen data beschikbaar",
+    "filtered": "Gefilterd: {{count}} medewerker(s)",
+    "clearFilter": "Wis filter"
   },
   "json": {
     "loaded": "JSON geladen",
@@ -238,7 +240,15 @@
     "withinTarget": "binnen target",
     "consecutiveSameShift": "aaneengesloten dagen met hetzelfde diensttype",
     "shiftChangeRest": "Minimaal 11 uur rust gegarandeerd bij dienstwissel conform ATW",
-    "employeesOnShift": "medewerkers op dienst"
+    "employeesOnShift": "medewerkers op dienst",
+    "askAi": "Vraag AI waarom deze keuze is gemaakt",
+    "aiAnalyzing": "AI analyseert...",
+    "aiExplanation": "AI Uitleg",
+    "solverStats": "Solver Statistieken",
+    "solveTime": "Oplostijd",
+    "fillRate": "Bezettingsgraad",
+    "totalAssignments": "Toewijzingen",
+    "hardViolations": "Harde overtredingen"
   },
   "days": {
     "mo": "Ma",
@@ -509,8 +519,4 @@
     "noJsonTitle": "Geen data geladen",
     "noJsonDesc": "Laad eerst een JSON-bestand via de sidebar voordat je oplost."
   },
-  "grid": {
-    "filtered": "Gefilterd: {{count}} medewerker(s)",
-    "clearFilter": "Wis filter"
-  }
 }

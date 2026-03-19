@@ -158,7 +158,9 @@
     "day": "Giorno",
     "late": "Pomeriggio",
     "night": "Notte",
-    "noData": "Nessun dato disponibile"
+    "noData": "Nessun dato disponibile",
+    "filtered": "Filtrato: {{count}} dipendente/i",
+    "clearFilter": "Cancella filtro"
   },
   "json": {
     "loaded": "JSON caricato",
@@ -228,7 +230,25 @@
     "rotation": "Rotazione",
     "noQualification": "Senza qualifica",
     "shiftChange": "Cambio turno",
-    "attention": "Punto di attenzione"
+    "attention": "Punto di attenzione",
+    "qualifiedFor": "Qualificato/a per",
+    "noSpecificQual": "Nessuna qualifica specifica — assegnato/a a compiti di supporto",
+    "daysAssigned": "giorni programmati",
+    "of": "di",
+    "overloaded": "sovraccaricato/a",
+    "underloaded": "sottocaricato/a",
+    "withinTarget": "entro l'obiettivo",
+    "consecutiveSameShift": "giorni consecutivi con lo stesso tipo di turno",
+    "shiftChangeRest": "Minimo 11 ore di riposo garantite al cambio turno",
+    "employeesOnShift": "dipendenti in turno",
+    "askAi": "Chiedi all'IA perché è stata fatta questa scelta",
+    "aiAnalyzing": "L'IA sta analizzando...",
+    "aiExplanation": "Spiegazione IA",
+    "solverStats": "Statistiche del solver",
+    "solveTime": "Tempo di risoluzione",
+    "fillRate": "Tasso di occupazione",
+    "totalAssignments": "Assegnazioni",
+    "hardViolations": "Violazioni gravi"
   },
   "days": {
     "mo": "Lun",
@@ -507,8 +527,4 @@
     "noJsonTitle": "Nessun dato caricato",
     "noJsonDesc": "Carica prima un file JSON dalla barra laterale."
   },
-  "grid": {
-    "filtered": "Filtrato: {{count}} dipendente/i",
-    "clearFilter": "Cancella filtro"
-  }
 }

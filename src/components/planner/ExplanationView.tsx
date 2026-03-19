@@ -166,29 +166,29 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
             <TrendingUp className="h-5 w-5" />
           </div>
           <div className="flex-1">
-            <h2 className="text-sm font-bold text-foreground">{t("explanation.solverStats", "Solver Statistieken")}</h2>
+            <h2 className="text-sm font-bold text-foreground">{t("explanation.solverStats")}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
               {stats.ElapsedSeconds !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.solveTime", "Oplostijd")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.solveTime")}</p>
                   <p className="text-sm font-bold">{stats.ElapsedSeconds.toFixed(1)}s</p>
                 </div>
               )}
               {stats.FillRatePercentage !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.fillRate", "Bezettingsgraad")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.fillRate")}</p>
                   <p className="text-sm font-bold">{stats.FillRatePercentage}%</p>
                 </div>
               )}
               {stats.TotalAssignments !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.totalAssignments", "Toewijzingen")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.totalAssignments")}</p>
                   <p className="text-sm font-bold">{stats.TotalAssignments}</p>
                 </div>
               )}
               {stats.HardViolations !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.hardViolations", "Harde overtredingen")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.hardViolations")}</p>
                   <p className={`text-sm font-bold ${stats.HardViolations > 0 ? "text-destructive" : "text-kpi-assignments"}`}>{stats.HardViolations}</p>
                 </div>
               )}
@@ -219,6 +219,7 @@ const EmployeeRow = memo(function EmployeeRow({
   aiLoading: boolean;
   aiExplanation?: string;
 }) {
+  const { t } = useTranslation();
   return (
     <div className="border border-border/50 rounded-xl bg-card overflow-hidden">
       <button
@@ -261,7 +262,7 @@ const EmployeeRow = memo(function EmployeeRow({
             <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1">
                 <Sparkles className="h-3.5 w-3.5 text-primary shrink-0" />
-                <span className="text-xs font-semibold text-primary">AI Uitleg</span>
+                <span className="text-xs font-semibold text-primary">{t("explanation.aiExplanation")}</span>
               </div>
               <p className="text-[11px] text-foreground leading-relaxed whitespace-pre-line">{aiExplanation}</p>
             </div>
@@ -281,7 +282,7 @@ const EmployeeRow = memo(function EmployeeRow({
               ) : (
                 <Sparkles className="h-3.5 w-3.5" />
               )}
-              {aiLoading ? "AI analyseert..." : "Vraag AI waarom deze keuze is gemaakt"}
+              {aiLoading ? t("explanation.aiAnalyzing") : t("explanation.askAi")}
             </Button>
           )}
         </div>

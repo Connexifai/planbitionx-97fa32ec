@@ -97,7 +97,7 @@ export function ServiceRosterGrid({ data }: ServiceRosterGridProps) {
   if (!data) {
     return (
       <div className="rounded-xl border border-border/50 bg-card p-8 text-center text-muted-foreground">
-        <p className="text-sm">{t("grid.noData", "Geen roosterdata beschikbaar")}</p>
+        <p className="text-sm">{t("grid.noData")}</p>
       </div>
     );
   }

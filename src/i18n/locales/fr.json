@@ -158,7 +158,9 @@
     "day": "Jour",
     "late": "Soir",
     "night": "Nuit",
-    "noData": "Aucune donnée disponible"
+    "noData": "Aucune donnée disponible",
+    "filtered": "Filtré : {{count}} employé(s)",
+    "clearFilter": "Effacer le filtre"
   },
   "json": {
     "loaded": "JSON chargé",
@@ -228,7 +230,25 @@
     "rotation": "Rotation",
     "noQualification": "Sans qualification",
     "shiftChange": "Changement de service",
-    "attention": "Point d'attention"
+    "attention": "Point d'attention",
+    "qualifiedFor": "Qualifié(e) pour",
+    "noSpecificQual": "Pas de qualification spécifique — affecté(e) aux tâches de support",
+    "daysAssigned": "jours planifiés",
+    "of": "de",
+    "overloaded": "surchargé(e)",
+    "underloaded": "sous-chargé(e)",
+    "withinTarget": "dans l'objectif",
+    "consecutiveSameShift": "jours consécutifs avec le même type de poste",
+    "shiftChangeRest": "Minimum 11 heures de repos garanti lors du changement de poste",
+    "employeesOnShift": "employés en poste",
+    "askAi": "Demander à l'IA pourquoi ce choix a été fait",
+    "aiAnalyzing": "L'IA analyse...",
+    "aiExplanation": "Explication IA",
+    "solverStats": "Statistiques du solver",
+    "solveTime": "Temps de résolution",
+    "fillRate": "Taux de remplissage",
+    "totalAssignments": "Affectations",
+    "hardViolations": "Violations graves"
   },
   "days": {
     "mo": "Lun",
@@ -507,8 +527,4 @@
     "noJsonTitle": "Aucune donnée chargée",
     "noJsonDesc": "Chargez d'abord un fichier JSON via la barre latérale."
   },
-  "grid": {
-    "filtered": "Filtré : {{count}} employé(s)",
-    "clearFilter": "Effacer le filtre"
-  }
 }

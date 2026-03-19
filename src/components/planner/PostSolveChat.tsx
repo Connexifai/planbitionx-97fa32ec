@@ -13,6 +13,9 @@ import { format, parseISO } from "date-fns";
 import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
 import { EmployeeApprovalDialog } from "./EmployeeApprovalDialog";
 
+const dateFnsLocales: Record<string, typeof nl> = { nl, en: enUS, de, fr, pt, pl, it, es };
+function getDateLocale() { return dateFnsLocales[i18n.language] || nl; }
+
 interface CandidateEmployee {
   id: string;
   name: string;
@@ -84,7 +87,7 @@ interface ClassifiedAlternative {
 function formatShiftDate(isoDate?: string): string {
   if (!isoDate) return "";
   try {
-    return format(parseISO(isoDate), "EEEE d MMM", { locale: nl });
+    return format(parseISO(isoDate), "EEEE d MMM", { locale: getDateLocale() });
   } catch {
     return isoDate.split("T")[0] || "";
   }

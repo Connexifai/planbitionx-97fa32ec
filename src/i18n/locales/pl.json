@@ -158,7 +158,9 @@
     "day": "Dzień",
     "late": "Popołudnie",
     "night": "Noc",
-    "noData": "Brak danych"
+    "noData": "Brak danych",
+    "filtered": "Filtrowane: {{count}} pracownik(ów)",
+    "clearFilter": "Wyczyść filtr"
   },
   "json": {
     "loaded": "JSON załadowany",
@@ -228,7 +230,25 @@
     "rotation": "Rotacja",
     "noQualification": "Brak kwalifikacji",
     "shiftChange": "Zmiana zmiany",
-    "attention": "Punkt uwagi"
+    "attention": "Punkt uwagi",
+    "qualifiedFor": "Kwalifikowany/a do",
+    "noSpecificQual": "Brak konkretnej kwalifikacji — przydzielony/a do zadań wspierających",
+    "daysAssigned": "dni zaplanowanych",
+    "of": "z",
+    "overloaded": "przeciążony/a",
+    "underloaded": "niedociążony/a",
+    "withinTarget": "w ramach celu",
+    "consecutiveSameShift": "kolejnych dni z tym samym typem zmiany",
+    "shiftChangeRest": "Minimum 11 godzin odpoczynku gwarantowane przy zmianie",
+    "employeesOnShift": "pracowników na zmianie",
+    "askAi": "Zapytaj AI, dlaczego dokonano tego wyboru",
+    "aiAnalyzing": "AI analizuje...",
+    "aiExplanation": "Wyjaśnienie AI",
+    "solverStats": "Statystyki solvera",
+    "solveTime": "Czas rozwiązania",
+    "fillRate": "Współczynnik wypełnienia",
+    "totalAssignments": "Przydzielenia",
+    "hardViolations": "Poważne naruszenia"
   },
   "days": {
     "mo": "Pn",
@@ -507,8 +527,4 @@
     "noJsonTitle": "Brak załadowanych danych",
     "noJsonDesc": "Najpierw załaduj plik JSON z paska bocznego."
   },
-  "grid": {
-    "filtered": "Filtrowane: {{count}} pracownik(ów)",
-    "clearFilter": "Wyczyść filtr"
-  }
 }

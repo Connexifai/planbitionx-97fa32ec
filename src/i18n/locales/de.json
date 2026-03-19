@@ -158,7 +158,9 @@
     "day": "Tag",
     "late": "Spät",
     "night": "Nacht",
-    "noData": "Keine Daten verfügbar"
+    "noData": "Keine Daten verfügbar",
+    "filtered": "Gefiltert: {{count}} Mitarbeiter",
+    "clearFilter": "Filter löschen"
   },
   "json": {
     "loaded": "JSON geladen",
@@ -228,7 +230,25 @@
     "rotation": "Rotation",
     "noQualification": "Keine Qualifikation",
     "shiftChange": "Schichtwechsel",
-    "attention": "Aufmerksamkeitspunkt"
+    "attention": "Aufmerksamkeitspunkt",
+    "qualifiedFor": "Qualifiziert für",
+    "noSpecificQual": "Keine spezifische Qualifikation — eingesetzt für unterstützende Aufgaben",
+    "daysAssigned": "Tage eingeplant",
+    "of": "von",
+    "overloaded": "überlastet",
+    "underloaded": "unterlastet",
+    "withinTarget": "innerhalb des Ziels",
+    "consecutiveSameShift": "aufeinanderfolgende Tage mit demselben Schichttyp",
+    "shiftChangeRest": "Mindestens 11 Stunden Ruhe bei Schichtwechsel gemäß AZG garantiert",
+    "employeesOnShift": "Mitarbeiter in der Schicht",
+    "askAi": "KI fragen, warum diese Wahl getroffen wurde",
+    "aiAnalyzing": "KI analysiert...",
+    "aiExplanation": "KI-Erklärung",
+    "solverStats": "Solver-Statistiken",
+    "solveTime": "Lösungszeit",
+    "fillRate": "Auslastungsgrad",
+    "totalAssignments": "Zuweisungen",
+    "hardViolations": "Harte Verstöße"
   },
   "days": {
     "mo": "Mo",
@@ -507,8 +527,4 @@
     "noJsonTitle": "Keine Daten geladen",
     "noJsonDesc": "Lade zuerst eine JSON-Datei über die Seitenleiste."
   },
-  "grid": {
-    "filtered": "Gefiltert: {{count}} Mitarbeiter",
-    "clearFilter": "Filter löschen"
-  }
 }
