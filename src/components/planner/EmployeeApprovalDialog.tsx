@@ -142,7 +142,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                           {t("approval.greeting", { name: employee.name.split(" ")[0] })}
                         </p>
                         <p className="text-[14px] text-muted-foreground leading-relaxed">
-                          Er is een roosterwijziging waar jouw akkoord voor nodig is:
+                          {t("approval.changeDescription")}
                         </p>
 
                         {/* Changes */}
