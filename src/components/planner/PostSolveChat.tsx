@@ -871,7 +871,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `❌ Er ging iets mis bij het opnieuw zoeken: ${error instanceof Error ? error.message : "Onbekende fout"}`,
+          content: t("postSolve.reSearchError", { error: error instanceof Error ? error.message : t("postSolve.unknownError") }),
         },
       ]);
     } finally {
