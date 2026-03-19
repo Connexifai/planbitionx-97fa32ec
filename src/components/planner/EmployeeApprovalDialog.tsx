@@ -331,12 +331,12 @@ export function EmployeeApprovalDialog({
           {/* Header info above phone */}
           <div className="text-center space-y-1.5 animate-fade-in">
             <p className="text-sm font-semibold text-foreground">
-              {phase === "notifying" ? "Bevestiging verzenden" : phase === "done" ? "Afgerond" : "Goedkeuring vragen"}
+              {phase === "notifying" ? t("approval.sendingConfirmation") : phase === "done" ? t("approval.completed") : t("approval.requestingApproval")}
             </p>
             <p className="text-xs text-muted-foreground">
               {phase === "notifying" || phase === "done"
-                ? `${constraintEmployeeName || "Aanvrager"} wordt op de hoogte gebracht`
-                : `${activeEmployee?.name ?? ""} · ${approvedCount}/${employees.length} akkoord`}
+                ? t("approval.notifiedMessage", { name: constraintEmployeeName || t("common.requester") })
+                : `${activeEmployee?.name ?? ""} · ${t("approval.approvalProgress", { approved: approvedCount, total: employees.length })}`}
             </p>
             {/* Dot indicators */}
             {phase === "approving" && (
