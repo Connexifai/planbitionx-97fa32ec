@@ -762,7 +762,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: resultMsgId,
             role: "assistant",
-            content: (t as any)("postSolve.alternativesFound", { count: formatAlternativeCount(narrowPrepared) }),
+            content: (t as any)("postSolve.alternativesFound", { count: formatAlternativeCount(narrowPrepared, t) }),
             alternatives: narrowPrepared.visibleAlts,
             baseline: altResponse.Baseline,
             constraintSummary: intent.summary,
