@@ -133,7 +133,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                         </p>
                         <div className="flex items-center justify-center gap-2 py-3 text-primary text-[16px] font-semibold animate-fade-in">
                           <CheckCircle2 className="h-6 w-6" />
-                          Goedgekeurd
+                          {t("approval.approved")}
                         </div>
                       </>
                     ) : (
