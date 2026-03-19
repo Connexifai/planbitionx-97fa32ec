@@ -483,7 +483,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
       // ── Add days intent: find free days and show options ──
       if (intent.constraintType === "add_days") {
-        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const dayNamesLocal = t("postSolve.dayNames", { returnObjects: true }) as string[];
         const empId = String(intent.employeeId);
         const empAssignments = (solverAssignments || []).filter(
           (a: any) => String(a.PersonId) === String(empId)
