@@ -812,7 +812,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `✅ **Alle medewerkers akkoord — wijziging doorgevoerd!**`,
+        content: t("postSolve.allApprovedApplied"),
         alternatives: [alt],
         applied: true,
       },
