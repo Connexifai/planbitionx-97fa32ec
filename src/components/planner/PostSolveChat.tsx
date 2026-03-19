@@ -960,7 +960,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       console.error("Swap day selection error:", error);
       setMessages((prev) => [
         ...prev,
-        { id: Date.now() + 1, role: "assistant", content: `❌ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}` },
+        { id: Date.now() + 1, role: "assistant", content: t("postSolve.errorOccurred", { error: error instanceof Error ? error.message : t("postSolve.unknownError") }) },
       ]);
     } finally {
       setIsTyping(false);
