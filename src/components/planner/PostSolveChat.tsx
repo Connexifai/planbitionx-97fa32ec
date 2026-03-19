@@ -1090,7 +1090,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       if (prepared.visibleAlts.length === 0) {
         setMessages((prev) => [
           ...prev,
-          { id: Date.now() + 2, role: "assistant", content: `⚠️ Geen geschikte alternatieven gevonden voor ${option.label}.` },
+          { id: Date.now() + 2, role: "assistant", content: t("postSolve.noAlternativesForDay", { day: option.label }) },
         ]);
       } else {
         setMessages((prev) => [
@@ -1098,10 +1098,10 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 2,
             role: "assistant",
-            content: `Ik heb **${prepared.visibleAlts.length} ${prepared.visibleAlts.length === 1 ? "optie" : "opties"}** gevonden om ${targetEmployeeName} in te plannen op ${option.label}:`,
+            content: t("postSolve.displacementOptionsFound", { count: prepared.visibleAlts.length, name: targetEmployeeName, day: option.label }),
             alternatives: prepared.visibleAlts,
             baseline: altResponse.Baseline,
-            constraintSummary: `${targetEmployeeName} inplannen op ${option.label}`,
+            constraintSummary: t("postSolve.scheduleOn", { name: targetEmployeeName, day: option.label }),
             pendingConstraint: constraint,
           },
         ]);
