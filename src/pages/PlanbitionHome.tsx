@@ -25,13 +25,6 @@ import { Card } from "@/components/ui/card";
 import robotImg from "@/assets/robot-assistant.png";
 import SolverShowcase from "@/components/home/SolverShowcase";
 
-const clients = [
-  { name: "Timing", src: "/images/clients/timing.png" },
-  { name: "Adecco", src: "/images/clients/adecco.png" },
-  { name: "Stork", src: "/images/clients/stork.png" },
-  { name: "Consolid", src: "/images/clients/consolid.png" },
-  { name: "YoungCapital", src: "/images/clients/yc.png" },
-];
 
 const featureIcons = [Calendar, Users, Handshake, UserCheck, Building2, BarChart3, Clock, Plug];
 
