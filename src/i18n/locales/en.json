@@ -469,7 +469,24 @@
       "Saturday",
       "Sunday"
     ],
-    "shiftOpenDefault": "The shift will not be filled and remains open."
+    "shiftOpenDefault": "The shift will not be filled and remains open.",
+    "solutionCount_one": "1 solution",
+    "solutionCount_other": "{{count}} solutions",
+    "solutionCount_zero": "0 solutions",
+    "optionCount_one": "1 option",
+    "understoodSwapDay": "🔄 **Understood:** {{name}} wants to swap {{offDay}} with {{swapDay}}.\n\n⏳ Looking for the best swap options...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** is not scheduled on {{day}}. There is no shift to swap.\n\nTry another day.",
+    "noSwapOptions": "⚠️ No swap options found for this combination.",
+    "swapSummary": "{{name}} swaps {{offDay}} with {{swapDay}}",
+    "openShiftSummary": "{{name}} is scheduled on {{shift}} — open shift.",
+    "openShiftReason": "Open shift — no other employee needs to be displaced.",
+    "openShiftsFound": "✅ There are **{{count}} open shift(s)** on {{day}} where {{name}} can be directly scheduled — without displacing other employees:",
+    "scheduleOnOpen": "Schedule {{name}} on {{day}} (open)",
+    "allSpotsOccupied": "There are no open shifts on **{{day}}**. All {{count}} spots are occupied.",
+    "searchingDisplacement": "Looking for alternatives where {{name}} takes over from someone...",
+    "noAlternativesForDay": "⚠️ No suitable alternatives found for {{day}}.",
+    "displacementOptionsFound": "I found **{{count}}** options to schedule {{name}} on {{day}}:",
+    "scheduleOn": "Schedule {{name}} on {{day}}"
   },
   "approval": {
     "confirmation": "Confirmation",

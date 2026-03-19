@@ -459,7 +459,24 @@
       "piątek",
       "sobota",
       "niedziela"
-    ]
+    ],
+    "solutionCount_one": "1 rozwiązanie",
+    "solutionCount_other": "{{count}} rozwiązań",
+    "solutionCount_zero": "0 rozwiązań",
+    "optionCount_one": "1 opcja",
+    "understoodSwapDay": "🔄 **Zrozumiałem:** {{name}} chce zamienić {{offDay}} na {{swapDay}}.\n\n⏳ Szukam najlepszych opcji zamiany...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** nie jest zaplanowany/a w {{day}}. Nie ma zmiany do zamiany.\n\nSpróbuj inny dzień.",
+    "noSwapOptions": "⚠️ Nie znaleziono opcji zamiany dla tej kombinacji.",
+    "swapSummary": "{{name}} zamienia {{offDay}} na {{swapDay}}",
+    "openShiftSummary": "{{name}} zostaje zaplanowany/a na {{shift}} — otwarta zmiana.",
+    "openShiftReason": "Otwarta zmiana — żaden inny pracownik nie musi być przeniesiony.",
+    "openShiftsFound": "✅ Jest **{{count}} otwarta/ych zmian(a)** w {{day}}, gdzie {{name}} może zostać bezpośrednio zaplanowany/a — bez przenoszenia innych pracowników:",
+    "scheduleOnOpen": "Zaplanuj {{name}} na {{day}} (otwarte)",
+    "allSpotsOccupied": "Nie ma otwartych zmian w **{{day}}**. Wszystkie {{count}} miejsc jest zajętych.",
+    "searchingDisplacement": "Szukam alternatyw, w których {{name}} przejmuje od kogoś...",
+    "noAlternativesForDay": "⚠️ Nie znaleziono odpowiednich alternatyw dla {{day}}.",
+    "displacementOptionsFound": "Znalazłem **{{count}}** opcji, aby zaplanować {{name}} w {{day}}:",
+    "scheduleOn": "Zaplanuj {{name}} na {{day}}"
   },
   "approval": {
     "confirmation": "Potwierdzenie",

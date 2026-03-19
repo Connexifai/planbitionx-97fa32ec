@@ -459,7 +459,24 @@
       "Freitag",
       "Samstag",
       "Sonntag"
-    ]
+    ],
+    "solutionCount_one": "1 Lösung",
+    "solutionCount_other": "{{count}} Lösungen",
+    "solutionCount_zero": "0 Lösungen",
+    "optionCount_one": "1 Option",
+    "understoodSwapDay": "🔄 **Verstanden:** {{name}} möchte {{offDay}} mit {{swapDay}} tauschen.\n\n⏳ Suche nach den besten Tauschoptionen...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** ist am {{day}} nicht eingeplant. Es gibt keine Schicht zum Tauschen.\n\nVersuche einen anderen Tag.",
+    "noSwapOptions": "⚠️ Keine Tauschoptionen für diese Kombination gefunden.",
+    "swapSummary": "{{name}} tauscht {{offDay}} mit {{swapDay}}",
+    "openShiftSummary": "{{name}} wird auf {{shift}} eingeplant — offene Schicht.",
+    "openShiftReason": "Offene Schicht — kein anderer Mitarbeiter muss verschoben werden.",
+    "openShiftsFound": "✅ Es gibt **{{count}} offene Schicht(en)** am {{day}}, wo {{name}} direkt eingeplant werden kann — ohne andere Mitarbeiter zu verschieben:",
+    "scheduleOnOpen": "{{name}} am {{day}} einplanen (offen)",
+    "allSpotsOccupied": "Es gibt keine offenen Schichten am **{{day}}**. Alle {{count}} Plätze sind besetzt.",
+    "searchingDisplacement": "Suche nach Alternativen, bei denen {{name}} jemanden übernimmt...",
+    "noAlternativesForDay": "⚠️ Keine geeigneten Alternativen für {{day}} gefunden.",
+    "displacementOptionsFound": "Ich habe **{{count}}** Optionen gefunden, um {{name}} am {{day}} einzuplanen:",
+    "scheduleOn": "{{name}} am {{day}} einplanen"
   },
   "approval": {
     "confirmation": "Bestätigung",

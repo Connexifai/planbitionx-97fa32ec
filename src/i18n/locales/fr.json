@@ -459,7 +459,24 @@
       "vendredi",
       "samedi",
       "dimanche"
-    ]
+    ],
+    "solutionCount_one": "1 solution",
+    "solutionCount_other": "{{count}} solutions",
+    "solutionCount_zero": "0 solutions",
+    "optionCount_one": "1 option",
+    "understoodSwapDay": "🔄 **Compris :** {{name}} veut échanger {{offDay}} avec {{swapDay}}.\n\n⏳ Recherche des meilleures options d'échange...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** n'est pas planifié(e) le {{day}}. Il n'y a pas de poste à échanger.\n\nEssayez un autre jour.",
+    "noSwapOptions": "⚠️ Aucune option d'échange trouvée pour cette combinaison.",
+    "swapSummary": "{{name}} échange {{offDay}} avec {{swapDay}}",
+    "openShiftSummary": "{{name}} est planifié(e) sur {{shift}} — poste ouvert.",
+    "openShiftReason": "Poste ouvert — aucun autre employé n'a besoin d'être déplacé.",
+    "openShiftsFound": "✅ Il y a **{{count}} poste(s) ouvert(s)** le {{day}} où {{name}} peut être directement planifié(e) — sans déplacer d'autres employés :",
+    "scheduleOnOpen": "Planifier {{name}} le {{day}} (ouvert)",
+    "allSpotsOccupied": "Il n'y a pas de postes ouverts le **{{day}}**. Les {{count}} places sont toutes occupées.",
+    "searchingDisplacement": "Recherche d'alternatives où {{name}} reprend le poste de quelqu'un...",
+    "noAlternativesForDay": "⚠️ Aucune alternative appropriée trouvée pour {{day}}.",
+    "displacementOptionsFound": "J'ai trouvé **{{count}}** options pour planifier {{name}} le {{day}} :",
+    "scheduleOn": "Planifier {{name}} le {{day}}"
   },
   "approval": {
     "confirmation": "Confirmation",

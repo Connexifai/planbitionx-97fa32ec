@@ -459,7 +459,24 @@
       "sexta-feira",
       "sábado",
       "domingo"
-    ]
+    ],
+    "solutionCount_one": "1 solução",
+    "solutionCount_other": "{{count}} soluções",
+    "solutionCount_zero": "0 soluções",
+    "optionCount_one": "1 opção",
+    "understoodSwapDay": "🔄 **Entendido:** {{name}} quer trocar {{offDay}} por {{swapDay}}.\n\n⏳ A procurar as melhores opções de troca...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** não está escalado/a no {{day}}. Não há turno para trocar.\n\nTente outro dia.",
+    "noSwapOptions": "⚠️ Nenhuma opção de troca encontrada para esta combinação.",
+    "swapSummary": "{{name}} troca {{offDay}} por {{swapDay}}",
+    "openShiftSummary": "{{name}} é escalado/a em {{shift}} — turno aberto.",
+    "openShiftReason": "Turno aberto — nenhum outro funcionário precisa ser deslocado.",
+    "openShiftsFound": "✅ Há **{{count}} turno(s) aberto(s)** no {{day}} onde {{name}} pode ser escalado/a diretamente — sem deslocar outros funcionários:",
+    "scheduleOnOpen": "Escalar {{name}} no {{day}} (aberto)",
+    "allSpotsOccupied": "Não há turnos abertos no **{{day}}**. Todos os {{count}} lugares estão ocupados.",
+    "searchingDisplacement": "A procurar alternativas em que {{name}} substitui alguém...",
+    "noAlternativesForDay": "⚠️ Nenhuma alternativa adequada encontrada para {{day}}.",
+    "displacementOptionsFound": "Encontrei **{{count}}** opções para escalar {{name}} no {{day}}:",
+    "scheduleOn": "Escalar {{name}} no {{day}}"
   },
   "approval": {
     "confirmation": "Confirmação",
