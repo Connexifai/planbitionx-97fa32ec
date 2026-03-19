@@ -405,7 +405,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `🤔 Er zijn meerdere medewerkers met die naam. Wie bedoel je?`,
+              content: t("postSolve.ambiguousEmployee"),
               candidates: intent.candidates,
               originalMessage: msg,
             },
