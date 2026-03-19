@@ -101,7 +101,8 @@
     "aiExplanationSub": "Verständliche Erklärung via Claude nach dem Lösen",
     "seedRepeat": "Seed-Wiederholung",
     "seedRepeatSub": "Gleiche Zahl = gleicher Plan; 0 = zufällig",
-    "callbackUrl": "Callback-URL"
+    "callbackUrl": "Callback-URL",
+    "example": "Beispiel"
   },
   "solving": {
     "title": "Dienstplan wird gelöst",

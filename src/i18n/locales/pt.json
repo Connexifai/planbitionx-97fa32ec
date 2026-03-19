@@ -101,7 +101,8 @@
     "aiExplanationSub": "Explicação compreensível via Claude após resolução",
     "seedRepeat": "Semente de repetição",
     "seedRepeatSub": "Mesmo número = mesma escala; 0 = aleatório",
-    "callbackUrl": "URL de callback"
+    "callbackUrl": "URL de callback",
+    "example": "Exemplo"
   },
   "solving": {
     "title": "A resolver a escala",
