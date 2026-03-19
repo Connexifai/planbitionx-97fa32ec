@@ -1072,7 +1072,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       // ── Step 2: No open shifts — fall back to solver to displace someone ──
       const othersCount = option.currentEmployees.length;
       const othersText = othersCount > 0
-        ? `Er zijn geen openstaande diensten op **${option.label}**. Alle ${othersCount} plekken zijn bezet.\n\n`
+        ? t("postSolve.allSpotsOccupied", { day: option.label, count: othersCount }) + "\n\n"
         : "";
 
       setMessages((prev) => [
@@ -1080,7 +1080,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `⏳ ${othersText}Ik zoek alternatieven waarbij ${targetEmployeeName} iemand overneemt...`,
+          content: `⏳ ${othersText}${t("postSolve.searchingDisplacement", { name: targetEmployeeName })}`,
         },
       ]);
 
