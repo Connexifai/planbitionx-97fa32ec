@@ -1217,7 +1217,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                   })()}
                   {msg.alternatives.map((alt, altIdx) => {
                     const isSwapCtx = !!(msg.pendingConstraint?.swapDayOfWeek !== undefined || msg.pendingConstraint?.swapDate);
-                    const classified = classifyAlternative(alt, msg.constraintSummary, isSwapCtx);
+                    const classified = classifyAlternative(alt, msg.constraintSummary, isSwapCtx, t);
                     const TypeIcon = classified.icon;
                     const isOpenShift = alt.ConflictShiftFilled === false;
                     const isRecommended = altIdx === 0 && !isOpenShift;
