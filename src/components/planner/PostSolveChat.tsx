@@ -431,7 +431,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `🔍 Ik zoek uit waarom **${intent.employeeName}** zo is ingepland...`,
+            content: t("postSolve.lookingUpExplanation", { name: intent.employeeName }),
           },
         ]);
 
