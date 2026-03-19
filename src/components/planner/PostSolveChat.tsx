@@ -748,7 +748,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: resultMsgId,
             role: "assistant",
-            content: "⚠️ Geen alternatieven gevonden voor dit verzoek.",
+            content: t("postSolve.noAlternativesFound"),
           },
         ]);
       } else {
