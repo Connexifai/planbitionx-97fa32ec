@@ -5,7 +5,11 @@ import { CheckCircle2, XCircle, Battery, Wifi, Signal } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { Alternative, AlternativeChange } from "@/lib/buildAlternativesPayload";
 import { format, parseISO } from "date-fns";
-import { nl } from "date-fns/locale";
+import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
+import i18n from "@/i18n";
+
+const dateFnsLocales: Record<string, Locale> = { nl, en: enUS, de, fr, pt, pl, it, es };
+function getDateLocale() { return dateFnsLocales[i18n.language] || nl; }
 
 interface AffectedEmployee {
   id: string;
