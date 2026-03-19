@@ -597,7 +597,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `📅 **${intent.employeeName}** is momenteel **${currentDayCount} van de ${currentDayCount + addDayOptions.length} dagen** ingepland.\n\nOp welke dag wil je ${intent.employeeName} extra inplannen? Ik zoek dan wie er uitgewisseld kan worden.`,
+            content: t("postSolve.addDayPrompt", { name: intent.employeeName, current: currentDayCount, total: currentDayCount + addDayOptions.length }),
             addDayOptions,
             addDaysEmployeeId: empId,
             addDaysEmployeeName: intent.employeeName,
