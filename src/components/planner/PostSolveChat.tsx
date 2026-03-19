@@ -1277,7 +1277,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                           <div className="flex items-center gap-1.5">
                             {isRecommended && (
                               <Badge className="text-[10px] bg-primary text-primary-foreground border-primary font-semibold">
-                                Aanbevolen
+                                {t("postSolve.recommended")}
                               </Badge>
                             )}
                             {isOpenShift && (
