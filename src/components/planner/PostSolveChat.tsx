@@ -948,7 +948,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 2,
             role: "assistant",
-            content: t("postSolve.alternativesFound", { count: formatAlternativeCount(prepared, t) }),
+            content: (t as any)("postSolve.alternativesFound", { count: formatAlternativeCount(prepared, t) }),
             alternatives: prepared.visibleAlts,
             baseline: altResponse.Baseline,
             constraintSummary: t("postSolve.swapSummary", { name: constraint.employeeName, offDay, swapDay: dayLabel.toLowerCase() }),
