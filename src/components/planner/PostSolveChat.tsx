@@ -863,7 +863,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: (t as any)("postSolve.foundWithout", { count: formatAlternativeCount(prepared), name: rejectedByName }),
+            content: (t as any)("postSolve.foundWithout", { count: formatAlternativeCount(prepared, t), name: rejectedByName }),
             alternatives: prepared.visibleAlts,
             baseline: altResponse.Baseline,
           },
