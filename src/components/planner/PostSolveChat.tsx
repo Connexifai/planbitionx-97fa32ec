@@ -563,8 +563,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                 id: Date.now() + 1,
                 role: "assistant",
                 content: alreadyScheduled
-                  ? `ℹ️ **${intent.employeeName}** is al ingepland op ${dayLabel}. Kies een andere dag.`
-                  : `⚠️ ${dayLabel} valt niet binnen de planningsperiode.`,
+                  ? t("postSolve.alreadyScheduledOn", { name: intent.employeeName, day: dayLabel })
+                  : t("postSolve.outsidePeriod", { day: dayLabel }),
               },
             ]);
             setIsTyping(false);
