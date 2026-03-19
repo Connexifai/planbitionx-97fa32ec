@@ -14,6 +14,7 @@ interface Props {
  * 2. A progress banner at the top
  */
 export function RosterChangeOverlay({ state }: Props) {
+  const { t } = useTranslation();
   if (!state.active) return null;
 
   return createPortal(
