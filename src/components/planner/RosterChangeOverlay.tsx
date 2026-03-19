@@ -31,7 +31,7 @@ export function RosterChangeOverlay({ state }: Props) {
                 <CheckCircle2 className="h-4 w-4" />
               </div>
               <span className="text-sm font-bold text-primary">
-                Alle {state.moves.length} wijzigingen doorgevoerd ✓
+                {t("overlay.allChangesApplied", { count: state.moves.length })}
               </span>
             </>
           ) : state.currentMove ? (
