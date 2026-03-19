@@ -101,7 +101,8 @@
     "aiExplanationSub": "Begrijpelijke uitleg via Claude na het oplossen",
     "seedRepeat": "Startpunt herhaling",
     "seedRepeatSub": "Zelfde getal = zelfde rooster; 0 = willekeurig",
-    "callbackUrl": "Callback URL"
+    "callbackUrl": "Callback URL",
+    "example": "Voorbeeld"
   },
   "solving": {
     "title": "Rooster wordt opgelost",
