@@ -547,7 +547,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
           if (!matchingOption) {
             // Employee is already scheduled on that day or day doesn't exist
-            const dayLabel = targetDate || (targetDayOfWeek !== undefined ? dayNamesNL[targetDayOfWeek] : "");
+            const dayLabel = targetDate || (targetDayOfWeek !== undefined ? dayNamesLocal[targetDayOfWeek] : "");
             const alreadyScheduled = empAssignments.some((a: any) => {
               if (targetDate) return a.Start?.split("T")[0] === targetDate;
               if (targetDayOfWeek !== undefined) {
