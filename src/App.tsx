@@ -56,7 +56,7 @@ function HomeOrPlanner() {
   const { session, loading } = useAuth();
   if (loading) return <LoadingScreen />;
   if (session) return <Index />;
-  return <PlanbitionHome />;
+  return <Navigate to="/landing" replace />;
 }
 
 const App = () => (
