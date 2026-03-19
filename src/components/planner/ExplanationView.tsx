@@ -398,7 +398,7 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
   if (!data || explanations.length === 0) {
     return (
       <div className="rounded-xl border border-border/50 bg-card p-8 text-center text-muted-foreground">
-        <p className="text-sm">{t("grid.noData", "Geen data beschikbaar")}</p>
+        <p className="text-sm">{t("grid.noData")}</p>
       </div>
     );
   }

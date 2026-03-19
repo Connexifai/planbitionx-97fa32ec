@@ -156,7 +156,8 @@
     "early": "Early",
     "day": "Day",
     "late": "Late",
-    "night": "Night"
+    "night": "Night",
+    "noData": "No data available"
   },
   "json": {
     "loaded": "JSON loaded",
