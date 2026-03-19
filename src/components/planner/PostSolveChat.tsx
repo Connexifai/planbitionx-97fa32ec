@@ -1282,7 +1282,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                             )}
                             {isOpenShift && (
                               <Badge variant="outline" className="text-[10px] text-muted-foreground border-muted-foreground/30">
-                                Geen vervanging
+                                {t("postSolve.noReplacement")}
                               </Badge>
                             )}
                           </div>
