@@ -663,7 +663,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `🔄 **${constraint.employeeName}** wil ${conflictDay} ruilen met een andere dag.\n\nWelke vrije dag wil ${constraint.employeeName} daarvoor werken?`,
+            content: t("postSolve.swapDayPrompt", { name: constraint.employeeName, conflictDay }),
             swapOptions: freeDays.map(d => ({ dayOfWeek: d.idx, label: d.name.charAt(0).toUpperCase() + d.name.slice(1) })),
             swapConstraintBase: constraint,
           },
