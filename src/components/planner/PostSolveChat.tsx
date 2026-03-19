@@ -1031,7 +1031,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         const openAlternatives: Alternative[] = openShifts.map((s: any, idx: number) => ({
           Rank: idx + 1,
           ChangesFromBaseline: 1,
-          Summary: `${targetEmployeeName} wordt ingepland op ${s.Name} — er is nog plek (openstaande dienst).`,
+          Summary: t("postSolve.openShiftSummary", { name: targetEmployeeName, shift: s.Name }),
           ConflictShiftFilled: true,
           Score: { FillRatePercentage: 100, HardViolations: 0 },
           Changes: [{
@@ -1040,7 +1040,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             ShiftId: String(s.Id),
             ShiftName: s.Name || "",
             Action: "added" as const,
-            Reason: "Openstaande dienst — geen andere medewerker hoeft uitgewisseld te worden.",
+            Reason: t("postSolve.openShiftReason"),
             Start: s.Start,
             End: s.End,
           }],
