@@ -25,13 +25,6 @@ import { Card } from "@/components/ui/card";
 import robotImg from "@/assets/robot-assistant.png";
 import SolverShowcase from "@/components/home/SolverShowcase";
 
-const clients = [
-  { name: "Timing", src: "/images/clients/timing.png" },
-  { name: "Adecco", src: "/images/clients/adecco.png" },
-  { name: "Stork", src: "/images/clients/stork.png" },
-  { name: "Consolid", src: "/images/clients/consolid.png" },
-  { name: "YoungCapital", src: "/images/clients/yc.png" },
-];
 
 const featureIcons = [Calendar, Users, Handshake, UserCheck, Building2, BarChart3, Clock, Plug];
 
@@ -186,19 +179,6 @@ export default function PlanbitionHome() {
         </div>
       </section>
 
-      {/* ── Client logos ── */}
-      <section className="border-y border-border bg-card/50 py-10">
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-center text-sm text-muted-foreground mb-6 font-medium">
-            {t("home.clients")}
-          </p>
-          <div className="flex items-center justify-center gap-10 md:gap-16 flex-wrap opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            {clients.map((c) => (
-              <img key={c.name} src={c.src} alt={c.name} className="h-8 md:h-10 object-contain" />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── Planbition X ── */}
       <section id="planbition-x" className="py-24 md:py-32 px-6 relative overflow-hidden">
