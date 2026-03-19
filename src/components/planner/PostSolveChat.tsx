@@ -651,7 +651,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `⚠️ **${constraint.employeeName}** is elke dag ingepland in het huidige rooster, er zijn geen vrije dagen beschikbaar om mee te ruilen.`,
+              content: t("postSolve.swapAllDaysScheduled", { name: constraint.employeeName }),
             },
           ]);
           setIsTyping(false);
