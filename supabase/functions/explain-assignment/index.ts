@@ -12,7 +12,13 @@ serve(async (req) => {
   }
 
   try {
-    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod, solverExplanations } = await req.json();
+    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod, solverExplanations, language } = await req.json();
+
+    const LANGUAGE_NAMES: Record<string, string> = {
+      nl: "Dutch", en: "English", de: "German", fr: "French",
+      pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+    };
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
 
     // Build context about the employee's schedule
     const empAssignments = (assignments || []).filter(
