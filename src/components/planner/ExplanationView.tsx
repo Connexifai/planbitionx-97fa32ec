@@ -263,7 +263,7 @@ const EmployeeRow = memo(function EmployeeRow({
             <div className="rounded-lg border border-primary/30 bg-primary/5 px-3 py-2.5">
               <div className="flex items-center gap-2 mb-1">
                 <Sparkles className="h-3.5 w-3.5 text-primary shrink-0" />
-                <span className="text-xs font-semibold text-primary">AI Uitleg</span>
+                <span className="text-xs font-semibold text-primary">{t("explanation.aiExplanation")}</span>
               </div>
               <p className="text-[11px] text-foreground leading-relaxed whitespace-pre-line">{aiExplanation}</p>
             </div>
