@@ -680,8 +680,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           id: Date.now() + 1,
           role: "assistant",
           content: isSwapWithTarget
-            ? `✅ **Begrepen:** ${intent.summary}\n\n🔄 Ik zoek nu de beste ruilopties...`
-            : `✅ **Begrepen:** ${intent.summary}\n\n⏳ Ik zoek nu snel de beste alternatieven...`,
+            ? t("postSolve.understoodSwap", { summary: intent.summary })
+            : t("postSolve.understoodSearch", { summary: intent.summary }),
         },
       ]);
 
