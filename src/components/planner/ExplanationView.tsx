@@ -219,6 +219,8 @@ const EmployeeRow = memo(function EmployeeRow({
   aiLoading: boolean;
   aiExplanation?: string;
 }) {
+  const { t } = useTranslation();
+}) {
   return (
     <div className="border border-border/50 rounded-xl bg-card overflow-hidden">
       <button
