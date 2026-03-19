@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import ReactMarkdown from "react-markdown";
 import { buildAlternativesPayload, getRemovedAssignments } from "@/lib/buildAlternativesPayload";
 import type { AlternativeConstraint, Alternative, AlternativesResponse, AlternativeChange, SearchScope } from "@/lib/buildAlternativesPayload";
@@ -390,6 +391,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               .map((m) => ({ role: m.role, content: m.content })),
             employees: requestData?.Employees || [],
             schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+            language: i18n.language,
           }),
         }
       );
@@ -459,6 +461,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               solverExplanations: (solverExplanations || []).filter(
                 (e: any) => String(e.EmployeeId) === String(intent.employeeId)
               ),
+              language: i18n.language,
             }),
           }
         );

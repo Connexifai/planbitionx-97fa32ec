@@ -77,7 +77,12 @@ Voorbeeld:
 
 Verlies NOOIT de oorspronkelijke constraint-informatie uit eerdere berichten wanneer je een verduidelijkingsantwoord verwerkt.
 
-Antwoord altijd in het Nederlands tenzij de gebruiker Engels spreekt.`;
+Antwoord altijd in het Nederlands tenzij anders aangegeven.`;
+
+const LANGUAGE_NAMES: Record<string, string> = {
+  nl: "Dutch", en: "English", de: "German", fr: "French",
+  pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -85,7 +90,9 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, employees, schedulePeriod } = await req.json();
+    const { messages, employees, schedulePeriod, language } = await req.json();
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
+    const langInstruction = `\n\nIMPORTANT: Always respond in ${langName}. The "message" field in your JSON response MUST be in ${langName}.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -136,7 +143,7 @@ ${schedulePeriod || "Niet opgegeven"}
         body: JSON.stringify({
           model: "google/gemini-3-flash-preview",
           messages: [
-            { role: "system", content: SYSTEM_PROMPT },
+            { role: "system", content: SYSTEM_PROMPT + langInstruction },
             { role: "user", content: contextMessage },
             ...messages,
           ],

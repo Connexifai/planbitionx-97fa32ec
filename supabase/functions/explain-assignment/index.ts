@@ -12,7 +12,13 @@ serve(async (req) => {
   }
 
   try {
-    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod, solverExplanations } = await req.json();
+    const { employeeId, employeeName, question, assignments, employee, shifts, schedulePeriod, solverExplanations, language } = await req.json();
+
+    const LANGUAGE_NAMES: Record<string, string> = {
+      nl: "Dutch", en: "English", de: "German", fr: "French",
+      pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+    };
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
 
     // Build context about the employee's schedule
     const empAssignments = (assignments || []).filter(
@@ -51,7 +57,7 @@ serve(async (req) => {
       ? `\n\nDe solver heeft de volgende redenen geregistreerd voor ${employeeName}:\n${solverReasons.map((r: string) => `- ${r}`).join("\n")}`
       : "";
 
-    const systemPrompt = `Je bent een AI-roosterassistent die uitlegt waarom het rooster er zo uitziet. Geef een duidelijk, beknopt antwoord in het Nederlands. Gebruik bullet points waar nuttig. Wees specifiek en verwijs naar concrete gegevens.
+    const systemPrompt = `You are an AI scheduling assistant that explains why the roster looks the way it does. Give a clear, concise answer in ${langName}. Use bullet points where useful. Be specific and refer to concrete data.
 
 Medewerker: ${employeeName} (ID: ${employeeId})
 ${empDetails.length > 0 ? "\nMedewerkergegevens:\n" + empDetails.join("\n") : ""}
@@ -75,7 +81,7 @@ Beantwoord de vraag van de planner. Mogelijke redenen waarom iemand wel/niet is 
 - Maximaal aantal diensten per week
 - Vraag/bezetting (geen open plekken op die dag)
 
-Houd het antwoord kort (max 4-5 zinnen) en relevant.`;
+Keep the answer short (max 4-5 sentences) and relevant. Always respond in ${langName}.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import ReactMarkdown from "react-markdown";
 
 export interface EmployeeConstraint {
@@ -113,6 +114,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
             messages: chatHistory,
             employees,
             schedulePeriod,
+            language: i18n.language,
           }),
         }
       );

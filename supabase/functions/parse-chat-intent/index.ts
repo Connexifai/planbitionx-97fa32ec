@@ -12,7 +12,13 @@ serve(async (req) => {
   }
 
   try {
-    const { message, conversationHistory, employees, schedulePeriod } = await req.json();
+    const { message, conversationHistory, employees, schedulePeriod, language } = await req.json();
+
+    const LANGUAGE_NAMES: Record<string, string> = {
+      nl: "Dutch", en: "English", de: "German", fr: "French",
+      pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+    };
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
 
     const empList = (employees || []).map((e: any) => 
       `- ${e.Name} (Id: ${e.PersonId ?? e.Id})`
@@ -50,6 +56,8 @@ IMPORTANT - Ambiguity check:
 - Compare using first names, last names, or partial matches.
 - If there are multiple matches, set understood=false, set ambiguous=true, and return the list of matching candidates in the "candidates" array with their full names and IDs.
 - Only return understood=true when exactly ONE employee matches.
+
+IMPORTANT: The "summary" and "reason" fields MUST be written in ${langName}.
 
 Use the parse_scheduling_intent function to return the structured result.`;
 
@@ -112,8 +120,8 @@ Use the parse_scheduling_intent function to return the structured result.`;
                   isSwap: { type: "boolean", description: "True if this is a swap/exchange request (ruilen/wisselen)" },
                   swapDayOfWeek: { type: "number", description: "The day the employee offers to work instead (0=ma,...,6=zo)" },
                   swapDate: { type: "string", description: "The date the employee offers to work instead (YYYY-MM-DD)" },
-                  summary: { type: "string", description: "Brief Dutch description of what was understood" },
-                  reason: { type: "string", description: "If not understood or ambiguous, explanation in Dutch" },
+                   summary: { type: "string", description: "Brief description of what was understood, in the user's language" },
+                   reason: { type: "string", description: `If not understood or ambiguous, explanation in ${langName}` },
                 },
                 required: ["understood"],
                 additionalProperties: false,
