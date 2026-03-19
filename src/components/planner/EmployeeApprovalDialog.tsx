@@ -223,7 +223,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                       ) : (
                         <div className="flex items-center justify-center gap-2 py-4 text-destructive text-[16px] font-semibold animate-fade-in">
                           <XCircle className="h-5 w-5" />
-                          Afgewezen
+                          {t("approval.rejected")}
                         </div>
                       )}
                     </div>
