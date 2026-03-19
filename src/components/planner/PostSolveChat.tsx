@@ -209,7 +209,7 @@ function enrichSwapAlternatives(
             ShiftId: String(swapAssignment.ShiftId),
             ShiftName: shiftName,
             Action: "removed",
-            Reason: `${replacerName} wordt van ${shiftName} gehaald op ${swapDayLabel} (ruil)`,
+            Reason: `${replacerName} → ${shiftName} ${swapDayLabel} (swap)`,
             Start: swapAssignment.Start,
             End: swapAssignment.End,
           },
@@ -219,7 +219,7 @@ function enrichSwapAlternatives(
             ShiftId: String(swapAssignment.ShiftId),
             ShiftName: shiftName,
             Action: "added",
-            Reason: `${constraint.employeeName} werkt ${swapDayLabel} in plaats van ${replacerName} (ruil)`,
+            Reason: `${constraint.employeeName} → ${swapDayLabel} (swap)`,
             Start: swapAssignment.Start,
             End: swapAssignment.End,
           },
@@ -227,7 +227,7 @@ function enrichSwapAlternatives(
 
         enriched.push({
           ...alt,
-          Summary: `${constraint.employeeName} en ${replacerName} ruilen: ${replacerName} werkt ${constraint.dayOfWeek !== undefined ? dayNamesNL[constraint.dayOfWeek] : ""}, ${constraint.employeeName} werkt ${swapDayLabel}`,
+          Summary: `${constraint.employeeName} ↔ ${replacerName}`,
           Changes: [...(alt.Changes || []), ...swapChanges],
           ChangesFromBaseline: (alt.Changes?.length || 0) + swapChanges.length,
         });
