@@ -257,6 +257,9 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
     assignmentNamesByShiftDay.get(shiftLabel)![dayIdx].push(displayName);
   }
 
+  let totalAssigned = 0;
+  let totalSkippedDayIdx = 0;
+
   for (const emp of request.Employees) {
     const assignments = assignmentsByContract.get(emp.ContractId) || [];
     const shifts: ShiftData[] = days.map(() => ({ type: null }));
@@ -266,7 +269,11 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
     for (const a of assignments) {
       const dateKey = format(parseISO(a.startTime), "yyyy-MM-dd");
       const dayIdx = resolveDayIndex(dateKey);
-      if (dayIdx === undefined) continue;
+      if (dayIdx === undefined) {
+        totalSkippedDayIdx++;
+        console.warn("[parseSolverResponse] skipped assignment - no dayIdx for dateKey:", dateKey, "contractId:", a.contractId, "shiftId:", a.shiftId);
+        continue;
+      }
 
       const start = parseISO(a.startTime);
       const end = parseISO(a.endTime);
@@ -278,6 +285,7 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
       totalHours += durationH;
 
       shifts[dayIdx] = { type, time, label: shiftName };
+      totalAssigned++;
     }
 
     // Employee tags from qualifications
