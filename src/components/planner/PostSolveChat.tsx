@@ -583,7 +583,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `ℹ️ **${intent.employeeName}** is al elke dag ingepland. Er zijn geen vrije dagen meer beschikbaar.`,
+              content: t("postSolve.allDaysScheduled", { name: intent.employeeName }),
             },
           ]);
           setIsTyping(false);
