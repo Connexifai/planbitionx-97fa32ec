@@ -57,6 +57,8 @@ IMPORTANT - Ambiguity check:
 - If there are multiple matches, set understood=false, set ambiguous=true, and return the list of matching candidates in the "candidates" array with their full names and IDs.
 - Only return understood=true when exactly ONE employee matches.
 
+IMPORTANT: The "summary" and "reason" fields MUST be written in ${langName}.
+
 Use the parse_scheduling_intent function to return the structured result.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
