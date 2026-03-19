@@ -526,7 +526,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               addDayOptions.push({
                 dayOfWeek: solverDay,
                 date: dateStr,
-                label: `${dayNamesNL[solverDay].charAt(0).toUpperCase() + dayNamesNL[solverDay].slice(1)} ${dateStr}`,
+                label: `${dayNamesLocal[solverDay].charAt(0).toUpperCase() + dayNamesLocal[solverDay].slice(1)} ${dateStr}`,
                 currentEmployees: uniqueOthers,
               });
             }
