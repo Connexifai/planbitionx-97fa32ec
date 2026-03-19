@@ -1058,10 +1058,10 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `✅ Er ${openShifts.length === 1 ? "is" : "zijn"} **${openShifts.length} openstaande ${openShifts.length === 1 ? "dienst" : "diensten"}** op ${option.label} waar ${targetEmployeeName} direct op ingepland kan worden — zonder andere medewerkers te verplaatsen:`,
+            content: t("postSolve.openShiftsFound", { count: openShifts.length, day: option.label, name: targetEmployeeName }),
             alternatives: openPrepared.visibleAlts,
             baseline: { TotalAssignments: solverAssignments?.length || 0, FillRatePercentage: 100 },
-            constraintSummary: `${targetEmployeeName} inplannen op ${option.label} (openstaand)`,
+            constraintSummary: t("postSolve.scheduleOnOpen", { name: targetEmployeeName, day: option.label }),
             pendingConstraint: constraint,
           },
         ]);
