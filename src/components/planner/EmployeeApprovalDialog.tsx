@@ -206,7 +206,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                             onClick={onReject}
                             className="flex-1 flex items-center justify-center gap-1.5 py-4 text-destructive text-[16px] font-medium active:bg-muted/50 transition-colors"
                           >
-                            Afwijzen
+                            {t("approval.reject")}
                           </button>
                           <button
                             onClick={onApprove}
