@@ -272,7 +272,7 @@ export function EmployeeApprovalDialog({
       if (!empMap.has(id)) {
         empMap.set(id, {
           id,
-          name: change.EmployeeName || `Medewerker ${id}`,
+          name: change.EmployeeName || `${t("common.employee")} ${id}`,
           changes: [],
           status: "pending",
         });
