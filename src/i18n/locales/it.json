@@ -101,7 +101,8 @@
     "aiExplanationSub": "Spiegazione comprensibile via Claude dopo la risoluzione",
     "seedRepeat": "Seme di ripetizione",
     "seedRepeatSub": "Stesso numero = stesso piano; 0 = casuale",
-    "callbackUrl": "URL di callback"
+    "callbackUrl": "URL di callback",
+    "example": "Esempio"
   },
   "solving": {
     "title": "Risoluzione del piano turni",

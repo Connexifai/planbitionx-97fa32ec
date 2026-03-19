@@ -101,7 +101,8 @@
     "aiExplanationSub": "Zrozumiałe wyjaśnienie przez Claude po rozwiązaniu",
     "seedRepeat": "Ziarno powtórzenia",
     "seedRepeatSub": "Ta sama liczba = ten sam grafik; 0 = losowe",
-    "callbackUrl": "URL callback"
+    "callbackUrl": "URL callback",
+    "example": "Przykład"
   },
   "solving": {
     "title": "Rozwiązywanie grafiku",

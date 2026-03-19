@@ -101,7 +101,8 @@
     "aiExplanationSub": "Explicación comprensible vía Claude tras resolver",
     "seedRepeat": "Semilla de repetición",
     "seedRepeatSub": "Mismo número = mismo cuadrante; 0 = aleatorio",
-    "callbackUrl": "URL de callback"
+    "callbackUrl": "URL de callback",
+    "example": "Ejemplo"
   },
   "solving": {
     "title": "Resolviendo el cuadrante",

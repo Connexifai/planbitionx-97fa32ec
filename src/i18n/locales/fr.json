@@ -101,7 +101,8 @@
     "aiExplanationSub": "Explication compréhensible via Claude après résolution",
     "seedRepeat": "Graine de répétition",
     "seedRepeatSub": "Même nombre = même planning ; 0 = aléatoire",
-    "callbackUrl": "URL de callback"
+    "callbackUrl": "URL de callback",
+    "example": "Exemple"
   },
   "solving": {
     "title": "Résolution du planning",

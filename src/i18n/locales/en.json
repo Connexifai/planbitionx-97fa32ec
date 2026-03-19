@@ -101,7 +101,8 @@
     "aiExplanationSub": "Understandable explanation via Claude after solving",
     "seedRepeat": "Seed repeat",
     "seedRepeatSub": "Same number = same roster; 0 = random",
-    "callbackUrl": "Callback URL"
+    "callbackUrl": "Callback URL",
+    "example": "Example"
   },
   "solving": {
     "title": "Solving roster",
