@@ -9,7 +9,7 @@ import ReactMarkdown from "react-markdown";
 import { buildAlternativesPayload, getRemovedAssignments } from "@/lib/buildAlternativesPayload";
 import type { AlternativeConstraint, Alternative, AlternativesResponse, AlternativeChange, SearchScope } from "@/lib/buildAlternativesPayload";
 import { format, parseISO } from "date-fns";
-import { nl } from "date-fns/locale";
+import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
 import { EmployeeApprovalDialog } from "./EmployeeApprovalDialog";
 
 interface CandidateEmployee {
