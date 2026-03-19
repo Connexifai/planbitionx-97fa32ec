@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import robotImg from "@/assets/robot-assistant.png";
 import {
   Clock,
