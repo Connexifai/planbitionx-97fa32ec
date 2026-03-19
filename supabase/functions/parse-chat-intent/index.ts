@@ -12,7 +12,13 @@ serve(async (req) => {
   }
 
   try {
-    const { message, conversationHistory, employees, schedulePeriod } = await req.json();
+    const { message, conversationHistory, employees, schedulePeriod, language } = await req.json();
+
+    const LANGUAGE_NAMES: Record<string, string> = {
+      nl: "Dutch", en: "English", de: "German", fr: "French",
+      pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+    };
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
 
     const empList = (employees || []).map((e: any) => 
       `- ${e.Name} (Id: ${e.PersonId ?? e.Id})`
