@@ -57,7 +57,7 @@ serve(async (req) => {
       ? `\n\nDe solver heeft de volgende redenen geregistreerd voor ${employeeName}:\n${solverReasons.map((r: string) => `- ${r}`).join("\n")}`
       : "";
 
-    const systemPrompt = `Je bent een AI-roosterassistent die uitlegt waarom het rooster er zo uitziet. Geef een duidelijk, beknopt antwoord in het Nederlands. Gebruik bullet points waar nuttig. Wees specifiek en verwijs naar concrete gegevens.
+    const systemPrompt = `You are an AI scheduling assistant that explains why the roster looks the way it does. Give a clear, concise answer in ${langName}. Use bullet points where useful. Be specific and refer to concrete data.
 
 Medewerker: ${employeeName} (ID: ${employeeId})
 ${empDetails.length > 0 ? "\nMedewerkergegevens:\n" + empDetails.join("\n") : ""}
