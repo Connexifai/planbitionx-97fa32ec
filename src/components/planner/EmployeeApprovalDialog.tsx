@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Battery, Wifi, Signal } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Alternative, AlternativeChange } from "@/lib/buildAlternativesPayload";
 import { format, parseISO } from "date-fns";
 import { nl } from "date-fns/locale";
