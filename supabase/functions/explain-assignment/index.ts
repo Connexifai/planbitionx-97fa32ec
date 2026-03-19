@@ -81,7 +81,7 @@ Beantwoord de vraag van de planner. Mogelijke redenen waarom iemand wel/niet is 
 - Maximaal aantal diensten per week
 - Vraag/bezetting (geen open plekken op die dag)
 
-Houd het antwoord kort (max 4-5 zinnen) en relevant.`;
+Keep the answer short (max 4-5 sentences) and relevant. Always respond in ${langName}.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
