@@ -115,7 +115,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                     <div>
                       <div className="text-[14px] font-semibold text-foreground leading-tight">Planbition X</div>
                       <div className="text-[12px] text-muted-foreground leading-tight">
-                        {notificationMode ? "Bevestiging" : "Roosterwijziging"}
+                        {notificationMode ? t("approval.confirmation") : t("approval.rosterChange")}
                       </div>
                     </div>
                     <div className="ml-auto text-[12px] text-muted-foreground">nu</div>
