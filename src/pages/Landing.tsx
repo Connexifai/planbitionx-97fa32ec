@@ -1,9 +1,8 @@
-import { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import robotImg from "@/assets/robot-assistant.png";
 import {
