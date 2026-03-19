@@ -1347,7 +1347,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                             onClick={() => handleApplyAlternative(alt)}
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" />
-                            {isOpenShift ? "Dienst open laten" : "Doorvoeren"}
+                            {isOpenShift ? t("postSolve.leaveShiftOpen") : t("postSolve.applyChange")}
                           </Button>
                           {!isOpenShift && (
                             <Button
