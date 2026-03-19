@@ -788,7 +788,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `✅ **Wijziging doorgevoerd!**`,
+        content: t("postSolve.changeApplied"),
         alternatives: [alt],
         applied: true,
       },
