@@ -255,6 +255,7 @@ export function EmployeeApprovalDialog({
   onAllApproved,
   onRejected,
 }: EmployeeApprovalDialogProps) {
+  const { t } = useTranslation();
   const [employees, setEmployees] = useState<AffectedEmployee[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [phase, setPhase] = useState<"approving" | "done" | "notifying">("approving");
