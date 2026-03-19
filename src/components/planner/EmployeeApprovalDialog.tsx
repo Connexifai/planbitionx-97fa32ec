@@ -390,7 +390,7 @@ export function EmployeeApprovalDialog({
           {phase === "done" && (
             <div className="flex items-center gap-2 text-primary font-semibold text-sm animate-fade-in">
               <CheckCircle2 className="h-5 w-5" />
-              Alle medewerkers akkoord — {constraintEmployeeName || "aanvrager"} is op de hoogte!
+              {t("approval.allApprovedNotified", { name: constraintEmployeeName || t("common.requester") })}
             </div>
           )}
         </div>
