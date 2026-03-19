@@ -825,7 +825,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `❌ **${rejectedByName}** heeft de wijziging afgewezen. Ik zoek automatisch een nieuw alternatief zonder ${rejectedByName}...`,
+        content: t("postSolve.rejectedSearching", { name: rejectedByName }),
       },
     ]);
     setIsTyping(true);
