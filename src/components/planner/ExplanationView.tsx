@@ -170,7 +170,7 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
               {stats.ElapsedSeconds !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.solveTime", "Oplostijd")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.solveTime")}</p>
                   <p className="text-sm font-bold">{stats.ElapsedSeconds.toFixed(1)}s</p>
                 </div>
               )}
