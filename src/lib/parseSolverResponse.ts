@@ -124,10 +124,16 @@ const dayKeyMap: Record<number, string> = {
 };
 
 export function parseSolverResponse(request: RawSchedule, response: SolverResponse): RosterData {
+  console.log("[parseSolverResponse] response keys:", Object.keys(response));
+  console.log("[parseSolverResponse] Assignments count:", (response.Assignments || []).length);
+  console.log("[parseSolverResponse] request.Start:", request.Start, "request.End:", request.End);
+
   // Use requested date range as canonical timeline for demand vs assignments
   const requestStartDate = parseISO(request.Start);
   const requestEndDate = parseISO(request.End);
   const allDays = eachDayOfInterval({ start: requestStartDate, end: requestEndDate });
+
+  console.log("[parseSolverResponse] allDays count:", allDays.length);
 
   const days: DayColumn[] = allDays.map((d) => ({
     dayKey: dayKeyMap[d.getDay()],
@@ -159,6 +165,13 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
       contractId: personToContract.get(String(a.PersonId)) || String(a.PersonId),
     };
   });
+
+  console.log("[parseSolverResponse] assignedShifts count:", assignedShifts.length);
+  // Log unmapped PersonIds
+  const unmappedPersonIds = (response.Assignments || []).filter(a => !personToContract.has(String(a.PersonId)));
+  if (unmappedPersonIds.length > 0) {
+    console.warn("[parseSolverResponse] unmapped PersonIds:", unmappedPersonIds.slice(0, 5).map(a => a.PersonId));
+  }
 
   // Fallback when solver returns shifted dates
   const assignmentDayOrder = Array.from(
@@ -244,6 +257,9 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
     assignmentNamesByShiftDay.get(shiftLabel)![dayIdx].push(displayName);
   }
 
+  let totalAssigned = 0;
+  let totalSkippedDayIdx = 0;
+
   for (const emp of request.Employees) {
     const assignments = assignmentsByContract.get(emp.ContractId) || [];
     const shifts: ShiftData[] = days.map(() => ({ type: null }));
@@ -253,7 +269,11 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
     for (const a of assignments) {
       const dateKey = format(parseISO(a.startTime), "yyyy-MM-dd");
       const dayIdx = resolveDayIndex(dateKey);
-      if (dayIdx === undefined) continue;
+      if (dayIdx === undefined) {
+        totalSkippedDayIdx++;
+        console.warn("[parseSolverResponse] skipped assignment - no dayIdx for dateKey:", dateKey, "contractId:", a.contractId, "shiftId:", a.shiftId);
+        continue;
+      }
 
       const start = parseISO(a.startTime);
       const end = parseISO(a.endTime);
@@ -265,6 +285,7 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
       totalHours += durationH;
 
       shifts[dayIdx] = { type, time, label: shiftName };
+      totalAssigned++;
     }
 
     // Employee tags from qualifications
@@ -305,6 +326,9 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
       shifts,
     });
   }
+
+  console.log("[parseSolverResponse] totalAssigned:", totalAssigned, "totalSkippedDayIdx:", totalSkippedDayIdx);
+  console.log("[parseSolverResponse] employees with shifts:", employees.filter(e => e.shifts.some(s => s.type !== null)).length, "/", employees.length);
 
   // Sort: employees with shifts first, then by last name alphabetically
   employees.sort((a, b) => {
