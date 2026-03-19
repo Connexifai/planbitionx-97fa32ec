@@ -1268,7 +1268,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-0.5">
                                 {(() => {
                                   const count = alt.ChangesFromBaseline;
-                                  return <span>{count} wijziging{count !== 1 && "en"}</span>;
+                                  return <span>{count !== 1 ? t("postSolve.changeCountPlural", { count }) : t("postSolve.changeCount", { count })}</span>;
                                 })()}
                               </div>
                               )}
