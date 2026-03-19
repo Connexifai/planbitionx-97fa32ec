@@ -373,15 +373,15 @@ export function EmployeeApprovalDialog({
               key="requester-notification"
               employee={{
                 id: constraintEmployeeId || "requester",
-                name: constraintEmployeeName || "Aanvrager",
+                name: constraintEmployeeName || t("common.requester"),
                 changes: [],
                 status: "approved",
               }}
               onApprove={() => {}}
               onReject={() => {}}
               notificationMode={{
-                title: `Goed nieuws, ${(constraintEmployeeName || "").split(" ")[0]}! 🎉`,
-                body: "Alle betrokken collega's zijn akkoord gegaan met de roosterwijziging. Je verzoek is goedgekeurd!",
+                title: t("approval.goodNews", { name: (constraintEmployeeName || "").split(" ")[0] }),
+                body: t("approval.allAgreed"),
               }}
             />
           )}
