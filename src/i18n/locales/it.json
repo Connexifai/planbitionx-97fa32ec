@@ -527,8 +527,4 @@
     "noJsonTitle": "Nessun dato caricato",
     "noJsonDesc": "Carica prima un file JSON dalla barra laterale."
   },
-  "grid": {
-    "filtered": "Filtrato: {{count}} dipendente/i",
-    "clearFilter": "Cancella filtro"
-  }
 }

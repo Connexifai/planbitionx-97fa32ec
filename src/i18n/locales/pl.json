@@ -527,8 +527,4 @@
     "noJsonTitle": "Brak załadowanych danych",
     "noJsonDesc": "Najpierw załaduj plik JSON z paska bocznego."
   },
-  "grid": {
-    "filtered": "Filtrowane: {{count}} pracownik(ów)",
-    "clearFilter": "Wyczyść filtr"
-  }
 }
