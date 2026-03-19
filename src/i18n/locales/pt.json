@@ -489,5 +489,9 @@
   "planner": {
     "noJsonTitle": "Nenhum dado carregado",
     "noJsonDesc": "Carregue primeiro um arquivo JSON pela barra lateral."
+  },
+  "grid": {
+    "filtered": "Filtrado: {{count}} funcionário(s)",
+    "clearFilter": "Limpar filtro"
   }
 }
