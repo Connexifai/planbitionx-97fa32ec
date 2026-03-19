@@ -460,6 +460,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               solverExplanations: (solverExplanations || []).filter(
                 (e: any) => String(e.EmployeeId) === String(intent.employeeId)
               ),
+              language: i18n.language,
             }),
           }
         );
