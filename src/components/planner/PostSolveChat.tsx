@@ -87,7 +87,7 @@ interface ClassifiedAlternative {
 function formatShiftDate(isoDate?: string): string {
   if (!isoDate) return "";
   try {
-    return format(parseISO(isoDate), "EEEE d MMM", { locale: nl });
+    return format(parseISO(isoDate), "EEEE d MMM", { locale: getDateLocale() });
   } catch {
     return isoDate.split("T")[0] || "";
   }

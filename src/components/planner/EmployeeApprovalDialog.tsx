@@ -32,7 +32,7 @@ interface EmployeeApprovalDialogProps {
 function formatDate(iso?: string) {
   if (!iso) return "";
   try {
-    return format(parseISO(iso), "EEEE d MMMM", { locale: nl });
+    return format(parseISO(iso), "EEEE d MMMM", { locale: getDateLocale() });
   } catch {
     return iso.split("T")[0] || "";
   }
