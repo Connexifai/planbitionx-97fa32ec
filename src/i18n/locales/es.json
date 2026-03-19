@@ -459,7 +459,24 @@
       "viernes",
       "sábado",
       "domingo"
-    ]
+    ],
+    "solutionCount_one": "1 solución",
+    "solutionCount_other": "{{count}} soluciones",
+    "solutionCount_zero": "0 soluciones",
+    "optionCount_one": "1 opción",
+    "understoodSwapDay": "🔄 **Entendido:** {{name}} quiere intercambiar {{offDay}} por {{swapDay}}.\n\n⏳ Buscando las mejores opciones de intercambio...",
+    "notScheduledOnDay": "ℹ️ **{{name}}** no está programado/a en {{day}}. No hay turno para intercambiar.\n\nPrueba con otro día.",
+    "noSwapOptions": "⚠️ No se encontraron opciones de intercambio para esta combinación.",
+    "swapSummary": "{{name}} intercambia {{offDay}} por {{swapDay}}",
+    "openShiftSummary": "{{name}} es programado/a en {{shift}} — turno abierto.",
+    "openShiftReason": "Turno abierto — no es necesario desplazar a otro empleado.",
+    "openShiftsFound": "✅ Hay **{{count}} turno(s) abierto(s)** en {{day}} donde {{name}} puede ser programado/a directamente — sin desplazar a otros empleados:",
+    "scheduleOnOpen": "Programar {{name}} en {{day}} (abierto)",
+    "allSpotsOccupied": "No hay turnos abiertos en **{{day}}**. Los {{count}} puestos están ocupados.",
+    "searchingDisplacement": "Buscando alternativas donde {{name}} reemplace a alguien...",
+    "noAlternativesForDay": "⚠️ No se encontraron alternativas adecuadas para {{day}}.",
+    "displacementOptionsFound": "Encontré **{{count}}** opciones para programar a {{name}} en {{day}}:",
+    "scheduleOn": "Programar {{name}} en {{day}}"
   },
   "approval": {
     "confirmation": "Confirmación",
