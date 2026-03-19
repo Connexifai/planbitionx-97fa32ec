@@ -849,7 +849,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `⚠️ Geen alternatieven gevonden zonder ${rejectedByName}. Probeer een andere aanpassing of laat de dienst open.`,
+            content: t("postSolve.noAlternativesWithout", { name: rejectedByName }),
           },
         ]);
       } else {
