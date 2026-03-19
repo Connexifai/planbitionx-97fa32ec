@@ -1440,7 +1440,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                       📅 {opt.label}
                       {opt.currentEmployees.length > 0 && (
                         <span className="text-muted-foreground ml-1">
-                          ({opt.currentEmployees.length} ingepland)
+                          ({opt.currentEmployees.length} {t("postSolve.scheduled")})
                         </span>
                       )}
                     </Button>
