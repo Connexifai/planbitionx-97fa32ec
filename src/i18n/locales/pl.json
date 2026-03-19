@@ -526,5 +526,5 @@
   "planner": {
     "noJsonTitle": "Brak załadowanych danych",
     "noJsonDesc": "Najpierw załaduj plik JSON z paska bocznego."
-  },
+  }
 }

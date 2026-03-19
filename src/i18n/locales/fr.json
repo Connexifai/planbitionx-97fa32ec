@@ -526,5 +526,5 @@
   "planner": {
     "noJsonTitle": "Aucune donnée chargée",
     "noJsonDesc": "Chargez d'abord un fichier JSON via la barre latérale."
-  },
+  }
 }
