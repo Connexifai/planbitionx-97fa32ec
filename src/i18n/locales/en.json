@@ -158,7 +158,9 @@
     "day": "Day",
     "late": "Late",
     "night": "Night",
-    "noData": "No data available"
+    "noData": "No data available",
+    "filtered": "Filtered: {{count}} employee(s)",
+    "clearFilter": "Clear filter"
   },
   "json": {
     "loaded": "JSON loaded",
