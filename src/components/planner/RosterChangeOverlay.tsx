@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { RosterAnimationState } from "@/hooks/useRosterAnimation";
 
 interface Props {
