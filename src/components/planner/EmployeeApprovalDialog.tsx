@@ -212,7 +212,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                             onClick={onApprove}
                             className="flex-1 flex items-center justify-center gap-1.5 py-4 text-primary text-[16px] font-semibold active:bg-muted/50 transition-colors"
                           >
-                            Akkoord
+                            {t("approval.approve")}
                           </button>
                         </div>
                       ) : employee.status === "approved" ? (
