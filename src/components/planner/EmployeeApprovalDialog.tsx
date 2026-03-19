@@ -191,7 +191,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                         </div>
 
                         <p className="text-[14px] text-muted-foreground text-center pt-1">
-                          Ga je akkoord met deze wijziging?
+                          {t("approval.confirmQuestion")}
                         </p>
                       </>
                     )}
