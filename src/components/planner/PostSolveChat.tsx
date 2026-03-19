@@ -13,6 +13,9 @@ import { format, parseISO } from "date-fns";
 import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
 import { EmployeeApprovalDialog } from "./EmployeeApprovalDialog";
 
+const dateFnsLocales: Record<string, Locale> = { nl, en: enUS, de, fr, pt, pl, it, es };
+function getDateLocale() { return dateFnsLocales[i18n.language] || nl; }
+
 interface CandidateEmployee {
   id: string;
   name: string;
