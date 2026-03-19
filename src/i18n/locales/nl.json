@@ -156,7 +156,8 @@
     "early": "Vroeg",
     "day": "Dag",
     "late": "Laat",
-    "night": "Nacht"
+    "night": "Nacht",
+    "noData": "Geen data beschikbaar"
   },
   "json": {
     "loaded": "JSON geladen",
