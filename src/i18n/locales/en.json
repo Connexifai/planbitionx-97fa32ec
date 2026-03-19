@@ -459,7 +459,16 @@
     "scheduled": "scheduled",
     "alternativeApplied": "Alternative #{{rank}} applied",
     "changesApplied": "{{count}} change(s) applied",
-    "dayNames": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    "dayNames": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ],
+    "shiftOpenDefault": "The shift will not be filled and remains open."
   },
   "approval": {
     "confirmation": "Confirmation",
