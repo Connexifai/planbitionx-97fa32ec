@@ -51,7 +51,7 @@ export default function Landing() {
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">{t("landing.navFeatures")}</a>
             <a href="#microservice" className="hover:text-foreground transition-colors">{t("landing.navMicroservice")}</a>
-            <a href="#pricing" className="hover:text-foreground transition-colors">{t("landing.navPricing")}</a>
+            
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
