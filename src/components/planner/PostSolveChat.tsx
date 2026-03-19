@@ -976,8 +976,6 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
     setIsTyping(true);
 
     try {
-      // Create a constraint targeting the employee to ADD on this date
-      // The solver will find alternatives that include this employee on this day
       const constraint: AlternativeConstraint = {
         employeeId: targetEmployeeId,
         employeeName: targetEmployeeName,
@@ -985,12 +983,90 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         date: option.date,
         strength: "hard",
       };
-
       setLastConstraint(constraint);
 
+      // ── Step 1: Check for open (unfilled) shifts on this date ──
+      const shiftsOnDate = (requestData?.Shifts || []).filter(
+        (s: any) => String(s.Start || "").startsWith(option.date)
+      );
+
+      // Count current assignments per shift (by ShiftId + Start)
+      const assignmentCountByShift = new Map<string, number>();
+      for (const a of (solverAssignments || [])) {
+        const key = `${a.ShiftId}|${a.Start}`;
+        assignmentCountByShift.set(key, (assignmentCountByShift.get(key) || 0) + 1);
+      }
+
+      // Get employee qualifications
+      const targetEmp = (requestData?.Employees || []).find(
+        (e: any) => String(e.PersonId ?? e.Id) === targetEmployeeId
+      );
+      const empQuals = (targetEmp?.Qualifications || [])
+        .filter((q: any) => q.Type === "Qualification")
+        .map((q: any) => q.Value);
+
+      // Find shifts with open spots that the employee is qualified for
+      const openShifts = shiftsOnDate.filter((s: any) => {
+        const key = `${s.Id}|${s.Start}`;
+        const assigned = assignmentCountByShift.get(key) || 0;
+        const demand = s.Demand || 0;
+        if (assigned >= demand) return false;
+
+        // Check qualification match
+        const requiredQuals = s.Qualifications?.AllOf || [];
+        if (requiredQuals.length === 0) return true; // no qualification needed
+        return requiredQuals.every((q: any) => empQuals.includes(q.Value));
+      });
+
+      console.log("[PostSolveChat] Open shifts on", option.date, ":", openShifts.length, "of", shiftsOnDate.length);
+
+      if (openShifts.length > 0) {
+        // ── Create synthetic alternatives for open shifts (no displacement needed) ──
+        const openAlternatives: Alternative[] = openShifts.map((s: any, idx: number) => ({
+          Rank: idx + 1,
+          ChangesFromBaseline: 1,
+          Summary: `${targetEmployeeName} wordt ingepland op ${s.Name} — er is nog plek (openstaande dienst).`,
+          ConflictShiftFilled: true,
+          Score: { FillRatePercentage: 100, HardViolations: 0 },
+          Changes: [{
+            EmployeeId: targetEmployeeId,
+            EmployeeName: targetEmployeeName,
+            ShiftId: String(s.Id),
+            ShiftName: s.Name || "",
+            Action: "added" as const,
+            Reason: "Openstaande dienst — geen andere medewerker hoeft uitgewisseld te worden.",
+            Start: s.Start,
+            End: s.End,
+          }],
+          Assignments: [
+            // Include all current assignments plus this new one
+            ...(solverAssignments || []),
+            { Start: s.Start, End: s.End, PersonId: targetEmployeeId, ShiftId: String(s.Id) },
+          ],
+        }));
+
+        const openPrepared = prepareAlternatives(openAlternatives);
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: Date.now() + 1,
+            role: "assistant",
+            content: `✅ Er ${openShifts.length === 1 ? "is" : "zijn"} **${openShifts.length} openstaande ${openShifts.length === 1 ? "dienst" : "diensten"}** op ${option.label} waar ${targetEmployeeName} direct op ingepland kan worden — zonder andere medewerkers te verplaatsen:`,
+            alternatives: openPrepared.visibleAlts,
+            baseline: { TotalAssignments: solverAssignments?.length || 0, FillRatePercentage: 100 },
+            constraintSummary: `${targetEmployeeName} inplannen op ${option.label} (openstaand)`,
+            pendingConstraint: constraint,
+          },
+        ]);
+        setIsTyping(false);
+        return;
+      }
+
+      // ── Step 2: No open shifts — fall back to solver to displace someone ──
       const othersCount = option.currentEmployees.length;
       const othersText = othersCount > 0
-        ? `Op **${option.label}** zijn al **${othersCount} medewerkers** ingepland.\n\n`
+        ? `Er zijn geen openstaande diensten op **${option.label}**. Alle ${othersCount} plekken zijn bezet.\n\n`
         : "";
 
       setMessages((prev) => [
@@ -998,11 +1074,10 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `⏳ ${othersText}Ik zoek alternatieven waarbij ${targetEmployeeName} deze dag overneemt...`,
+          content: `⏳ ${othersText}Ik zoek alternatieven waarbij ${targetEmployeeName} iemand overneemt...`,
         },
       ]);
 
-      // Use "full" search scope for add_date — solver needs to search broadly
       const altResponse = await fetchAlternatives(constraint, "full");
       const prepared = prepareAlternatives(altResponse.Alternatives || []);
 
