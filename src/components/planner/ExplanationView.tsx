@@ -166,7 +166,7 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
             <TrendingUp className="h-5 w-5" />
           </div>
           <div className="flex-1">
-            <h2 className="text-sm font-bold text-foreground">{t("explanation.solverStats", "Solver Statistieken")}</h2>
+            <h2 className="text-sm font-bold text-foreground">{t("explanation.solverStats")}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-2">
               {stats.ElapsedSeconds !== undefined && (
                 <div>
