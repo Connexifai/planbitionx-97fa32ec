@@ -831,7 +831,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
     setIsTyping(true);
 
     try {
-      if (!lastConstraint) throw new Error("Geen constraint beschikbaar voor opnieuw zoeken.");
+      if (!lastConstraint) throw new Error(t("postSolve.noConstraintAvailable"));
 
       // Search with full scope to find more options
       const altResponse = await fetchAlternatives(lastConstraint, "full");
