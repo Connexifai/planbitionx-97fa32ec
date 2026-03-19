@@ -124,10 +124,16 @@ const dayKeyMap: Record<number, string> = {
 };
 
 export function parseSolverResponse(request: RawSchedule, response: SolverResponse): RosterData {
+  console.log("[parseSolverResponse] response keys:", Object.keys(response));
+  console.log("[parseSolverResponse] Assignments count:", (response.Assignments || []).length);
+  console.log("[parseSolverResponse] request.Start:", request.Start, "request.End:", request.End);
+
   // Use requested date range as canonical timeline for demand vs assignments
   const requestStartDate = parseISO(request.Start);
   const requestEndDate = parseISO(request.End);
   const allDays = eachDayOfInterval({ start: requestStartDate, end: requestEndDate });
+
+  console.log("[parseSolverResponse] allDays count:", allDays.length);
 
   const days: DayColumn[] = allDays.map((d) => ({
     dayKey: dayKeyMap[d.getDay()],
@@ -159,6 +165,13 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
       contractId: personToContract.get(String(a.PersonId)) || String(a.PersonId),
     };
   });
+
+  console.log("[parseSolverResponse] assignedShifts count:", assignedShifts.length);
+  // Log unmapped PersonIds
+  const unmappedPersonIds = (response.Assignments || []).filter(a => !personToContract.has(String(a.PersonId)));
+  if (unmappedPersonIds.length > 0) {
+    console.warn("[parseSolverResponse] unmapped PersonIds:", unmappedPersonIds.slice(0, 5).map(a => a.PersonId));
+  }
 
   // Fallback when solver returns shifted dates
   const assignmentDayOrder = Array.from(
