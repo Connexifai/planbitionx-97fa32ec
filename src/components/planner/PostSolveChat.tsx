@@ -905,15 +905,15 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
     setLastConstraint(constraint);
 
     try {
-      const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
-      const offDay = constraint.dayOfWeek !== undefined ? dayNamesNL[constraint.dayOfWeek] : constraint.date || "";
+      const dayNames = t("postSolve.dayNames", { returnObjects: true }) as string[];
+      const offDay = constraint.dayOfWeek !== undefined ? dayNames[constraint.dayOfWeek] : constraint.date || "";
 
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `🔄 **Begrepen:** ${constraint.employeeName} wil ${offDay} ruilen met ${dayLabel.toLowerCase()}.\n\n⏳ Ik zoek de beste ruilopties...`,
+          content: t("postSolve.understoodSwapDay", { name: constraint.employeeName, offDay, swapDay: dayLabel.toLowerCase() }),
         },
       ]);
 
@@ -925,7 +925,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 2,
             role: "assistant",
-            content: `ℹ️ **${constraint.employeeName}** is niet ingepland op ${offDay}. Er is geen dienst om te ruilen.\n\nProbeer een andere dag.`,
+            content: t("postSolve.notScheduledOnDay", { name: constraint.employeeName, day: offDay }),
           },
         ]);
         setIsTyping(false);
@@ -940,7 +940,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       if (prepared.visibleAlts.length === 0) {
         setMessages((prev) => [
           ...prev,
-          { id: Date.now() + 2, role: "assistant", content: "⚠️ Geen ruilopties gevonden voor deze combinatie." },
+          { id: Date.now() + 2, role: "assistant", content: t("postSolve.noSwapOptions") },
         ]);
       } else {
         setMessages((prev) => [
@@ -948,10 +948,10 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 2,
             role: "assistant",
-            content: `Ik heb **${formatAlternativeCount(prepared)}** gevonden:`,
+            content: t("postSolve.alternativesFound", { count: formatAlternativeCount(prepared, t) }),
             alternatives: prepared.visibleAlts,
             baseline: altResponse.Baseline,
-            constraintSummary: `${constraint.employeeName} ruilt ${offDay} met ${dayLabel.toLowerCase()}`,
+            constraintSummary: t("postSolve.swapSummary", { name: constraint.employeeName, offDay, swapDay: dayLabel.toLowerCase() }),
             pendingConstraint: constraint,
           },
         ]);
