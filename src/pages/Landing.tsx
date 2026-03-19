@@ -112,7 +112,7 @@ export default function Landing() {
     { value: "<1min", label: t("landing.statSolveTime") },
     { value: "100%", label: t("landing.statCompliance") },
     { value: "73%", label: t("landing.statEffort") },
-    { value: "€5k+", label: t("landing.statCostSaving") },
+    { value: "50++", label: t("landing.statCostSaving") },
   ];
 
   return (
