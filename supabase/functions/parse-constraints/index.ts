@@ -77,7 +77,12 @@ Voorbeeld:
 
 Verlies NOOIT de oorspronkelijke constraint-informatie uit eerdere berichten wanneer je een verduidelijkingsantwoord verwerkt.
 
-Antwoord altijd in het Nederlands tenzij de gebruiker Engels spreekt.`;
+Antwoord altijd in het Nederlands tenzij anders aangegeven.`;
+
+const LANGUAGE_NAMES: Record<string, string> = {
+  nl: "Dutch", en: "English", de: "German", fr: "French",
+  pt: "Portuguese", pl: "Polish", it: "Italian", es: "Spanish",
+};
 
 serve(async (req) => {
   if (req.method === "OPTIONS") {
