@@ -188,7 +188,7 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
               )}
               {stats.HardViolations !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.hardViolations", "Harde overtredingen")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.hardViolations")}</p>
                   <p className={`text-sm font-bold ${stats.HardViolations > 0 ? "text-destructive" : "text-kpi-assignments"}`}>{stats.HardViolations}</p>
                 </div>
               )}
