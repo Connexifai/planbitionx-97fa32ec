@@ -182,7 +182,7 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
               )}
               {stats.TotalAssignments !== undefined && (
                 <div>
-                  <p className="text-[11px] text-muted-foreground">{t("explanation.totalAssignments", "Toewijzingen")}</p>
+                  <p className="text-[11px] text-muted-foreground">{t("explanation.totalAssignments")}</p>
                   <p className="text-sm font-bold">{stats.TotalAssignments}</p>
                 </div>
               )}
