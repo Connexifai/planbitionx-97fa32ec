@@ -518,5 +518,5 @@
   "planner": {
     "noJsonTitle": "Geen data geladen",
     "noJsonDesc": "Laad eerst een JSON-bestand via de sidebar voordat je oplost."
-  },
+  }
 }
