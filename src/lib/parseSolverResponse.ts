@@ -327,6 +327,9 @@ export function parseSolverResponse(request: RawSchedule, response: SolverRespon
     });
   }
 
+  console.log("[parseSolverResponse] totalAssigned:", totalAssigned, "totalSkippedDayIdx:", totalSkippedDayIdx);
+  console.log("[parseSolverResponse] employees with shifts:", employees.filter(e => e.shifts.some(s => s.type !== null)).length, "/", employees.length);
+
   // Sort: employees with shifts first, then by last name alphabetically
   employees.sort((a, b) => {
     const aHasShifts = a.shifts.some((s) => s.type !== null);
