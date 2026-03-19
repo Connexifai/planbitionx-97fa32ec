@@ -390,6 +390,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               .map((m) => ({ role: m.role, content: m.content })),
             employees: requestData?.Employees || [],
             schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
+            language: i18n.language,
           }),
         }
       );
