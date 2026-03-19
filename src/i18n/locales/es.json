@@ -527,8 +527,4 @@
     "noJsonTitle": "Sin datos cargados",
     "noJsonDesc": "Primero carga un archivo JSON desde la barra lateral."
   },
-  "grid": {
-    "filtered": "Filtrado: {{count}} empleado(s)",
-    "clearFilter": "Borrar filtro"
-  }
 }

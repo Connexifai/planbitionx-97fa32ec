@@ -527,8 +527,4 @@
     "noJsonTitle": "Keine Daten geladen",
     "noJsonDesc": "Lade zuerst eine JSON-Datei über die Seitenleiste."
   },
-  "grid": {
-    "filtered": "Gefiltert: {{count}} Mitarbeiter",
-    "clearFilter": "Filter löschen"
-  }
 }
