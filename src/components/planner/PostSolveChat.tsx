@@ -772,7 +772,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `❌ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}. Probeer het opnieuw.`,
+          content: t("postSolve.errorOccurred", { error: error instanceof Error ? error.message : t("postSolve.unknownError") }),
         },
       ]);
     } finally {
