@@ -184,7 +184,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                                   ? "bg-primary/20 text-primary"
                                   : "bg-destructive/20 text-destructive"
                               )}>
-                                {change.Action === "added" ? "NIEUW" : "VERVALT"}
+                                {change.Action === "added" ? t("approval.new") : t("approval.removed")}
                               </div>
                             </div>
                           ))}
