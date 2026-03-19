@@ -140,11 +140,13 @@ function prepareAlternatives(alternatives: Alternative[]): PreparedAlternatives 
   };
 }
 
-function formatAlternativeCount(prepared: PreparedAlternatives): string {
+function formatAlternativeCount(prepared: PreparedAlternatives, t: (key: string, opts?: any) => string): string {
   if (prepared.filledAlts.length > 0) {
-    return `${prepared.filledAlts.length} oplossing${prepared.filledAlts.length === 1 ? "" : "en"}`;
+    return prepared.filledAlts.length === 1
+      ? t("postSolve.solutionCount_one", { count: 1 })
+      : t("postSolve.solutionCount_other", { count: prepared.filledAlts.length });
   }
-  return prepared.openAlt ? "1 optie" : "0 oplossingen";
+  return prepared.openAlt ? t("postSolve.optionCount_one", { count: 1 }) : t("postSolve.solutionCount_zero");
 }
 
 /**
