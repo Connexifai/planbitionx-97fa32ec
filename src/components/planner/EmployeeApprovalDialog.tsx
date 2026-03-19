@@ -46,6 +46,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
   onReject: () => void;
   notificationMode?: { title: string; body: string };
 }) {
+  const { t } = useTranslation();
   const now = new Date();
   const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
 
