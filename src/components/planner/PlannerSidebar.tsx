@@ -171,7 +171,7 @@ function JsonSection({ onJsonLoaded }: { onJsonLoaded?: (rawJson?: string) => vo
           setLoaded(true);
         } catch {}
       }}>
-        {t("sidebar.example", "Voorbeeld")}
+        {t("sidebar.example")}
       </Button>
     </div>
   );
