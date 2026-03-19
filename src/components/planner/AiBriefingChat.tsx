@@ -113,6 +113,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
             messages: chatHistory,
             employees,
             schedulePeriod,
+            language: i18n.language,
           }),
         }
       );
