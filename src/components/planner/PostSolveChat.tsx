@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import ReactMarkdown from "react-markdown";
 import { buildAlternativesPayload, getRemovedAssignments } from "@/lib/buildAlternativesPayload";
 import type { AlternativeConstraint, Alternative, AlternativesResponse, AlternativeChange, SearchScope } from "@/lib/buildAlternativesPayload";

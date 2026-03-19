@@ -90,7 +90,9 @@ serve(async (req) => {
   }
 
   try {
-    const { messages, employees, schedulePeriod } = await req.json();
+    const { messages, employees, schedulePeriod, language } = await req.json();
+    const langName = LANGUAGE_NAMES[language] || "Dutch";
+    const langInstruction = `\n\nIMPORTANT: Always respond in ${langName}. The "message" field in your JSON response MUST be in ${langName}.`;
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
