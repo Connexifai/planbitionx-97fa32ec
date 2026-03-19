@@ -238,14 +238,15 @@ function enrichSwapAlternatives(
   return enriched;
 }
 
-function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSwapRequest?: boolean): ClassifiedAlternative {
-  // "Dienst open laten" option
+function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSwapRequest?: boolean, t?: (key: string, opts?: any) => string): ClassifiedAlternative {
+  const tr = t || ((k: string) => k);
+  // "Leave shift open" option
   if (alt.ConflictShiftFilled === false) {
     return {
       type: "direct_replacement",
       icon: AlertCircle,
-      label: "Dienst open laten",
-      explanation: alt.Summary || "De dienst wordt niet opgevuld en blijft open.",
+      label: tr("postSolve.leaveShiftOpen"),
+      explanation: alt.Summary || tr("postSolve.shiftOpenDefault", "The shift will not be filled and remains open."),
     };
   }
 
@@ -258,8 +259,8 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "swap",
       icon: Repeat2,
-      label: "Dienstruil",
-      explanation: alt.Summary || "Medewerkers wisselen van dienst.",
+      label: tr("postSolve.shiftSwapLabel"),
+      explanation: alt.Summary || tr("postSolve.shiftSwapDefault"),
     };
   }
 
@@ -268,11 +269,11 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "direct_replacement",
       icon: UserPlus,
-      label: "Directe vervanging",
+      label: tr("postSolve.directReplacement"),
       explanation: alt.Summary || (
         added.length === 1
-          ? `${replacers[0]} neemt de dienst over op ${formatShiftDate(added[0].Start)}. Geen andere wijzigingen nodig.`
-          : `${replacers.join(" en ")} nemen de dienst${added.length > 1 ? "en" : ""} over. Geen verdere impact op het rooster.`
+          ? tr("postSolve.directReplacementSingle", { name: replacers[0], date: formatShiftDate(added[0].Start) })
+          : tr("postSolve.directReplacementMulti", { names: replacers.join(", ") })
       ),
     };
   }
@@ -281,8 +282,8 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "swap",
       icon: Repeat2,
-      label: "Dienstruil",
-      explanation: alt.Summary || `${removed[0].EmployeeName} en ${added[0].EmployeeName} wisselen van dienst op ${formatShiftDate(added[0].Start)}.`,
+      label: tr("postSolve.shiftSwapLabel"),
+      explanation: alt.Summary || tr("postSolve.swapExplanation", { name1: removed[0].EmployeeName, name2: added[0].EmployeeName, date: formatShiftDate(added[0].Start) }),
     };
   }
 
@@ -292,11 +293,11 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
   return {
     type: "chain",
     icon: GitBranch,
-    label: "Ketenaanpassing",
+    label: tr("postSolve.chainLabel"),
     explanation: alt.Summary || (
       uniqueDays.length > 1
-        ? `Herschikking over ${uniqueDays.length} dagen met ${uniqueEmployees.length} medewerker${uniqueEmployees.length > 1 ? "s" : ""}: ${uniqueEmployees.join(", ")}.`
-        : `Meervoudige aanpassing met ${uniqueEmployees.length} medewerker${uniqueEmployees.length > 1 ? "s" : ""}: ${uniqueEmployees.join(", ")}.`
+        ? tr("postSolve.chainMultiDay", { days: uniqueDays.length, count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
+        : tr("postSolve.chainSingleDay", { count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
     ),
   };
 }
