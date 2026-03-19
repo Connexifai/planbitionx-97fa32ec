@@ -238,7 +238,15 @@
     "withinTarget": "within target",
     "consecutiveSameShift": "consecutive days with same shift type",
     "shiftChangeRest": "Minimum 11 hours rest guaranteed at shift change per WTA",
-    "employeesOnShift": "employees on shift"
+    "employeesOnShift": "employees on shift",
+    "askAi": "Ask AI why this choice was made",
+    "aiAnalyzing": "AI analyzing...",
+    "aiExplanation": "AI Explanation",
+    "solverStats": "Solver Statistics",
+    "solveTime": "Solve time",
+    "fillRate": "Fill rate",
+    "totalAssignments": "Assignments",
+    "hardViolations": "Hard violations"
   },
   "days": {
     "mo": "Mon",

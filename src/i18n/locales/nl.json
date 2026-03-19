@@ -238,7 +238,15 @@
     "withinTarget": "binnen target",
     "consecutiveSameShift": "aaneengesloten dagen met hetzelfde diensttype",
     "shiftChangeRest": "Minimaal 11 uur rust gegarandeerd bij dienstwissel conform ATW",
-    "employeesOnShift": "medewerkers op dienst"
+    "employeesOnShift": "medewerkers op dienst",
+    "askAi": "Vraag AI waarom deze keuze is gemaakt",
+    "aiAnalyzing": "AI analyseert...",
+    "aiExplanation": "AI Uitleg",
+    "solverStats": "Solver Statistieken",
+    "solveTime": "Oplostijd",
+    "fillRate": "Bezettingsgraad",
+    "totalAssignments": "Toewijzingen",
+    "hardViolations": "Harde overtredingen"
   },
   "days": {
     "mo": "Ma",
