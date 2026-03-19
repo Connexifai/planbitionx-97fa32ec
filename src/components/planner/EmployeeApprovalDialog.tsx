@@ -218,7 +218,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                       ) : employee.status === "approved" ? (
                         <div className="flex items-center justify-center gap-2 py-4 text-primary text-[16px] font-semibold animate-fade-in">
                           <CheckCircle2 className="h-5 w-5" />
-                          Akkoord gegeven
+                          {t("approval.approveGiven")}
                         </div>
                       ) : (
                         <div className="flex items-center justify-center gap-2 py-4 text-destructive text-[16px] font-semibold animate-fade-in">
