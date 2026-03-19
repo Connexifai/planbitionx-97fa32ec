@@ -392,8 +392,7 @@ export default function Index() {
         setSolverAssignments(updatedAssignments);
       },
       () => {
-        // Clear any active roster filter after animation completes
-        setRosterFilter(null);
+        // Don't clear roster filter — let user dismiss it manually
         toast.success(t("postSolve.alternativeApplied", { rank: alt.Rank }), {
           description: t("postSolve.changesApplied", { count: alt.ChangesFromBaseline }),
         });

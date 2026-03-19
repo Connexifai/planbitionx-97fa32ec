@@ -365,7 +365,7 @@ export function RosterGrid({ data, employeeConstraints = [], animationState, fil
           <div className="flex items-center gap-2 text-sm">
             <Filter className="h-4 w-4 text-primary" />
             <span className="font-medium text-foreground">
-              Gefilterd: {employees.length} medewerker{employees.length !== 1 && "s"}
+              {t("grid.filtered", { count: employees.length })}
             </span>
             {filter.conflictEmployeeName && (
               <Badge variant="destructive" className="text-[10px]">
@@ -375,7 +375,7 @@ export function RosterGrid({ data, employeeConstraints = [], animationState, fil
           </div>
           <Button variant="ghost" size="sm" className="h-7 gap-1 text-xs text-muted-foreground hover:text-foreground" onClick={onClearFilter}>
             <X className="h-3 w-3" />
-            Wis filter
+            {t("grid.clearFilter")}
           </Button>
         </div>
       )}
