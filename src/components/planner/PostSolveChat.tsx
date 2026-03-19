@@ -628,7 +628,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
       if (isOpenSwap) {
         // Find the employee's free days so we can suggest them
-        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const dayNamesSwap = t("postSolve.dayNames", { returnObjects: true }) as string[];
         const empAssignments = (solverAssignments || []).filter(
           (a: any) => String(a.PersonId) === String(constraint.employeeId)
         );
