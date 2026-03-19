@@ -233,7 +233,7 @@ export function StatsDashboard({ data }: StatsDashboardProps) {
   if (!data) {
     return (
       <div className="rounded-xl border border-border/50 bg-card p-8 text-center text-muted-foreground">
-        <p className="text-sm">{t("grid.noData", "Geen data beschikbaar")}</p>
+        <p className="text-sm">{t("grid.noData")}</p>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import { createPortal } from "react-dom";
 import { cn } from "@/lib/utils";
 import { CheckCircle2 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { RosterAnimationState } from "@/hooks/useRosterAnimation";
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
  * 2. A progress banner at the top
  */
 export function RosterChangeOverlay({ state }: Props) {
+  const { t } = useTranslation();
   if (!state.active) return null;
 
   return createPortal(
@@ -29,7 +31,7 @@ export function RosterChangeOverlay({ state }: Props) {
                 <CheckCircle2 className="h-4 w-4" />
               </div>
               <span className="text-sm font-bold text-primary">
-                Alle {state.moves.length} wijzigingen doorgevoerd ✓
+                {t("overlay.allChangesApplied", { count: state.moves.length })}
               </span>
             </>
           ) : state.currentMove ? (

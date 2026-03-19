@@ -394,8 +394,8 @@ export default function Index() {
       () => {
         // Clear any active roster filter after animation completes
         setRosterFilter(null);
-        toast.success(`Alternatief #${alt.Rank} doorgevoerd`, {
-          description: `${alt.ChangesFromBaseline} wijziging${alt.ChangesFromBaseline !== 1 ? "en" : ""} toegepast`,
+        toast.success(t("postSolve.alternativeApplied", { rank: alt.Rank }), {
+          description: t("postSolve.changesApplied", { count: alt.ChangesFromBaseline }),
         });
       }
     );
@@ -600,7 +600,7 @@ export default function Index() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={signOut} className="cursor-pointer text-destructive focus:text-destructive">
                   <LogOut className="h-4 w-4 mr-2" />
-                  Uitloggen
+                  {t("common.logout")}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

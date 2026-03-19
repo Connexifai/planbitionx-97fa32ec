@@ -9,7 +9,7 @@ import ReactMarkdown from "react-markdown";
 import { buildAlternativesPayload, getRemovedAssignments } from "@/lib/buildAlternativesPayload";
 import type { AlternativeConstraint, Alternative, AlternativesResponse, AlternativeChange, SearchScope } from "@/lib/buildAlternativesPayload";
 import { format, parseISO } from "date-fns";
-import { nl } from "date-fns/locale";
+import { nl, enUS, de, fr, pt, pl, it, es } from "date-fns/locale";
 import { EmployeeApprovalDialog } from "./EmployeeApprovalDialog";
 
 interface CandidateEmployee {
@@ -238,14 +238,15 @@ function enrichSwapAlternatives(
   return enriched;
 }
 
-function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSwapRequest?: boolean): ClassifiedAlternative {
-  // "Dienst open laten" option
+function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSwapRequest?: boolean, t?: (key: string, opts?: any) => string): ClassifiedAlternative {
+  const tr = t || ((k: string) => k);
+  // "Leave shift open" option
   if (alt.ConflictShiftFilled === false) {
     return {
       type: "direct_replacement",
       icon: AlertCircle,
-      label: "Dienst open laten",
-      explanation: alt.Summary || "De dienst wordt niet opgevuld en blijft open.",
+      label: tr("postSolve.leaveShiftOpen"),
+      explanation: alt.Summary || tr("postSolve.shiftOpenDefault", "The shift will not be filled and remains open."),
     };
   }
 
@@ -258,8 +259,8 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "swap",
       icon: Repeat2,
-      label: "Dienstruil",
-      explanation: alt.Summary || "Medewerkers wisselen van dienst.",
+      label: tr("postSolve.shiftSwapLabel"),
+      explanation: alt.Summary || tr("postSolve.shiftSwapDefault"),
     };
   }
 
@@ -268,11 +269,11 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "direct_replacement",
       icon: UserPlus,
-      label: "Directe vervanging",
+      label: tr("postSolve.directReplacement"),
       explanation: alt.Summary || (
         added.length === 1
-          ? `${replacers[0]} neemt de dienst over op ${formatShiftDate(added[0].Start)}. Geen andere wijzigingen nodig.`
-          : `${replacers.join(" en ")} nemen de dienst${added.length > 1 ? "en" : ""} over. Geen verdere impact op het rooster.`
+          ? tr("postSolve.directReplacementSingle", { name: replacers[0], date: formatShiftDate(added[0].Start) })
+          : tr("postSolve.directReplacementMulti", { names: replacers.join(", ") })
       ),
     };
   }
@@ -281,8 +282,8 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     return {
       type: "swap",
       icon: Repeat2,
-      label: "Dienstruil",
-      explanation: alt.Summary || `${removed[0].EmployeeName} en ${added[0].EmployeeName} wisselen van dienst op ${formatShiftDate(added[0].Start)}.`,
+      label: tr("postSolve.shiftSwapLabel"),
+      explanation: alt.Summary || tr("postSolve.swapExplanation", { name1: removed[0].EmployeeName, name2: added[0].EmployeeName, date: formatShiftDate(added[0].Start) }),
     };
   }
 
@@ -292,11 +293,11 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
   return {
     type: "chain",
     icon: GitBranch,
-    label: "Ketenaanpassing",
+    label: tr("postSolve.chainLabel"),
     explanation: alt.Summary || (
       uniqueDays.length > 1
-        ? `Herschikking over ${uniqueDays.length} dagen met ${uniqueEmployees.length} medewerker${uniqueEmployees.length > 1 ? "s" : ""}: ${uniqueEmployees.join(", ")}.`
-        : `Meervoudige aanpassing met ${uniqueEmployees.length} medewerker${uniqueEmployees.length > 1 ? "s" : ""}: ${uniqueEmployees.join(", ")}.`
+        ? tr("postSolve.chainMultiDay", { days: uniqueDays.length, count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
+        : tr("postSolve.chainSingleDay", { count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
     ),
   };
 }
@@ -404,7 +405,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `🤔 Er zijn meerdere medewerkers met die naam. Wie bedoel je?`,
+              content: t("postSolve.ambiguousEmployee"),
               candidates: intent.candidates,
               originalMessage: msg,
             },
@@ -415,7 +416,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `⚠️ ${intent.reason || "Ik kon je verzoek niet begrijpen. Kun je het anders formuleren?"}`,
+              content: `⚠️ ${intent.reason || t("postSolve.notUnderstood")}`,
             },
           ]);
         }
@@ -430,7 +431,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `🔍 Ik zoek uit waarom **${intent.employeeName}** zo is ingepland...`,
+            content: t("postSolve.lookingUpExplanation", { name: intent.employeeName }),
           },
         ]);
 
@@ -482,7 +483,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
       // ── Add days intent: find free days and show options ──
       if (intent.constraintType === "add_days") {
-        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const dayNamesLocal = t("postSolve.dayNames", { returnObjects: true }) as string[];
         const empId = String(intent.employeeId);
         const empAssignments = (solverAssignments || []).filter(
           (a: any) => String(a.PersonId) === String(empId)
@@ -525,7 +526,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
               addDayOptions.push({
                 dayOfWeek: solverDay,
                 date: dateStr,
-                label: `${dayNamesNL[solverDay].charAt(0).toUpperCase() + dayNamesNL[solverDay].slice(1)} ${dateStr}`,
+                label: `${dayNamesLocal[solverDay].charAt(0).toUpperCase() + dayNamesLocal[solverDay].slice(1)} ${dateStr}`,
                 currentEmployees: uniqueOthers,
               });
             }
@@ -546,7 +547,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
           if (!matchingOption) {
             // Employee is already scheduled on that day or day doesn't exist
-            const dayLabel = targetDate || (targetDayOfWeek !== undefined ? dayNamesNL[targetDayOfWeek] : "");
+            const dayLabel = targetDate || (targetDayOfWeek !== undefined ? dayNamesLocal[targetDayOfWeek] : "");
             const alreadyScheduled = empAssignments.some((a: any) => {
               if (targetDate) return a.Start?.split("T")[0] === targetDate;
               if (targetDayOfWeek !== undefined) {
@@ -562,8 +563,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                 id: Date.now() + 1,
                 role: "assistant",
                 content: alreadyScheduled
-                  ? `ℹ️ **${intent.employeeName}** is al ingepland op ${dayLabel}. Kies een andere dag.`
-                  : `⚠️ ${dayLabel} valt niet binnen de planningsperiode.`,
+                  ? t("postSolve.alreadyScheduledOn", { name: intent.employeeName, day: dayLabel })
+                  : t("postSolve.outsidePeriod", { day: dayLabel }),
               },
             ]);
             setIsTyping(false);
@@ -582,7 +583,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `ℹ️ **${intent.employeeName}** is al elke dag ingepland. Er zijn geen vrije dagen meer beschikbaar.`,
+              content: t("postSolve.allDaysScheduled", { name: intent.employeeName }),
             },
           ]);
           setIsTyping(false);
@@ -596,7 +597,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `📅 **${intent.employeeName}** is momenteel **${currentDayCount} van de ${currentDayCount + addDayOptions.length} dagen** ingepland.\n\nOp welke dag wil je ${intent.employeeName} extra inplannen? Ik zoek dan wie er uitgewisseld kan worden.`,
+            content: t("postSolve.addDayPrompt", { name: intent.employeeName, current: currentDayCount, total: currentDayCount + addDayOptions.length }),
             addDayOptions,
             addDaysEmployeeId: empId,
             addDaysEmployeeName: intent.employeeName,
@@ -627,7 +628,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
 
       if (isOpenSwap) {
         // Find the employee's free days so we can suggest them
-        const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const dayNamesSwap = t("postSolve.dayNames", { returnObjects: true }) as string[];
         const empAssignments = (solverAssignments || []).filter(
           (a: any) => String(a.PersonId) === String(constraint.employeeId)
         );
@@ -638,11 +639,11 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           const solverDay = d.getDay() === 0 ? 6 : d.getDay() - 1; // JS→ISO
           occupiedDays.add(solverDay);
         }
-        const freeDays = dayNamesNL
+        const freeDays = dayNamesSwap
           .map((name, idx) => ({ name, idx }))
           .filter(({ idx }) => !occupiedDays.has(idx));
 
-        const conflictDay = constraint.dayOfWeek !== undefined ? dayNamesNL[constraint.dayOfWeek] : constraint.date || "";
+        const conflictDay = constraint.dayOfWeek !== undefined ? dayNamesSwap[constraint.dayOfWeek] : constraint.date || "";
 
         if (freeDays.length === 0) {
           setMessages((prev) => [
@@ -650,7 +651,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
             {
               id: Date.now() + 1,
               role: "assistant",
-              content: `⚠️ **${constraint.employeeName}** is elke dag ingepland in het huidige rooster, er zijn geen vrije dagen beschikbaar om mee te ruilen.`,
+              content: t("postSolve.swapAllDaysScheduled", { name: constraint.employeeName }),
             },
           ]);
           setIsTyping(false);
@@ -662,7 +663,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `🔄 **${constraint.employeeName}** wil ${conflictDay} ruilen met een andere dag.\n\nWelke vrije dag wil ${constraint.employeeName} daarvoor werken?`,
+            content: t("postSolve.swapDayPrompt", { name: constraint.employeeName, conflictDay }),
             swapOptions: freeDays.map(d => ({ dayOfWeek: d.idx, label: d.name.charAt(0).toUpperCase() + d.name.slice(1) })),
             swapConstraintBase: constraint,
           },
@@ -679,8 +680,8 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           id: Date.now() + 1,
           role: "assistant",
           content: isSwapWithTarget
-            ? `✅ **Begrepen:** ${intent.summary}\n\n🔄 Ik zoek nu de beste ruilopties...`
-            : `✅ **Begrepen:** ${intent.summary}\n\n⏳ Ik zoek nu snel de beste alternatieven...`,
+            ? t("postSolve.understoodSwap", { summary: intent.summary })
+            : t("postSolve.understoodSearch", { summary: intent.summary }),
         },
       ]);
 
@@ -714,21 +715,21 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       console.log("[PostSolveChat] Removed shifts:", removedShifts);
 
       if (removedShifts.length === 0) {
-        const dayNames = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+        const dayNamesConflict = t("postSolve.dayNames", { returnObjects: true }) as string[];
         let detail = "";
         if (constraint.type === "avoid_day" && constraint.dayOfWeek !== undefined) {
-          detail = `op ${dayNames[constraint.dayOfWeek]}`;
+          detail = t("postSolve.onDay", { day: dayNamesConflict[constraint.dayOfWeek] });
         } else if (constraint.type === "avoid_date" && constraint.date) {
-          detail = `op ${constraint.date}`;
+          detail = t("postSolve.onDate", { date: constraint.date });
         } else if (constraint.type === "avoid_shift_kind" && constraint.shiftKind) {
-          detail = `in een ${constraint.shiftKind}-dienst`;
+          detail = t("postSolve.inShiftKind", { kind: constraint.shiftKind });
         }
         setMessages((prev) => [
           ...prev,
           {
             id: Date.now() + 2,
             role: "assistant",
-            content: `ℹ️ **${constraint.employeeName}** is in het huidige rooster niet ingepland ${detail}. Er is dus geen conflict om op te lossen.\n\nProbeer een andere medewerker of dag.`,
+            content: t("postSolve.noConflict", { name: constraint.employeeName, detail }),
           },
         ]);
         setIsTyping(false);
@@ -747,7 +748,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: resultMsgId,
             role: "assistant",
-            content: "⚠️ Geen alternatieven gevonden voor dit verzoek.",
+            content: t("postSolve.noAlternativesFound"),
           },
         ]);
       } else {
@@ -756,7 +757,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: resultMsgId,
             role: "assistant",
-            content: `Ik heb **${formatAlternativeCount(narrowPrepared)}** gevonden:`,
+            content: (t as any)("postSolve.alternativesFound", { count: formatAlternativeCount(narrowPrepared) }),
             alternatives: narrowPrepared.visibleAlts,
             baseline: altResponse.Baseline,
             constraintSummary: intent.summary,
@@ -771,7 +772,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `❌ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}. Probeer het opnieuw.`,
+          content: t("postSolve.errorOccurred", { error: error instanceof Error ? error.message : t("postSolve.unknownError") }),
         },
       ]);
     } finally {
@@ -787,7 +788,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `✅ **Wijziging doorgevoerd!**`,
+        content: t("postSolve.changeApplied"),
         alternatives: [alt],
         applied: true,
       },
@@ -811,7 +812,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `✅ **Alle medewerkers akkoord — wijziging doorgevoerd!**`,
+        content: t("postSolve.allApprovedApplied"),
         alternatives: [alt],
         applied: true,
       },
@@ -824,13 +825,13 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
       {
         id: Date.now(),
         role: "assistant",
-        content: `❌ **${rejectedByName}** heeft de wijziging afgewezen. Ik zoek automatisch een nieuw alternatief zonder ${rejectedByName}...`,
+        content: t("postSolve.rejectedSearching", { name: rejectedByName }),
       },
     ]);
     setIsTyping(true);
 
     try {
-      if (!lastConstraint) throw new Error("Geen constraint beschikbaar voor opnieuw zoeken.");
+      if (!lastConstraint) throw new Error(t("postSolve.noConstraintAvailable"));
 
       // Search with full scope to find more options
       const altResponse = await fetchAlternatives(lastConstraint, "full");
@@ -848,7 +849,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `⚠️ Geen alternatieven gevonden zonder ${rejectedByName}. Probeer een andere aanpassing of laat de dienst open.`,
+            content: t("postSolve.noAlternativesWithout", { name: rejectedByName }),
           },
         ]);
       } else {
@@ -857,7 +858,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
           {
             id: Date.now() + 1,
             role: "assistant",
-            content: `🔎 **${formatAlternativeCount(prepared)}** gevonden zonder ${rejectedByName}:`,
+            content: (t as any)("postSolve.foundWithout", { count: formatAlternativeCount(prepared), name: rejectedByName }),
             alternatives: prepared.visibleAlts,
             baseline: altResponse.Baseline,
           },
@@ -870,7 +871,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         {
           id: Date.now() + 1,
           role: "assistant",
-          content: `❌ Er ging iets mis bij het opnieuw zoeken: ${error instanceof Error ? error.message : "Onbekende fout"}`,
+          content: t("postSolve.reSearchError", { error: error instanceof Error ? error.message : t("postSolve.unknownError") }),
         },
       ]);
     } finally {
@@ -1216,7 +1217,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                   })()}
                   {msg.alternatives.map((alt, altIdx) => {
                     const isSwapCtx = !!(msg.pendingConstraint?.swapDayOfWeek !== undefined || msg.pendingConstraint?.swapDate);
-                    const classified = classifyAlternative(alt, msg.constraintSummary, isSwapCtx);
+                    const classified = classifyAlternative(alt, msg.constraintSummary, isSwapCtx, t);
                     const TypeIcon = classified.icon;
                     const isOpenShift = alt.ConflictShiftFilled === false;
                     const isRecommended = altIdx === 0 && !isOpenShift;
@@ -1267,7 +1268,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                               <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-0.5">
                                 {(() => {
                                   const count = alt.ChangesFromBaseline;
-                                  return <span>{count} wijziging{count !== 1 && "en"}</span>;
+                                  return <span>{count !== 1 ? t("postSolve.changeCountPlural", { count }) : t("postSolve.changeCount", { count })}</span>;
                                 })()}
                               </div>
                               )}
@@ -1276,12 +1277,12 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                           <div className="flex items-center gap-1.5">
                             {isRecommended && (
                               <Badge className="text-[10px] bg-primary text-primary-foreground border-primary font-semibold">
-                                Aanbevolen
+                                {t("postSolve.recommended")}
                               </Badge>
                             )}
                             {isOpenShift && (
                               <Badge variant="outline" className="text-[10px] text-muted-foreground border-muted-foreground/30">
-                                Geen vervanging
+                                {t("postSolve.noReplacement")}
                               </Badge>
                             )}
                           </div>
@@ -1346,7 +1347,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                             onClick={() => handleApplyAlternative(alt)}
                           >
                             <CheckCircle2 className="h-3.5 w-3.5" />
-                            {isOpenShift ? "Dienst open laten" : "Doorvoeren"}
+                            {isOpenShift ? t("postSolve.leaveShiftOpen") : t("postSolve.applyChange")}
                           </Button>
                           {!isOpenShift && (
                             <Button
@@ -1356,7 +1357,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                               onClick={() => handleSolveForMe(alt)}
                             >
                               <Smartphone className="h-3.5 w-3.5" />
-                              Los het op voor mij!
+                              {t("postSolve.solveForMe")}
                             </Button>
                           )}
                         </div>
@@ -1439,7 +1440,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                       📅 {opt.label}
                       {opt.currentEmployees.length > 0 && (
                         <span className="text-muted-foreground ml-1">
-                          ({opt.currentEmployees.length} ingepland)
+                          ({opt.currentEmployees.length} {t("postSolve.scheduled")})
                         </span>
                       )}
                     </Button>

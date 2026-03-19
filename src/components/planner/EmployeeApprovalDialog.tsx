@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { CheckCircle2, XCircle, Battery, Wifi, Signal } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import type { Alternative, AlternativeChange } from "@/lib/buildAlternativesPayload";
 import { format, parseISO } from "date-fns";
 import { nl } from "date-fns/locale";
@@ -45,6 +46,7 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
   onReject: () => void;
   notificationMode?: { title: string; body: string };
 }) {
+  const { t } = useTranslation();
   const now = new Date();
   const timeStr = `${now.getHours()}:${String(now.getMinutes()).padStart(2, "0")}`;
 
@@ -113,10 +115,10 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                     <div>
                       <div className="text-[14px] font-semibold text-foreground leading-tight">Planbition X</div>
                       <div className="text-[12px] text-muted-foreground leading-tight">
-                        {notificationMode ? "Bevestiging" : "Roosterwijziging"}
+                        {notificationMode ? t("approval.confirmation") : t("approval.rosterChange")}
                       </div>
                     </div>
-                    <div className="ml-auto text-[12px] text-muted-foreground">nu</div>
+                    <div className="ml-auto text-[12px] text-muted-foreground">{t("common.now")}</div>
                   </div>
 
                   {/* Message content */}
@@ -131,16 +133,16 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                         </p>
                         <div className="flex items-center justify-center gap-2 py-3 text-primary text-[16px] font-semibold animate-fade-in">
                           <CheckCircle2 className="h-6 w-6" />
-                          Goedgekeurd
+                          {t("approval.approved")}
                         </div>
                       </>
                     ) : (
                       <>
-                        <p className="text-[15px] font-medium text-foreground leading-snug">
-                          Hoi {employee.name.split(" ")[0]} 👋
+                         <p className="text-[15px] font-medium text-foreground leading-snug">
+                          {t("approval.greeting", { name: employee.name.split(" ")[0] })}
                         </p>
                         <p className="text-[14px] text-muted-foreground leading-relaxed">
-                          Er is een roosterwijziging waar jouw akkoord voor nodig is:
+                          {t("approval.changeDescription")}
                         </p>
 
                         {/* Changes */}
@@ -182,14 +184,14 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                                   ? "bg-primary/20 text-primary"
                                   : "bg-destructive/20 text-destructive"
                               )}>
-                                {change.Action === "added" ? "NIEUW" : "VERVALT"}
+                                {change.Action === "added" ? t("approval.new") : t("approval.removed")}
                               </div>
                             </div>
                           ))}
                         </div>
 
                         <p className="text-[14px] text-muted-foreground text-center pt-1">
-                          Ga je akkoord met deze wijziging?
+                          {t("approval.confirmQuestion")}
                         </p>
                       </>
                     )}
@@ -204,24 +206,24 @@ function IPhone17({ employee, onApprove, onReject, notificationMode }: {
                             onClick={onReject}
                             className="flex-1 flex items-center justify-center gap-1.5 py-4 text-destructive text-[16px] font-medium active:bg-muted/50 transition-colors"
                           >
-                            Afwijzen
+                            {t("approval.reject")}
                           </button>
                           <button
                             onClick={onApprove}
                             className="flex-1 flex items-center justify-center gap-1.5 py-4 text-primary text-[16px] font-semibold active:bg-muted/50 transition-colors"
                           >
-                            Akkoord
+                            {t("approval.approve")}
                           </button>
                         </div>
                       ) : employee.status === "approved" ? (
                         <div className="flex items-center justify-center gap-2 py-4 text-primary text-[16px] font-semibold animate-fade-in">
                           <CheckCircle2 className="h-5 w-5" />
-                          Akkoord gegeven
+                          {t("approval.approveGiven")}
                         </div>
                       ) : (
                         <div className="flex items-center justify-center gap-2 py-4 text-destructive text-[16px] font-semibold animate-fade-in">
                           <XCircle className="h-5 w-5" />
-                          Afgewezen
+                          {t("approval.rejected")}
                         </div>
                       )}
                     </div>
@@ -253,6 +255,7 @@ export function EmployeeApprovalDialog({
   onAllApproved,
   onRejected,
 }: EmployeeApprovalDialogProps) {
+  const { t } = useTranslation();
   const [employees, setEmployees] = useState<AffectedEmployee[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [phase, setPhase] = useState<"approving" | "done" | "notifying">("approving");
@@ -269,7 +272,7 @@ export function EmployeeApprovalDialog({
       if (!empMap.has(id)) {
         empMap.set(id, {
           id,
-          name: change.EmployeeName || `Medewerker ${id}`,
+          name: change.EmployeeName || `${t("common.employee")} ${id}`,
           changes: [],
           status: "pending",
         });
@@ -328,12 +331,12 @@ export function EmployeeApprovalDialog({
           {/* Header info above phone */}
           <div className="text-center space-y-1.5 animate-fade-in">
             <p className="text-sm font-semibold text-foreground">
-              {phase === "notifying" ? "Bevestiging verzenden" : phase === "done" ? "Afgerond" : "Goedkeuring vragen"}
+              {phase === "notifying" ? t("approval.sendingConfirmation") : phase === "done" ? t("approval.completed") : t("approval.requestingApproval")}
             </p>
             <p className="text-xs text-muted-foreground">
               {phase === "notifying" || phase === "done"
-                ? `${constraintEmployeeName || "Aanvrager"} wordt op de hoogte gebracht`
-                : `${activeEmployee?.name ?? ""} · ${approvedCount}/${employees.length} akkoord`}
+                ? t("approval.notifiedMessage", { name: constraintEmployeeName || t("common.requester") })
+                : `${activeEmployee?.name ?? ""} · ${t("approval.approvalProgress", { approved: approvedCount, total: employees.length })}`}
             </p>
             {/* Dot indicators */}
             {phase === "approving" && (
@@ -370,15 +373,15 @@ export function EmployeeApprovalDialog({
               key="requester-notification"
               employee={{
                 id: constraintEmployeeId || "requester",
-                name: constraintEmployeeName || "Aanvrager",
+                name: constraintEmployeeName || t("common.requester"),
                 changes: [],
                 status: "approved",
               }}
               onApprove={() => {}}
               onReject={() => {}}
               notificationMode={{
-                title: `Goed nieuws, ${(constraintEmployeeName || "").split(" ")[0]}! 🎉`,
-                body: "Alle betrokken collega's zijn akkoord gegaan met de roosterwijziging. Je verzoek is goedgekeurd!",
+                title: t("approval.goodNews", { name: (constraintEmployeeName || "").split(" ")[0] }),
+                body: t("approval.allAgreed"),
               }}
             />
           )}
@@ -387,7 +390,7 @@ export function EmployeeApprovalDialog({
           {phase === "done" && (
             <div className="flex items-center gap-2 text-primary font-semibold text-sm animate-fade-in">
               <CheckCircle2 className="h-5 w-5" />
-              Alle medewerkers akkoord — {constraintEmployeeName || "aanvrager"} is op de hoogte!
+              {t("approval.allApprovedNotified", { name: constraintEmployeeName || t("common.requester") })}
             </div>
           )}
         </div>
