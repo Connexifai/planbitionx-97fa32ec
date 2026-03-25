@@ -231,9 +231,9 @@ const EmployeeRow = memo(function EmployeeRow({
           <span className="text-sm font-semibold text-foreground truncate">{toTitleCase(emp.name)}</span>
           <div className="flex items-center gap-2">
             <span className="text-[10px] px-1.5 py-0 h-4 inline-flex items-center rounded-md border border-border text-muted-foreground">
-              {emp.shiftCount} diensten
+              {emp.shiftCount} {t("explanation.shifts")}
             </span>
-            <span className="text-[10px] text-muted-foreground">{emp.reasons.length} redenen</span>
+            <span className="text-[10px] text-muted-foreground">{emp.reasons.length} {t("explanation.reasons")}</span>
           </div>
         </div>
         <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform shrink-0", isOpen && "rotate-180")} />

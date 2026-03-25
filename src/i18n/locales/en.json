@@ -252,7 +252,10 @@
     "totalAssignments": "Assignments",
     "hardViolations": "Hard violations",
     "aiQuestionDefault": "Why did the solver schedule {{name}} this way? Explain the main reasons.",
-    "aiError": "Could not retrieve AI explanation"
+    "aiError": "Could not retrieve AI explanation",
+    "shifts": "shifts",
+    "reasons": "reasons",
+    "solverDataAvailable": "The explanation below comes directly from the solver engine."
   },
   "days": {
     "mo": "Mon",

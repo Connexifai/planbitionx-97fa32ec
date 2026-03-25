@@ -252,7 +252,10 @@
     "totalAssignments": "Atribuições",
     "hardViolations": "Violações graves",
     "aiQuestionDefault": "Por que o solver planejou {{name}} desta forma? Explique os principais motivos.",
-    "aiError": "Não foi possível obter a explicação da IA"
+    "aiError": "Não foi possível obter a explicação da IA",
+    "shifts": "turnos",
+    "reasons": "razões",
+    "solverDataAvailable": "A explicação abaixo vem diretamente do motor solver."
   },
   "days": {
     "mo": "Seg",

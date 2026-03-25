@@ -252,7 +252,10 @@
     "totalAssignments": "Zuweisungen",
     "hardViolations": "Harte Verstöße",
     "aiQuestionDefault": "Warum hat der Solver {{name}} so eingeplant? Erkläre die wichtigsten Gründe.",
-    "aiError": "KI-Erklärung konnte nicht abgerufen werden"
+    "aiError": "KI-Erklärung konnte nicht abgerufen werden",
+    "shifts": "Schichten",
+    "reasons": "Gründe",
+    "solverDataAvailable": "Die nachstehende Erklärung stammt direkt von der Solver-Engine."
   },
   "days": {
     "mo": "Mo",
