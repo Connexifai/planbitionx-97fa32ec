@@ -252,7 +252,7 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
       type: "direct_replacement",
       icon: AlertCircle,
       label: tr("postSolve.leaveShiftOpen"),
-      explanation: alt.Summary || tr("postSolve.shiftOpenDefault", "The shift will not be filled and remains open."),
+      explanation: tr("postSolve.shiftOpenDefault"),
     };
   }
 
@@ -266,7 +266,7 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
       type: "swap",
       icon: Repeat2,
       label: tr("postSolve.shiftSwapLabel"),
-      explanation: alt.Summary || tr("postSolve.shiftSwapDefault"),
+      explanation: tr("postSolve.shiftSwapDefault"),
     };
   }
 
@@ -276,11 +276,9 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
       type: "direct_replacement",
       icon: UserPlus,
       label: tr("postSolve.directReplacement"),
-      explanation: alt.Summary || (
-        added.length === 1
-          ? tr("postSolve.directReplacementSingle", { name: replacers[0], date: formatShiftDate(added[0].Start) })
-          : tr("postSolve.directReplacementMulti", { names: replacers.join(", ") })
-      ),
+      explanation: added.length === 1
+        ? tr("postSolve.directReplacementSingle", { name: replacers[0], date: formatShiftDate(added[0].Start) })
+        : tr("postSolve.directReplacementMulti", { names: replacers.join(", ") }),
     };
   }
 
@@ -289,7 +287,7 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
       type: "swap",
       icon: Repeat2,
       label: tr("postSolve.shiftSwapLabel"),
-      explanation: alt.Summary || tr("postSolve.swapExplanation", { name1: removed[0].EmployeeName, name2: added[0].EmployeeName, date: formatShiftDate(added[0].Start) }),
+      explanation: tr("postSolve.swapExplanation", { name1: removed[0].EmployeeName, name2: added[0].EmployeeName, date: formatShiftDate(added[0].Start) }),
     };
   }
 
@@ -300,11 +298,9 @@ function classifyAlternative(alt: Alternative, constraintEmployee?: string, isSw
     type: "chain",
     icon: GitBranch,
     label: tr("postSolve.chainLabel"),
-    explanation: alt.Summary || (
-      uniqueDays.length > 1
-        ? tr("postSolve.chainMultiDay", { days: uniqueDays.length, count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
-        : tr("postSolve.chainSingleDay", { count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
-    ),
+    explanation: uniqueDays.length > 1
+      ? tr("postSolve.chainMultiDay", { days: uniqueDays.length, count: uniqueEmployees.length, names: uniqueEmployees.join(", ") })
+      : tr("postSolve.chainSingleDay", { count: uniqueEmployees.length, names: uniqueEmployees.join(", ") }),
   };
 }
 
