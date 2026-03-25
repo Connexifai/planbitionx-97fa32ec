@@ -16,6 +16,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import { toTitleCase } from "@/lib/utils";
 import type { RosterData } from "@/lib/parseSolverResponse";
 import { useMemo, useState, useRef, useCallback, memo } from "react";
