@@ -152,10 +152,14 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+    if (!loading) {
+      inputRef.current?.focus();
     }
   }, [messages, loading]);
 
@@ -360,6 +364,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
           </div>
           <div className="flex items-center gap-2 rounded-xl border-2 border-primary/20 bg-card px-4 py-3 shadow-md focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/10 transition-all">
             <input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && handleSend()}

@@ -325,10 +325,14 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
   const [approvalAlternative, setApprovalAlternative] = useState<Alternative | null>(null);
   const [lastConstraint, setLastConstraint] = useState<AlternativeConstraint | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+    if (!isTyping) {
+      inputRef.current?.focus();
     }
   }, [messages, isTyping]);
 
@@ -1481,6 +1485,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
         <div className="bg-background pt-4 pb-3 px-5 border-t border-border">
           <div className="flex items-center gap-2 rounded-xl border-2 border-primary/20 bg-card px-4 py-3 shadow-md focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/10 transition-all">
             <input
+              ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && !isTyping && handleSend()}
