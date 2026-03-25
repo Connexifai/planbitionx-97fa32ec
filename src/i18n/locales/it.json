@@ -252,7 +252,10 @@
     "totalAssignments": "Assegnazioni",
     "hardViolations": "Violazioni gravi",
     "aiQuestionDefault": "Perché il solver ha pianificato {{name}} in questo modo? Spiega i motivi principali.",
-    "aiError": "Impossibile recuperare la spiegazione AI"
+    "aiError": "Impossibile recuperare la spiegazione AI",
+    "shifts": "turni",
+    "reasons": "motivi",
+    "solverDataAvailable": "La spiegazione qui sotto proviene direttamente dal motore solver."
   },
   "days": {
     "mo": "Lun",

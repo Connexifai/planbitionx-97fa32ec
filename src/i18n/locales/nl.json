@@ -252,7 +252,10 @@
     "totalAssignments": "Toewijzingen",
     "hardViolations": "Harde overtredingen",
     "aiQuestionDefault": "Waarom heeft de solver {{name}} zo ingepland? Leg de belangrijkste redenen uit.",
-    "aiError": "Kon geen AI-uitleg ophalen"
+    "aiError": "Kon geen AI-uitleg ophalen",
+    "shifts": "diensten",
+    "reasons": "redenen",
+    "solverDataAvailable": "Onderstaande uitleg komt direct van de solver engine."
   },
   "days": {
     "mo": "Ma",

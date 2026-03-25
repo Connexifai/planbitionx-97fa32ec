@@ -252,7 +252,10 @@
     "totalAssignments": "Affectations",
     "hardViolations": "Violations graves",
     "aiQuestionDefault": "Pourquoi le solveur a-t-il planifié {{name}} de cette façon ? Expliquez les raisons principales.",
-    "aiError": "Impossible de récupérer l'explication IA"
+    "aiError": "Impossible de récupérer l'explication IA",
+    "shifts": "services",
+    "reasons": "raisons",
+    "solverDataAvailable": "L'explication ci-dessous provient directement du moteur solver."
   },
   "days": {
     "mo": "Lun",

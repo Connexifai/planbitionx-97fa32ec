@@ -252,7 +252,10 @@
     "totalAssignments": "Przydzielenia",
     "hardViolations": "Poważne naruszenia",
     "aiQuestionDefault": "Dlaczego solver zaplanował {{name}} w ten sposób? Wyjaśnij główne powody.",
-    "aiError": "Nie udało się pobrać wyjaśnienia AI"
+    "aiError": "Nie udało się pobrać wyjaśnienia AI",
+    "shifts": "zmian",
+    "reasons": "powodów",
+    "solverDataAvailable": "Poniższe wyjaśnienie pochodzi bezpośrednio z silnika solvera."
   },
   "days": {
     "mo": "Pn",
