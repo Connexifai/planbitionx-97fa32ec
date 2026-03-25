@@ -325,10 +325,14 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
   const [approvalAlternative, setApprovalAlternative] = useState<Alternative | null>(null);
   const [lastConstraint, setLastConstraint] = useState<AlternativeConstraint | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+    if (!isTyping) {
+      inputRef.current?.focus();
     }
   }, [messages, isTyping]);
 
