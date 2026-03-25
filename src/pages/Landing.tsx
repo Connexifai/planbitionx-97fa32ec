@@ -64,7 +64,7 @@ export default function Landing() {
       <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video autoPlay muted loop playsInline className="w-full h-full object-cover" src="/videos/login-bg.mp4" />
-          <div className="absolute inset-0 bg-background/50" />
+          <div className="absolute inset-0 bg-background/70" />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
@@ -81,7 +81,7 @@ export default function Landing() {
             </span>
           </h1>
 
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-10 leading-relaxed drop-shadow-md">
             {t("landing.heroDesc")}
           </p>
 
