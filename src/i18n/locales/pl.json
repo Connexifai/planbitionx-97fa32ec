@@ -248,7 +248,9 @@
     "solveTime": "Czas rozwiązania",
     "fillRate": "Współczynnik wypełnienia",
     "totalAssignments": "Przydzielenia",
-    "hardViolations": "Poważne naruszenia"
+    "hardViolations": "Poważne naruszenia",
+    "aiQuestionDefault": "Dlaczego solver zaplanował {{name}} w ten sposób? Wyjaśnij główne powody.",
+    "aiError": "Nie udało się pobrać wyjaśnienia AI"
   },
   "days": {
     "mo": "Pn",
