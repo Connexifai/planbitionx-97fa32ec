@@ -85,7 +85,7 @@ export default function Landing() {
             {t("landing.heroDesc")}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-[50px]">
             <Button size="lg" className="text-base px-8 h-12" onClick={() => navigate("/login")}>
               {t("landing.getStarted")} <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
