@@ -500,7 +500,10 @@
     "searchingDisplacement": "Ik zoek alternatieven waarbij {{name}} iemand overneemt...",
     "noAlternativesForDay": "⚠️ Geen geschikte alternatieven gevonden voor {{day}}.",
     "displacementOptionsFound": "Ik heb **{{count}}** opties gevonden om {{name}} in te plannen op {{day}}:",
-    "scheduleOn": "{{name}} inplannen op {{day}}"
+    "scheduleOn": "{{name}} inplannen op {{day}}",
+    "alternativesHeader": "Alternatieven",
+    "optionsBadge": "{{count}} optie(s)",
+    "filter": "Filteren"
   },
   "approval": {
     "confirmation": "Bevestiging",
