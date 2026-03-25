@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/i18n";
 import ReactMarkdown from "react-markdown";
 
+// Per-employee constraint (avoid_day, avoid_shift_kind, avoid_date)
 export interface EmployeeConstraint {
   employeeName: string;
   personId: number;
@@ -18,6 +19,41 @@ export interface EmployeeConstraint {
     date?: string;
     strength?: "soft" | "hard";
   };
+}
+
+// Duo constraint (never_together, always_together)
+export interface DuoConstraint {
+  type: "never_together" | "always_together";
+  employeeNameA: string;
+  personIdA: number;
+  employeeNameB: string;
+  personIdB: number;
+  strength?: "soft" | "hard";
+}
+
+// Global constraint (prioritize_shift, prioritize_days, shift_priority, min_staffing)
+export interface GlobalConstraint {
+  type: "prioritize_shift" | "prioritize_days" | "shift_priority" | "min_staffing";
+  shiftName?: string;
+  shiftNameA?: string;
+  shiftNameB?: string;
+  days?: number[];
+  minCount?: number;
+  dayOfWeek?: number;
+  strength?: "soft" | "hard";
+}
+
+export type BriefingConstraint = EmployeeConstraint | DuoConstraint | GlobalConstraint;
+
+// Type guards
+export function isEmployeeConstraint(c: BriefingConstraint): c is EmployeeConstraint {
+  return "constraint" in c && "personId" in c;
+}
+export function isDuoConstraint(c: BriefingConstraint): c is DuoConstraint {
+  return "type" in c && (c as any).type === "never_together" || (c as any).type === "always_together";
+}
+export function isGlobalConstraint(c: BriefingConstraint): c is GlobalConstraint {
+  return "type" in c && !("constraint" in c) && !("personIdA" in c);
 }
 
 interface CandidateEmployee {
@@ -36,23 +72,60 @@ interface Message {
 interface AiBriefingChatProps {
   employees: any[];
   schedulePeriod: string;
-  constraints: EmployeeConstraint[];
-  onConstraintsChange: (constraints: EmployeeConstraint[]) => void;
+  constraints: BriefingConstraint[];
+  onConstraintsChange: (constraints: BriefingConstraint[]) => void;
 }
 
 const dayNames = ["Ma", "Di", "Wo", "Do", "Vr", "Za", "Zo"];
-const shiftKindNames: Record<string, string> = { early: "Vroeg", day: "Dag", late: "Laat", night: "Nacht" };
 
-function ConstraintTag({ c, onRemove }: { c: EmployeeConstraint; onRemove: () => void }) {
-  const nameParts = c.employeeName.split(",");
-  const shortName = nameParts.length > 1 ? `${nameParts[0].trim()}` : c.employeeName;
+function getShortName(name: string) {
+  const parts = name.split(",");
+  return parts.length > 1 ? parts[0].trim() : name;
+}
 
-  let detail = "";
-  if (c.constraint.type === "avoid_day") detail = dayNames[c.constraint.dayOfWeek ?? 0];
-  if (c.constraint.type === "avoid_shift_kind") detail = shiftKindNames[c.constraint.shiftKind ?? ""] || c.constraint.shiftKind || "";
-  if (c.constraint.type === "avoid_date") detail = c.constraint.date ?? "";
+function ConstraintTag({ c, onRemove, t }: { c: BriefingConstraint; onRemove: () => void; t: (key: string, opts?: any) => string }) {
+  let label = "";
+  let isHard = false;
 
-  const isHard = c.constraint.strength === "hard";
+  if (isEmployeeConstraint(c)) {
+    const shortName = getShortName(c.employeeName);
+    const shiftKindNames: Record<string, string> = {
+      early: t("constraint.early"), day: t("constraint.day"),
+      late: t("constraint.late"), night: t("constraint.night"),
+    };
+    let detail = "";
+    if (c.constraint.type === "avoid_day") detail = dayNames[c.constraint.dayOfWeek ?? 0];
+    if (c.constraint.type === "avoid_shift_kind") detail = shiftKindNames[c.constraint.shiftKind ?? ""] || c.constraint.shiftKind || "";
+    if (c.constraint.type === "avoid_date") detail = c.constraint.date ?? "";
+    isHard = c.constraint.strength === "hard";
+    label = `${shortName} · ${detail}`;
+  } else if (isDuoConstraint(c)) {
+    const nameA = getShortName(c.employeeNameA);
+    const nameB = getShortName(c.employeeNameB);
+    isHard = c.strength === "hard";
+    label = c.type === "never_together"
+      ? `${nameA} ✗ ${nameB} · ${t("constraint.neverTogether")}`
+      : `${nameA} ↔ ${nameB} · ${t("constraint.alwaysTogether")}`;
+  } else if (isGlobalConstraint(c)) {
+    isHard = c.strength === "hard";
+    switch (c.type) {
+      case "prioritize_shift":
+        label = `⬆ ${c.shiftName} · ${t("constraint.prioritizeShift")}`;
+        break;
+      case "prioritize_days":
+        label = `⬆ ${(c.days || []).map(d => dayNames[d]).join(", ")} · ${t("constraint.prioritizeDays")}`;
+        break;
+      case "shift_priority":
+        label = `${c.shiftNameA} > ${c.shiftNameB}`;
+        break;
+      case "min_staffing": {
+        const dayPart = c.dayOfWeek !== undefined ? ` ${dayNames[c.dayOfWeek]}` : "";
+        const shiftPart = c.shiftName ? ` ${c.shiftName}` : "";
+        label = `≥${c.minCount}${shiftPart}${dayPart} · ${t("constraint.minStaffing")}`;
+        break;
+      }
+    }
+  }
 
   return (
     <Badge
@@ -62,9 +135,7 @@ function ConstraintTag({ c, onRemove }: { c: EmployeeConstraint; onRemove: () =>
         isHard ? "border-destructive/50 bg-destructive/10 text-destructive" : "border-primary/30 bg-primary/10 text-primary"
       )}
     >
-      <span className="font-semibold">{shortName}</span>
-      <span className="opacity-70">·</span>
-      <span>{detail}</span>
+      <span>{label}</span>
       <span className="opacity-50">({isHard ? "hard" : "soft"})</span>
       <button onClick={onRemove} className="ml-0.5 hover:opacity-100 opacity-60">
         <X className="h-3 w-3" />
@@ -120,7 +191,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
       );
 
       if (!res.ok) {
-        const err = await res.json().catch(() => ({ error: "Fout" }));
+        const err = await res.json().catch(() => ({ error: "Error" }));
         throw new Error(err.error || `HTTP ${res.status}`);
       }
 
@@ -131,7 +202,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
         const aiMsg: Message = {
           id: Date.now() + 1,
           role: "assistant",
-          content: data.message || "🤔 Er zijn meerdere medewerkers met die naam. Wie bedoel je?",
+          content: data.message || t("chat.multipleCandidates"),
           candidates: data.candidates,
           originalMessage: msg,
         };
@@ -145,9 +216,32 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
         };
         setMessages((prev) => [...prev, aiMsg]);
 
-        // Add new constraints
+        // Add new constraints — normalize the mixed format from the AI
         if (data.constraints && data.constraints.length > 0) {
-          onConstraintsChange([...constraints, ...data.constraints]);
+          const newConstraints: BriefingConstraint[] = data.constraints.map((raw: any) => {
+            // Per-employee constraint (has nested "constraint" object)
+            if (raw.constraint) {
+              return {
+                employeeName: raw.employeeName,
+                personId: raw.personId,
+                constraint: raw.constraint,
+              } as EmployeeConstraint;
+            }
+            // Duo constraint
+            if (raw.type === "never_together" || raw.type === "always_together") {
+              return {
+                type: raw.type,
+                employeeNameA: raw.employeeNameA,
+                personIdA: raw.personIdA,
+                employeeNameB: raw.employeeNameB,
+                personIdB: raw.personIdB,
+                strength: raw.strength || "hard",
+              } as DuoConstraint;
+            }
+            // Global constraint
+            return raw as GlobalConstraint;
+          });
+          onConstraintsChange([...constraints, ...newConstraints]);
         }
       }
     } catch (error) {
@@ -155,7 +249,7 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
       const errMsg: Message = {
         id: Date.now() + 1,
         role: "assistant",
-        content: `⚠️ Er ging iets mis: ${error instanceof Error ? error.message : "Onbekende fout"}. Probeer het opnieuw.`,
+        content: `⚠️ ${t("chat.errorOccurred")}: ${error instanceof Error ? error.message : "Unknown error"}`,
       };
       setMessages((prev) => [...prev, errMsg]);
     } finally {
@@ -183,12 +277,12 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
             <div className="flex items-center gap-2 mb-2">
               <CheckCircle2 className="h-3.5 w-3.5 text-primary" />
               <span className="text-xs font-semibold text-muted-foreground">
-                {constraints.length} constraint{constraints.length > 1 ? "s" : ""} actief
+                {t("constraint.activeCount", { count: constraints.length })}
               </span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               {constraints.map((c, i) => (
-                <ConstraintTag key={i} c={c} onRemove={() => removeConstraint(i)} />
+                <ConstraintTag key={i} c={c} onRemove={() => removeConstraint(i)} t={t} />
               ))}
             </div>
           </div>

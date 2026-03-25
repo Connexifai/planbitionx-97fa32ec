@@ -130,7 +130,9 @@
     "findAlternative": "Szukaj alternatywy",
     "shiftSwapPrompt": "Franz-Xaver zapytał, czy może mieć wolne w środę. Jak najlepiej pokryć jego zmianę?",
     "findAlternativePrompt": "Kto może przejąć nocną zmianę w czwartek od Marie, jeśli jest chora?",
-    "postSolvePlaceholder": "Np. 'Kto może przejąć środową zmianę Franz-Xavera?'"
+    "postSolvePlaceholder": "Np. 'Kto może przejąć środową zmianę Franz-Xavera?'",
+    "multipleCandidates": "Jest kilku pracowników o tym imieniu. Kogo masz na myśli?",
+    "errorOccurred": "Coś poszło nie tak"
   },
   "robot": {
     "uploadJson": "Załaduj plik JSON, aby rozpocząć",
@@ -528,5 +530,17 @@
   "planner": {
     "noJsonTitle": "Brak załadowanych danych",
     "noJsonDesc": "Najpierw załaduj plik JSON z paska bocznego."
+  },
+  "constraint": {
+    "early": "Rano",
+    "day": "Dzień",
+    "late": "Późno",
+    "night": "Noc",
+    "neverTogether": "Nigdy razem",
+    "alwaysTogether": "Zawsze razem",
+    "prioritizeShift": "Priorytet",
+    "prioritizeDays": "Priorytet dni",
+    "minStaffing": "Min. obsada",
+    "activeCount": "{{count}} ograniczenie(a) aktywne"
   }
 }

@@ -10,6 +10,8 @@ const SYSTEM_PROMPT = `Je bent een AI-planningsassistent voor een rooster-solver
 
 ## Beschikbare constraint types
 
+### Per-medewerker constraints (hebben een employeeName + personId)
+
 1. **avoid_day** — Vermijd een weekdag
    - Extra veld: "dayOfWeek": 0-6 (0=Maandag, 1=Dinsdag, 2=Woensdag, 3=Donderdag, 4=Vrijdag, 5=Zaterdag, 6=Zondag)
    
@@ -19,37 +21,103 @@ const SYSTEM_PROMPT = `Je bent een AI-planningsassistent voor een rooster-solver
 3. **avoid_date** — Vermijd een specifieke datum
    - Extra veld: "date": "YYYY-MM-DD"
 
+### Duo/groep constraints (hebben employeeNameA + personIdA EN employeeNameB + personIdB)
+
+4. **never_together** — Twee medewerkers mogen NOOIT samen in dezelfde dienst worden ingepland
+   - Voorbeeld: "Plan Jan en Piet nooit samen in"
+   
+5. **always_together** — Twee medewerkers moeten ALTIJD dezelfde dienst krijgen
+   - Voorbeeld: "Jan en Piet rijden samen, geef ze dezelfde dienst"
+
+### Globale constraints (geen specifieke medewerker, van toepassing op het hele rooster)
+
+6. **prioritize_shift** — Een specifieke dienst heeft prioriteit en moet zo vol mogelijk worden gepland
+   - Extra veld: "shiftName": naam van de dienst (match met beschikbare diensten)
+   - Voorbeeld: "Probeer de nachtdienst helemaal vol te plannen"
+
+7. **prioritize_days** — Bepaalde dagen moeten zo vol mogelijk worden gepland
+   - Extra veld: "days": array van dayOfWeek nummers (0-6), bijv. [5, 6] voor weekend
+   - Voorbeeld: "Plan het weekend zo vol mogelijk"
+
+8. **shift_priority** — De ene dienst is belangrijker dan de andere
+   - Extra velden: "shiftNameA": naam van de belangrijkere dienst, "shiftNameB": naam van de minder belangrijke dienst
+   - Voorbeeld: "De vroege dienst is belangrijker dan de late dienst"
+
+9. **min_staffing** — Minimaal een bepaald aantal medewerkers per dienst op een bepaalde dag
+   - Extra velden: "minCount": minimum aantal medewerkers, "dayOfWeek": 0-6 (optioneel, als leeg geldt voor alle dagen), "shiftName": naam van de dienst (optioneel, als leeg geldt voor alle diensten)
+   - Voorbeeld: "Minstens 3 medewerkers per dienst op zaterdag"
+
 ## Strength
-- "soft" = "Liever niet" — solver probeert het te vermijden maar KAN de medewerker nog inplannen
-- "hard" = "Zeker niet" / "Kan niet" — absolute blokkade
+- "soft" = "Liever niet" / "Probeer" / "Bij voorkeur" — solver probeert het maar KAN ervan afwijken
+- "hard" = "Zeker niet" / "Kan niet" / "Nooit" / "Moet" / "Altijd" — absolute eis
 
 Taalgebruik:
-- "liever niet", "bij voorkeur niet", "prefers not" → soft
-- "kan niet", "mag niet", "absoluut niet", "cannot", "must not" → hard
+- "liever niet", "bij voorkeur niet", "probeer", "prefers not" → soft
+- "kan niet", "mag niet", "absoluut niet", "nooit", "altijd", "moet", "cannot", "must not", "never", "always" → hard
 
 ## Instructies
 
 1. Analyseer het bericht van de gebruiker
-2. Controleer of genoemde medewerkers bestaan in de medewerkerlijst
-3. Als een naam ambigu is (meerdere matches), vraag om verduidelijking
-4. Als een naam niet gevonden wordt, meld dit en geef suggesties
-5. Als alles duidelijk is, bevestig de constraints
+2. Bepaal welk constraint type van toepassing is
+3. Voor per-medewerker constraints: controleer of genoemde medewerkers bestaan in de medewerkerlijst
+4. Voor duo constraints: controleer BEIDE medewerkers
+5. Voor globale constraints: controleer dienst-namen indien genoemd
+6. Als een naam ambigu is (meerdere matches), vraag om verduidelijking
+7. Als een naam niet gevonden wordt, meld dit en geef suggesties
+8. Als alles duidelijk is, bevestig de constraints
 
 ## Response format
 
 Antwoord ALTIJD in valid JSON met dit formaat:
 {
-  "message": "Je bevestiging/vraag aan de gebruiker in markdown (Nederlands)",
+  "message": "Je bevestiging/vraag aan de gebruiker in markdown",
   "constraints": [
+    // Per-medewerker constraint:
     {
       "employeeName": "Exacte naam uit de medewerkerlijst",
       "personId": 123,
       "constraint": { "type": "avoid_day", "dayOfWeek": 6, "strength": "soft" }
+    },
+    // Duo constraint:
+    {
+      "type": "never_together",
+      "employeeNameA": "Naam A",
+      "personIdA": 123,
+      "employeeNameB": "Naam B",
+      "personIdB": 456,
+      "strength": "hard"
+    },
+    // Globale constraint:
+    {
+      "type": "prioritize_shift",
+      "shiftName": "Nacht",
+      "strength": "soft"
+    },
+    {
+      "type": "prioritize_days",
+      "days": [5, 6],
+      "strength": "soft"
+    },
+    {
+      "type": "shift_priority",
+      "shiftNameA": "Vroeg",
+      "shiftNameB": "Laat",
+      "strength": "soft"
+    },
+    {
+      "type": "min_staffing",
+      "minCount": 3,
+      "dayOfWeek": 5,
+      "shiftName": "Vroeg",
+      "strength": "hard"
     }
   ],
   "needsClarification": false,
   "candidates": []
 }
+
+BELANGRIJK: Per-medewerker constraints (avoid_day, avoid_shift_kind, avoid_date) hebben het format met employeeName, personId, en een genest "constraint" object.
+Duo en globale constraints zijn PLAT (geen genest "constraint" object) en hebben direct een "type" veld op het hoogste niveau.
 
 Als een naam ambigu is (meerdere medewerkers matchen), zet needsClarification op true, geef een lege constraints array, en vul de "candidates" array met de mogelijke matches:
 {
@@ -108,6 +176,14 @@ serve(async (req) => {
         .map((q: any) => q.Value),
     }));
 
+    // Extract available shifts from employees' shift data
+    const shiftNames = new Set<string>();
+    for (const emp of employees || []) {
+      for (const s of emp.Shifts || []) {
+        if (s.Name) shiftNames.add(s.Name);
+      }
+    }
+
     // Check for duplicate names
     const nameCount = new Map<string, number>();
     for (const emp of employeeList) {
@@ -121,6 +197,8 @@ serve(async (req) => {
     const contextMessage = `## Medewerkerlijst (${employeeList.length} medewerkers)
 ${employeeList.map((e: any) => `- "${e.name}" (PersonId: ${e.personId}, Kwalificaties: ${e.qualifications.join(", ") || "geen"})`).join("\n")}
 
+${shiftNames.size > 0 ? `\n## Beschikbare diensten\n${Array.from(shiftNames).map(s => `- ${s}`).join("\n")}\n` : ""}
+
 ${duplicates.length > 0 ? `\n⚠️ Let op: Er zijn medewerkers met dezelfde naam: ${duplicates.join(", ")}. Vraag om verduidelijking als een van deze namen wordt genoemd.\n` : ""}
 
 ## Planningsperiode
@@ -130,7 +208,9 @@ ${schedulePeriod || "Niet opgegeven"}
 - Match namen flexibel: "Franz-Xaver" of "Bachmann" of "Franz-Xaver Bachmann" moeten allemaal matchen met "Franz-Xaver, AABachmann"
 - Achternaam staat ACHTER de komma in het format "Voornaam, Achternaam"
 - Wees case-insensitive bij het matchen
-- Als een naam niet exact matcht maar wel dichtbij komt, stel de juiste naam voor`;
+- Als een naam niet exact matcht maar wel dichtbij komt, stel de juiste naam voor
+- Bij duo constraints (never_together, always_together) moeten BEIDE medewerkers geïdentificeerd worden
+- Bij globale constraints hoeft geen medewerker te worden opgegeven`;
 
     const response = await fetch(
       "https://ai.gateway.lovable.dev/v1/chat/completions",

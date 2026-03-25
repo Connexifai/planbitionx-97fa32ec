@@ -188,8 +188,8 @@ function ChatPanel({
   handleApplyAlternative: (alt: any) => void;
   handleNavigateToEmployee: (name: string) => void;
   handleFilterRoster: (filter: any) => void;
-  employeeConstraints: import("@/components/planner/AiBriefingChat").EmployeeConstraint[];
-  setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>>;
+  employeeConstraints: import("@/components/planner/AiBriefingChat").BriefingConstraint[];
+  setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").BriefingConstraint[]>>;
 }) {
   const { t } = useTranslation();
   const isDragging = useRef(false);
@@ -306,7 +306,7 @@ export default function Index() {
   const [rosterData, setRosterData] = useState<RosterData | null>(null);
   const [requestData, setRequestData] = useState<any>(null);
   const [requestRawJson, setRequestRawJson] = useState<string | null>(null);
-  const [employeeConstraints, setEmployeeConstraints] = useState<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>([]);
+  const [employeeConstraints, setEmployeeConstraints] = useState<import("@/components/planner/AiBriefingChat").BriefingConstraint[]>([]);
   const [entranceVisible, setEntranceVisible] = useState(() => {
     return sessionStorage.getItem("just_logged_in") === "true";
   });
@@ -456,22 +456,38 @@ export default function Index() {
       const settingsPayload = buildSettingsPayload(atw, soft, solver);
       const mergedPayload = { ...basePayload, ...settingsPayload };
 
-      // Inject per-employee constraints from AI briefing chat
-      if (employeeConstraints.length > 0 && Array.isArray(mergedPayload.Employees)) {
-        // Group constraints by personId
-        const constraintsByPerson = new Map<number, any[]>();
-        for (const ec of employeeConstraints) {
-          const list = constraintsByPerson.get(ec.personId) || [];
-          list.push(ec.constraint);
-          constraintsByPerson.set(ec.personId, list);
-        }
-        mergedPayload.Employees = mergedPayload.Employees.map((emp: any) => {
-          const personConstraints = constraintsByPerson.get(emp.PersonId);
-          if (personConstraints) {
-            return { ...emp, Constraints: [...(emp.Constraints || []), ...personConstraints] };
+      // Inject constraints from AI briefing chat
+      if (employeeConstraints.length > 0) {
+        const { isEmployeeConstraint } = await import("@/components/planner/AiBriefingChat");
+        
+        // Per-employee constraints → inject into employee's Constraints array
+        if (Array.isArray(mergedPayload.Employees)) {
+          const constraintsByPerson = new Map<number, any[]>();
+          for (const ec of employeeConstraints) {
+            if (isEmployeeConstraint(ec)) {
+              const list = constraintsByPerson.get(ec.personId) || [];
+              list.push(ec.constraint);
+              constraintsByPerson.set(ec.personId, list);
+            }
           }
-          return emp;
-        });
+          mergedPayload.Employees = mergedPayload.Employees.map((emp: any) => {
+            const personConstraints = constraintsByPerson.get(emp.PersonId);
+            if (personConstraints) {
+              return { ...emp, Constraints: [...(emp.Constraints || []), ...personConstraints] };
+            }
+            return emp;
+          });
+        }
+
+        // Global and duo constraints → inject into SchedulingOptions.AdditionalConstraints
+        const globalConstraints = employeeConstraints.filter(c => !isEmployeeConstraint(c));
+        if (globalConstraints.length > 0) {
+          mergedPayload.SchedulingOptions = mergedPayload.SchedulingOptions || {};
+          mergedPayload.SchedulingOptions.AdditionalConstraints = [
+            ...(mergedPayload.SchedulingOptions.AdditionalConstraints || []),
+            ...globalConstraints,
+          ];
+        }
       }
 
       const res = await fetch(
@@ -613,7 +629,7 @@ export default function Index() {
               <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-5 space-y-3 md:space-y-5">
                 <KpiCards solved data={rosterData ?? undefined} solveTime={solveDurationMs} />
                 <RosterTabs value={activeTab} onChange={setActiveTab} />
-                {activeTab === "roster" && <RosterGrid data={rosterData ?? undefined} employeeConstraints={employeeConstraints} animationState={animationState} onRegisterGridFns={registerGridFns} filter={rosterFilter} onClearFilter={() => setRosterFilter(null)} />}
+                {activeTab === "roster" && <RosterGrid data={rosterData ?? undefined} employeeConstraints={employeeConstraints.filter((c): c is import("@/components/planner/AiBriefingChat").EmployeeConstraint => "constraint" in c)} animationState={animationState} onRegisterGridFns={registerGridFns} filter={rosterFilter} onClearFilter={() => setRosterFilter(null)} />}
                 {activeTab === "dienst" && <ServiceRosterGrid data={rosterData ?? undefined} />}
                 {activeTab === "stats" && <StatsDashboard data={rosterData ?? undefined} />}
                 {activeTab === "uitleg" && <ExplanationView data={rosterData ?? undefined} solverExplanations={solverExplanations} solverStatistics={solverStatistics} solverAssignments={solverAssignments} requestData={requestData} />}
