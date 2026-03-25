@@ -56,9 +56,10 @@ function useTypingText(text: string, speed = 40) {
 }
 
 function RobotQuoteBubble() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const [quoteIndex] = useState(() => Math.floor(Math.random() * 10));
   const quotes = t("robot.quotes", { returnObjects: true }) as string[];
-  const [quote] = useState(() => quotes[Math.floor(Math.random() * quotes.length)]);
+  const quote = quotes[quoteIndex % quotes.length];
   const typed = useTypingText(quote, 45);
 
   return (
