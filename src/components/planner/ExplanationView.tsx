@@ -178,7 +178,7 @@ function StatsSummary({ stats }: { stats: SolverStatistics }) {
               {stats.FillRatePercentage !== undefined && (
                 <div>
                   <p className="text-[11px] text-muted-foreground">{t("explanation.fillRate")}</p>
-                  <p className="text-sm font-bold">{stats.FillRatePercentage}%</p>
+                  <p className="text-sm font-bold">{Number(stats.FillRatePercentage).toFixed(2)}%</p>
                 </div>
               )}
               {stats.TotalAssignments !== undefined && (
