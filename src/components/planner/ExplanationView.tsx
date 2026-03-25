@@ -358,12 +358,13 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
           body: JSON.stringify({
             employeeId: empId,
             employeeName: empName,
-            question: `Waarom heeft de solver ${empName} zo ingepland? Leg de belangrijkste redenen uit.`,
+            question: t("explanation.aiQuestionDefault", { name: empName }),
             assignments: solverAssignments || [],
             employee: empObj || null,
             shifts: requestData?.Shifts || [],
             schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
             solverExplanations: empExplanations,
+            language: i18n.language,
           }),
         }
       );
