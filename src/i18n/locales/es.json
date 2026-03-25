@@ -500,7 +500,10 @@
     "searchingDisplacement": "Buscando alternativas donde {{name}} reemplace a alguien...",
     "noAlternativesForDay": "⚠️ No se encontraron alternativas adecuadas para {{day}}.",
     "displacementOptionsFound": "Encontré **{{count}}** opciones para programar a {{name}} en {{day}}:",
-    "scheduleOn": "Programar {{name}} en {{day}}"
+    "scheduleOn": "Programar {{name}} en {{day}}",
+    "alternativesHeader": "Alternativas",
+    "optionsBadge": "{{count}} opción(es)",
+    "filter": "Filtrar"
   },
   "approval": {
     "confirmation": "Confirmación",

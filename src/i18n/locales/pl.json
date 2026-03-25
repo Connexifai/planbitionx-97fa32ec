@@ -500,7 +500,10 @@
     "searchingDisplacement": "Szukam alternatyw, w których {{name}} przejmuje od kogoś...",
     "noAlternativesForDay": "⚠️ Nie znaleziono odpowiednich alternatyw dla {{day}}.",
     "displacementOptionsFound": "Znalazłem **{{count}}** opcji, aby zaplanować {{name}} w {{day}}:",
-    "scheduleOn": "Zaplanuj {{name}} na {{day}}"
+    "scheduleOn": "Zaplanuj {{name}} na {{day}}",
+    "alternativesHeader": "Alternatywy",
+    "optionsBadge": "{{count}} opcja(e)",
+    "filter": "Filtruj"
   },
   "approval": {
     "confirmation": "Potwierdzenie",

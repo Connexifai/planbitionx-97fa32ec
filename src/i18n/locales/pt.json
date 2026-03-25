@@ -500,7 +500,10 @@
     "searchingDisplacement": "A procurar alternativas em que {{name}} substitui alguém...",
     "noAlternativesForDay": "⚠️ Nenhuma alternativa adequada encontrada para {{day}}.",
     "displacementOptionsFound": "Encontrei **{{count}}** opções para escalar {{name}} no {{day}}:",
-    "scheduleOn": "Escalar {{name}} no {{day}}"
+    "scheduleOn": "Escalar {{name}} no {{day}}",
+    "alternativesHeader": "Alternativas",
+    "optionsBadge": "{{count}} opção(ões)",
+    "filter": "Filtrar"
   },
   "approval": {
     "confirmation": "Confirmação",

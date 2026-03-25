@@ -515,6 +515,7 @@ export default function Index() {
       setSolveDurationMs(Date.now() - startTime);
       setSolved(true);
       setSidebarCollapsed(true);
+      setChatOpen(false);
     } catch (e) {
       console.error("Failed to solve:", e);
     } finally {

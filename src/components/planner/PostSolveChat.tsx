@@ -124,7 +124,7 @@ function prepareAlternatives(alternatives: Alternative[]): PreparedAlternatives 
       Rank: maxRank + 1,
       ChangesFromBaseline: 0,
       ConflictShiftFilled: false,
-      Summary: "De dienst wordt niet opgevuld en blijft open.",
+      Summary: "",
       Score: { FillRatePercentage: filledAlts[0]?.Score?.FillRatePercentage ?? 0, HardViolations: 0 },
       Changes: [],
       Assignments: filledAlts[0]?.Assignments || [],
@@ -165,8 +165,8 @@ function enrichSwapAlternatives(
 ): Alternative[] {
   if (constraint.swapDayOfWeek === undefined && !constraint.swapDate) return alternatives;
 
-  const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
-  const swapDayLabel = constraint.swapDayOfWeek !== undefined ? dayNamesNL[constraint.swapDayOfWeek] : constraint.swapDate || "";
+  const dayNamesLocal = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+  const swapDayLabel = constraint.swapDayOfWeek !== undefined ? dayNamesLocal[constraint.swapDayOfWeek] : constraint.swapDate || "";
 
   // Build shift name lookup
   const shiftNameMap = new Map<string, string>();
@@ -1202,9 +1202,9 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                     return (
                     <div className="flex items-center justify-between">
                       <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                        🔄 Alternatieven
+                        🔄 {t("postSolve.alternativesHeader")}
                         <Badge variant="secondary" className="text-[10px] font-normal">
-                          {msg.alternatives!.length} optie{msg.alternatives!.length !== 1 && "s"}
+                          {t("postSolve.optionsBadge", { count: msg.alternatives!.length })}
                         </Badge>
                       </h4>
                       <Button
@@ -1218,7 +1218,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                         })}
                       >
                         <Filter className="h-3 w-3" />
-                        Filteren
+                        {t("postSolve.filter")}
                       </Button>
                     </div>
                     );

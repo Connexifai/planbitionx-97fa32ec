@@ -500,7 +500,10 @@
     "searchingDisplacement": "Looking for alternatives where {{name}} takes over from someone...",
     "noAlternativesForDay": "⚠️ No suitable alternatives found for {{day}}.",
     "displacementOptionsFound": "I found **{{count}}** options to schedule {{name}} on {{day}}:",
-    "scheduleOn": "Schedule {{name}} on {{day}}"
+    "scheduleOn": "Schedule {{name}} on {{day}}",
+    "alternativesHeader": "Alternatives",
+    "optionsBadge": "{{count}} option(s)",
+    "filter": "Filter"
   },
   "approval": {
     "confirmation": "Confirmation",
