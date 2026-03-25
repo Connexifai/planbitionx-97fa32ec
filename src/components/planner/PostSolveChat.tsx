@@ -165,8 +165,8 @@ function enrichSwapAlternatives(
 ): Alternative[] {
   if (constraint.swapDayOfWeek === undefined && !constraint.swapDate) return alternatives;
 
-  const dayNamesNL = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
-  const swapDayLabel = constraint.swapDayOfWeek !== undefined ? dayNamesNL[constraint.swapDayOfWeek] : constraint.swapDate || "";
+  const dayNamesLocal = ["maandag", "dinsdag", "woensdag", "donderdag", "vrijdag", "zaterdag", "zondag"];
+  const swapDayLabel = constraint.swapDayOfWeek !== undefined ? dayNamesLocal[constraint.swapDayOfWeek] : constraint.swapDate || "";
 
   // Build shift name lookup
   const shiftNameMap = new Map<string, string>();
