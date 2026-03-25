@@ -419,8 +419,8 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
             <div>
               <h2 className="text-sm font-bold text-foreground">{t("explanation.title")}</h2>
               <p className="text-xs text-muted-foreground mt-0.5">
-                {hasSolverData
-                  ? t("explanation.solverDataAvailable", "Onderstaande uitleg komt direct van de solver engine.")
+              {hasSolverData
+                  ? t("explanation.solverDataAvailable")
                   : <span dangerouslySetInnerHTML={{ __html: t("explanation.description") }} />
                 }
               </p>
