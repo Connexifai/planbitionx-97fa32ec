@@ -1202,9 +1202,9 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                     return (
                     <div className="flex items-center justify-between">
                       <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
-                        🔄 Alternatieven
+                        🔄 {t("postSolve.alternativesHeader")}
                         <Badge variant="secondary" className="text-[10px] font-normal">
-                          {msg.alternatives!.length} optie{msg.alternatives!.length !== 1 && "s"}
+                          {t("postSolve.optionsBadge", { count: msg.alternatives!.length })}
                         </Badge>
                       </h4>
                       <Button
@@ -1218,7 +1218,7 @@ export function PostSolveChat({ requestData, solverAssignments, solverExplanatio
                         })}
                       >
                         <Filter className="h-3 w-3" />
-                        Filteren
+                        {t("postSolve.filter")}
                       </Button>
                     </div>
                     );
