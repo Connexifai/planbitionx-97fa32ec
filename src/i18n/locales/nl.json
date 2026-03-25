@@ -248,7 +248,9 @@
     "solveTime": "Oplostijd",
     "fillRate": "Bezettingsgraad",
     "totalAssignments": "Toewijzingen",
-    "hardViolations": "Harde overtredingen"
+    "hardViolations": "Harde overtredingen",
+    "aiQuestionDefault": "Waarom heeft de solver {{name}} zo ingepland? Leg de belangrijkste redenen uit.",
+    "aiError": "Kon geen AI-uitleg ophalen"
   },
   "days": {
     "mo": "Ma",

@@ -248,7 +248,9 @@
     "solveTime": "Tiempo de resolución",
     "fillRate": "Tasa de ocupación",
     "totalAssignments": "Asignaciones",
-    "hardViolations": "Violaciones graves"
+    "hardViolations": "Violaciones graves",
+    "aiQuestionDefault": "¿Por qué el solver ha planificado a {{name}} de esta manera? Explica las razones principales.",
+    "aiError": "No se pudo obtener la explicación de IA"
   },
   "days": {
     "mo": "Lun",

@@ -248,7 +248,9 @@
     "solveTime": "Temps de résolution",
     "fillRate": "Taux de remplissage",
     "totalAssignments": "Affectations",
-    "hardViolations": "Violations graves"
+    "hardViolations": "Violations graves",
+    "aiQuestionDefault": "Pourquoi le solveur a-t-il planifié {{name}} de cette façon ? Expliquez les raisons principales.",
+    "aiError": "Impossible de récupérer l'explication IA"
   },
   "days": {
     "mo": "Lun",

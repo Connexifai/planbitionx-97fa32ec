@@ -248,7 +248,9 @@
     "solveTime": "Solve time",
     "fillRate": "Fill rate",
     "totalAssignments": "Assignments",
-    "hardViolations": "Hard violations"
+    "hardViolations": "Hard violations",
+    "aiQuestionDefault": "Why did the solver schedule {{name}} this way? Explain the main reasons.",
+    "aiError": "Could not retrieve AI explanation"
   },
   "days": {
     "mo": "Mon",

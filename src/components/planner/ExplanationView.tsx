@@ -16,6 +16,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n";
 import { toTitleCase } from "@/lib/utils";
 import type { RosterData } from "@/lib/parseSolverResponse";
 import { useMemo, useState, useRef, useCallback, memo } from "react";
@@ -358,12 +359,13 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
           body: JSON.stringify({
             employeeId: empId,
             employeeName: empName,
-            question: `Waarom heeft de solver ${empName} zo ingepland? Leg de belangrijkste redenen uit.`,
+            question: t("explanation.aiQuestionDefault", { name: empName }),
             assignments: solverAssignments || [],
             employee: empObj || null,
             shifts: requestData?.Shifts || [],
             schedulePeriod: requestData ? `${requestData.Start} - ${requestData.End}` : "",
             solverExplanations: empExplanations,
+            language: i18n.language,
           }),
         }
       );
@@ -378,12 +380,12 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
     } catch (error) {
       console.error("AI explanation error:", error);
       setAiExplanations((prev) =>
-        new Map(prev).set(empId, `❌ Kon geen AI-uitleg ophalen: ${error instanceof Error ? error.message : "Onbekende fout"}`)
+        new Map(prev).set(empId, `❌ ${t("explanation.aiError")}: ${error instanceof Error ? error.message : "Unknown error"}`)
       );
     } finally {
       setAiLoadingId(null);
     }
-  }, [aiLoadingId, requestData, solverAssignments, solverExplanations]);
+  }, [aiLoadingId, requestData, solverAssignments, solverExplanations, t]);
 
   const virtualizer = useVirtualizer({
     count: explanations.length,

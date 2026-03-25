@@ -248,7 +248,9 @@
     "solveTime": "Lösungszeit",
     "fillRate": "Auslastungsgrad",
     "totalAssignments": "Zuweisungen",
-    "hardViolations": "Harte Verstöße"
+    "hardViolations": "Harte Verstöße",
+    "aiQuestionDefault": "Warum hat der Solver {{name}} so eingeplant? Erkläre die wichtigsten Gründe.",
+    "aiError": "KI-Erklärung konnte nicht abgerufen werden"
   },
   "days": {
     "mo": "Mo",
