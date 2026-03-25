@@ -49,7 +49,9 @@ export default function Landing() {
           <div className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
             <a href="#features" className="hover:text-foreground transition-colors">{t("landing.navFeatures")}</a>
             <a href="#microservice" className="hover:text-foreground transition-colors">{t("landing.navMicroservice")}</a>
-            
+            <button onClick={() => navigate("/ai-slides")} className="hover:text-foreground transition-colors flex items-center gap-1">
+              <Brain className="w-4 h-4" /> AI Presentation
+            </button>
           </div>
           <div className="flex items-center gap-3">
             <LanguageSwitcher />
