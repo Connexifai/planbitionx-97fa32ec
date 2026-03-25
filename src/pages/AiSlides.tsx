@@ -19,7 +19,7 @@ const AMBER = "#F59E0B";
 const VIOLET = "#8B5CF6";
 const BG = "#F8FAFC";
 
-const TOTAL_SLIDES = 6;
+const TOTAL_SLIDES = 7;
 
 /* ═══ Scaled Slide Wrapper ═══ */
 function ScaledSlide({ children }: { children: React.ReactNode }) {
@@ -410,8 +410,108 @@ function Slide6() {
   );
 }
 
+/* ═══ SLIDE 7 — CTA ═══ */
+function Slide7() {
+  const navigate = useNavigate();
+  return (
+    <div
+      className="w-[1920px] h-[1080px] relative overflow-hidden cursor-pointer select-none"
+      style={{ background: `linear-gradient(135deg, ${DARK} 0%, #0F172A 40%, ${DARK2} 100%)` }}
+      onClick={() => navigate("/login")}
+    >
+      {/* Animated grid */}
+      <div className="absolute inset-0 opacity-[0.06]" style={{
+        backgroundImage: `linear-gradient(${P}40 1px, transparent 1px), linear-gradient(90deg, ${P}40 1px, transparent 1px)`,
+        backgroundSize: "80px 80px",
+      }} />
+
+      {/* Glowing orbs */}
+      <div className="absolute w-[800px] h-[800px] rounded-full" style={{
+        background: `radial-gradient(circle, ${P}30 0%, transparent 70%)`,
+        left: "50%", top: "50%", transform: "translate(-50%, -50%)",
+      }} />
+      <div className="absolute w-[400px] h-[400px] rounded-full" style={{
+        background: `radial-gradient(circle, ${MODERN}25 0%, transparent 70%)`,
+        left: "20%", top: "30%", transform: "translate(-50%, -50%)",
+      }} />
+      <div className="absolute w-[300px] h-[300px] rounded-full" style={{
+        background: `radial-gradient(circle, ${ACC}20 0%, transparent 70%)`,
+        right: "15%", bottom: "20%",
+      }} />
+
+      {/* Floating tech icons */}
+      {[
+        { icon: "🧠", x: "12%", y: "18%", size: 64, delay: 0 },
+        { icon: "⚡", x: "85%", y: "22%", size: 56, delay: 1 },
+        { icon: "🔗", x: "8%", y: "75%", size: 48, delay: 2 },
+        { icon: "📊", x: "88%", y: "70%", size: 52, delay: 0.5 },
+        { icon: "🎯", x: "25%", y: "82%", size: 44, delay: 1.5 },
+        { icon: "🚀", x: "75%", y: "85%", size: 50, delay: 2.5 },
+      ].map((item, i) => (
+        <div key={i} className="absolute animate-pulse" style={{
+          left: item.x, top: item.y, fontSize: item.size,
+          animationDelay: `${item.delay}s`, animationDuration: "3s",
+          filter: "drop-shadow(0 0 20px rgba(255,255,255,0.3))",
+        }}>
+          {item.icon}
+        </div>
+      ))}
+
+      {/* Connection lines */}
+      <svg className="absolute inset-0 w-full h-full" style={{ opacity: 0.1 }}>
+        <line x1="200" y1="200" x2="960" y2="540" stroke={P} strokeWidth="1" strokeDasharray="8 4" />
+        <line x1="1700" y1="250" x2="960" y2="540" stroke={MODERN} strokeWidth="1" strokeDasharray="8 4" />
+        <line x1="150" y1="800" x2="960" y2="540" stroke={ACC} strokeWidth="1" strokeDasharray="8 4" />
+        <line x1="1720" y1="750" x2="960" y2="540" stroke={GREEN} strokeWidth="1" strokeDasharray="8 4" />
+      </svg>
+
+      {/* Central content */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+        {/* Logo */}
+        <div className="flex items-center gap-5 mb-10">
+          <img src={robotImg} alt="" className="w-[100px] h-[100px] object-contain drop-shadow-[0_0_30px_rgba(37,99,235,0.5)]" />
+        </div>
+
+        <h2 className="text-[72px] font-extrabold text-white tracking-tight mb-4 text-center" style={{
+          textShadow: `0 0 60px ${P}60, 0 4px 20px rgba(0,0,0,0.5)`,
+        }}>
+          Ready to Transform
+          <br />
+          <span style={{ color: P }}>Your Planning?</span>
+        </h2>
+
+        <p className="text-[24px] text-white/60 mb-14 text-center max-w-[700px] leading-relaxed">
+          Experience the power of AI-driven workforce management.
+          <br />
+          Start optimizing today.
+        </p>
+
+        {/* CTA Button */}
+        <div className="px-14 py-6 rounded-2xl text-[28px] font-bold text-white shadow-2xl transition-transform hover:scale-105" style={{
+          background: `linear-gradient(135deg, ${P}, ${MODERN})`,
+          boxShadow: `0 0 50px ${P}50, 0 20px 40px rgba(0,0,0,0.3)`,
+        }}>
+          Get Started →
+        </div>
+
+        <p className="mt-8 text-[16px] text-white/30 tracking-wider">Click anywhere to continue</p>
+      </div>
+
+      {/* Bottom bar */}
+      <div className="absolute bottom-0 left-0 w-full h-[48px] flex items-center justify-between px-10" style={{ background: `${DARK}CC` }}>
+        <div className="flex items-center gap-3">
+          <img src={robotImg} alt="" className="w-5 h-5 object-contain opacity-50" />
+          <span className="text-[12px] font-bold" style={{ color: "#475569" }}>Planbition X</span>
+        </div>
+        <p className="text-[12px]" style={{ color: "#475569" }}>info@planbition.com · +31-(0)24-3529629 · planbition.com</p>
+        <span className="text-[12px]" style={{ color: "#475569" }}>7 / {TOTAL_SLIDES}</span>
+      </div>
+    </div>
+  );
+}
+
 /* ═══ All slides ═══ */
-const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6];
+const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6, Slide7];
 
 export default function AiSlides() {
   const navigate = useNavigate();
