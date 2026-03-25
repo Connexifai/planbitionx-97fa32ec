@@ -188,8 +188,8 @@ function ChatPanel({
   handleApplyAlternative: (alt: any) => void;
   handleNavigateToEmployee: (name: string) => void;
   handleFilterRoster: (filter: any) => void;
-  employeeConstraints: import("@/components/planner/AiBriefingChat").EmployeeConstraint[];
-  setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>>;
+  employeeConstraints: import("@/components/planner/AiBriefingChat").BriefingConstraint[];
+  setEmployeeConstraints: React.Dispatch<React.SetStateAction<import("@/components/planner/AiBriefingChat").BriefingConstraint[]>>;
 }) {
   const { t } = useTranslation();
   const isDragging = useRef(false);
