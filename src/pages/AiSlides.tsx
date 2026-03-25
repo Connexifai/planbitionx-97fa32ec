@@ -19,7 +19,7 @@ const AMBER = "#F59E0B";
 const VIOLET = "#8B5CF6";
 const BG = "#F8FAFC";
 
-const TOTAL_SLIDES = 6;
+const TOTAL_SLIDES = 7;
 
 /* ═══ Scaled Slide Wrapper ═══ */
 function ScaledSlide({ children }: { children: React.ReactNode }) {
