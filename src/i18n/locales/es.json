@@ -130,7 +130,9 @@
     "findAlternative": "Buscar alternativa",
     "shiftSwapPrompt": "Franz-Xaver ha preguntado si puede estar libre el miércoles. ¿Cómo puedo cubrir mejor su turno?",
     "findAlternativePrompt": "¿Quién puede asumir el turno nocturno del jueves de Marie si está enferma?",
-    "postSolvePlaceholder": "Ej. '¿Quién puede asumir el turno del miércoles de Franz-Xaver?'"
+    "postSolvePlaceholder": "Ej. '¿Quién puede asumir el turno del miércoles de Franz-Xaver?'",
+    "multipleCandidates": "Hay varios empleados con ese nombre. ¿A quién te refieres?",
+    "errorOccurred": "Algo salió mal"
   },
   "robot": {
     "uploadJson": "Sube un archivo JSON para empezar",
@@ -528,5 +530,17 @@
   "planner": {
     "noJsonTitle": "Sin datos cargados",
     "noJsonDesc": "Primero carga un archivo JSON desde la barra lateral."
+  },
+  "constraint": {
+    "early": "Mañana",
+    "day": "Día",
+    "late": "Tarde",
+    "night": "Noche",
+    "neverTogether": "Nunca juntos",
+    "alwaysTogether": "Siempre juntos",
+    "prioritizeShift": "Prioridad",
+    "prioritizeDays": "Prioridad días",
+    "minStaffing": "Min. personal",
+    "activeCount": "{{count}} restricción(es) activa(s)"
   }
 }
