@@ -306,7 +306,7 @@ export default function Index() {
   const [rosterData, setRosterData] = useState<RosterData | null>(null);
   const [requestData, setRequestData] = useState<any>(null);
   const [requestRawJson, setRequestRawJson] = useState<string | null>(null);
-  const [employeeConstraints, setEmployeeConstraints] = useState<import("@/components/planner/AiBriefingChat").EmployeeConstraint[]>([]);
+  const [employeeConstraints, setEmployeeConstraints] = useState<import("@/components/planner/AiBriefingChat").BriefingConstraint[]>([]);
   const [entranceVisible, setEntranceVisible] = useState(() => {
     return sessionStorage.getItem("just_logged_in") === "true";
   });
