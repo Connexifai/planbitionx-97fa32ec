@@ -629,7 +629,7 @@ export default function Index() {
               <main className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-5 space-y-3 md:space-y-5">
                 <KpiCards solved data={rosterData ?? undefined} solveTime={solveDurationMs} />
                 <RosterTabs value={activeTab} onChange={setActiveTab} />
-                {activeTab === "roster" && <RosterGrid data={rosterData ?? undefined} employeeConstraints={employeeConstraints} animationState={animationState} onRegisterGridFns={registerGridFns} filter={rosterFilter} onClearFilter={() => setRosterFilter(null)} />}
+                {activeTab === "roster" && <RosterGrid data={rosterData ?? undefined} employeeConstraints={employeeConstraints.filter((c): c is import("@/components/planner/AiBriefingChat").EmployeeConstraint => "constraint" in c)} animationState={animationState} onRegisterGridFns={registerGridFns} filter={rosterFilter} onClearFilter={() => setRosterFilter(null)} />}
                 {activeTab === "dienst" && <ServiceRosterGrid data={rosterData ?? undefined} />}
                 {activeTab === "stats" && <StatsDashboard data={rosterData ?? undefined} />}
                 {activeTab === "uitleg" && <ExplanationView data={rosterData ?? undefined} solverExplanations={solverExplanations} solverStatistics={solverStatistics} solverAssignments={solverAssignments} requestData={requestData} />}
