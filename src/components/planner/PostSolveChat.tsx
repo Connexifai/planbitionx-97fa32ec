@@ -124,7 +124,7 @@ function prepareAlternatives(alternatives: Alternative[]): PreparedAlternatives 
       Rank: maxRank + 1,
       ChangesFromBaseline: 0,
       ConflictShiftFilled: false,
-      Summary: "De dienst wordt niet opgevuld en blijft open.",
+      Summary: "",
       Score: { FillRatePercentage: filledAlts[0]?.Score?.FillRatePercentage ?? 0, HardViolations: 0 },
       Changes: [],
       Assignments: filledAlts[0]?.Assignments || [],
