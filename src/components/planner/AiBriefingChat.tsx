@@ -152,10 +152,14 @@ export function AiBriefingChat({ employees, schedulePeriod, constraints, onConst
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+    if (!loading) {
+      inputRef.current?.focus();
     }
   }, [messages, loading]);
 
