@@ -456,22 +456,38 @@ export default function Index() {
       const settingsPayload = buildSettingsPayload(atw, soft, solver);
       const mergedPayload = { ...basePayload, ...settingsPayload };
 
-      // Inject per-employee constraints from AI briefing chat
-      if (employeeConstraints.length > 0 && Array.isArray(mergedPayload.Employees)) {
-        // Group constraints by personId
-        const constraintsByPerson = new Map<number, any[]>();
-        for (const ec of employeeConstraints) {
-          const list = constraintsByPerson.get(ec.personId) || [];
-          list.push(ec.constraint);
-          constraintsByPerson.set(ec.personId, list);
-        }
-        mergedPayload.Employees = mergedPayload.Employees.map((emp: any) => {
-          const personConstraints = constraintsByPerson.get(emp.PersonId);
-          if (personConstraints) {
-            return { ...emp, Constraints: [...(emp.Constraints || []), ...personConstraints] };
+      // Inject constraints from AI briefing chat
+      if (employeeConstraints.length > 0) {
+        const { isEmployeeConstraint } = await import("@/components/planner/AiBriefingChat");
+        
+        // Per-employee constraints → inject into employee's Constraints array
+        if (Array.isArray(mergedPayload.Employees)) {
+          const constraintsByPerson = new Map<number, any[]>();
+          for (const ec of employeeConstraints) {
+            if (isEmployeeConstraint(ec)) {
+              const list = constraintsByPerson.get(ec.personId) || [];
+              list.push(ec.constraint);
+              constraintsByPerson.set(ec.personId, list);
+            }
           }
-          return emp;
-        });
+          mergedPayload.Employees = mergedPayload.Employees.map((emp: any) => {
+            const personConstraints = constraintsByPerson.get(emp.PersonId);
+            if (personConstraints) {
+              return { ...emp, Constraints: [...(emp.Constraints || []), ...personConstraints] };
+            }
+            return emp;
+          });
+        }
+
+        // Global and duo constraints → inject into SchedulingOptions.AdditionalConstraints
+        const globalConstraints = employeeConstraints.filter(c => !isEmployeeConstraint(c));
+        if (globalConstraints.length > 0) {
+          mergedPayload.SchedulingOptions = mergedPayload.SchedulingOptions || {};
+          mergedPayload.SchedulingOptions.AdditionalConstraints = [
+            ...(mergedPayload.SchedulingOptions.AdditionalConstraints || []),
+            ...globalConstraints,
+          ];
+        }
       }
 
       const res = await fetch(
