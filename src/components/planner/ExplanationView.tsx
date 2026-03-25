@@ -385,7 +385,7 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
     } finally {
       setAiLoadingId(null);
     }
-  }, [aiLoadingId, requestData, solverAssignments, solverExplanations]);
+  }, [aiLoadingId, requestData, solverAssignments, solverExplanations, t]);
 
   const virtualizer = useVirtualizer({
     count: explanations.length,
