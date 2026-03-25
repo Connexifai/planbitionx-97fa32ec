@@ -53,7 +53,7 @@ function RuleRow({ label, sublabel, value, unit = "min", enabled = true, secondV
             type="number"
             value={value}
             onChange={(e) => onChange?.(Number(e.target.value))}
-            className="h-8 w-16 text-xs text-right"
+            className="h-8 w-20 text-xs text-right"
           />
           {secondValue !== undefined && (
             <>
@@ -62,7 +62,7 @@ function RuleRow({ label, sublabel, value, unit = "min", enabled = true, secondV
                 type="number"
                 value={secondValue}
                 onChange={(e) => onSecondChange?.(Number(e.target.value))}
-                className="h-8 w-16 text-xs text-right"
+                className="h-8 w-20 text-xs text-right"
               />
             </>
           )}
