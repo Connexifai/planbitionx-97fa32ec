@@ -49,7 +49,7 @@ export function KpiCards({ solved = false, data, solveTime }: KpiCardsProps) {
       0
     );
     unfilledCount = Math.max(0, totalDemand - filledSlots);
-    occupancyPct = totalDemand > 0 ? `${((filledSlots / totalDemand) * 100).toFixed(1)}%` : "0%";
+    occupancyPct = totalDemand > 0 ? `${((filledSlots / totalDemand) * 100).toFixed(2)}%` : "0%";
   }
 
   const timeStr = solveTime ? `${(solveTime / 1000).toFixed(1)}s` : "0s";
