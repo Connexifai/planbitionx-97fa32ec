@@ -64,7 +64,7 @@ export default function Landing() {
       <section className="relative pt-32 pb-20 md:pt-44 md:pb-32 px-6 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <video autoPlay muted loop playsInline className="w-full h-full object-cover" src="/videos/login-bg.mp4" />
-          <div className="absolute inset-0 bg-background/50" />
+          <div className="absolute inset-0 bg-background/70" />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
