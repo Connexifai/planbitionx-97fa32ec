@@ -380,7 +380,7 @@ export function ExplanationView({ data, solverExplanations, solverStatistics, so
     } catch (error) {
       console.error("AI explanation error:", error);
       setAiExplanations((prev) =>
-        new Map(prev).set(empId, `❌ Kon geen AI-uitleg ophalen: ${error instanceof Error ? error.message : "Onbekende fout"}`)
+        new Map(prev).set(empId, `❌ ${t("explanation.aiError")}: ${error instanceof Error ? error.message : "Unknown error"}`)
       );
     } finally {
       setAiLoadingId(null);
