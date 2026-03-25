@@ -140,8 +140,8 @@ function Slide2() {
           { label: "SA", full: "Simulated Annealing", x: "50%", y: "5%", mx: -55 },
           { label: "LNS", full: "Large Neighborhood Search", x: "68%", y: "18%", mx: 10 },
           { label: "LAHC", full: "Late Acceptance HC", x: "68%", y: "70%", mx: 10 },
-          { label: "GRASP", full: "GRASP + Tabu", x: "50%", y: "82%", mx: -55 },
-          { label: "CP", full: "Constraint Propagation", x: "32%", y: "70%", mx: -230 },
+          { label: "GRASP", full: "GRASP + Tabu", x: "50%", y: "76%", mx: -55 },
+          { label: "CP", full: "Constraint Propagation", x: "32%", y: "65%", mx: -230 },
           { label: "ICS", full: "Incremental Scoring", x: "32%", y: "18%", mx: -220 },
         ].map((t, i) => (
           <div key={i} className="absolute flex items-center gap-2" style={{ left: t.x, top: t.y, marginLeft: t.mx }}>
