@@ -109,15 +109,14 @@ export default function Login() {
             }}
           />
 
-          {/* Static X background image */}
+          {/* Animated X background */}
           <div
-            className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+            className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center animate-x-reveal"
             style={{
               backgroundImage: `url(${xBgPng})`,
               backgroundSize: "85%",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
-              opacity: 0.12,
             }}
           />
 
