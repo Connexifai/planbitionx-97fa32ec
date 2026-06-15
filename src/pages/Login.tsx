@@ -134,7 +134,16 @@ export default function Login() {
                 <span className="text-[hsl(var(--brand-accent))]">workforce</span>.
               </h1>
               <p className="mt-4 text-base xl:text-lg text-white/70 max-w-md">
-                Planbition X turns labour rules, demand and preferences into a compliant roster — in under a minute.
+                Planbition X is now available. Discover more at{" "}
+                <a
+                  href="https://www.planbition.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[hsl(var(--brand-accent))] underline-offset-4 hover:underline"
+                >
+                  www.planbition.com
+                </a>
+                .
               </p>
             </div>
 
