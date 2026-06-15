@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, LogIn, Mail, Lock, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, LogIn, User, Lock, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import robotImg from "@/assets/robot-assistant.png";
@@ -180,18 +180,18 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {t("login.email")}
+                  {t("login.username", "Gebruikersnaam")}
                 </Label>
                 <div className="relative">
-                  <Mail className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
-                    placeholder={t("login.emailPlaceholder")}
+                    placeholder="Planistrator"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    autoComplete="email"
+                    autoComplete="username"
                     className="h-12 pl-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                 </div>
@@ -247,12 +247,47 @@ export default function Login() {
                 ) : (
                   <>
                     <LogIn className="h-4 w-4" />
-                    {t("login.login")}
+                    {t("login.login", "Sign in")}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </>
                 )}
               </Button>
             </form>
+
+            {/* SSO options */}
+            <div className="mt-8">
+              <div className="relative mb-4">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-3 text-muted-foreground tracking-wider">
+                    {t("login.useAnotherService", "Use another service to log in")}
+                  </span>
+                </div>
+              </div>
+              <div className="grid gap-2.5">
+                {[
+                  { name: "Azure", provider: "azure" },
+                  { name: "Auth0", provider: "auth0" },
+                  { name: "Okta", provider: "okta" },
+                ].map((sso) => (
+                  <Button
+                    key={sso.provider}
+                    type="button"
+                    variant="outline"
+                    className="h-11 w-full justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    onClick={() =>
+                      toast.info(
+                        `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
+                      )
+                    }
+                  >
+                    {sso.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
 
             {/* KPI strip */}
             <div className="mt-10 grid grid-cols-3 gap-3 border-t border-border pt-6">
