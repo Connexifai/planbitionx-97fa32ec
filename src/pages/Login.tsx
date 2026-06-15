@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { Eye, EyeOff, LogIn, User, Lock, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import robotImg from "@/assets/robot-assistant.png";
+import tinaAiImg from "@/assets/tina-ai-alpaca.png.asset.json";
 
 function AzureLogo({ className }: { className?: string }) {
   return (
@@ -124,8 +124,8 @@ export default function Login() {
           {/* Middle: mascot + headline */}
           <div className="relative z-10 flex flex-col items-start gap-8 max-w-lg">
             <img
-              src={robotImg}
-              alt="Planbition X assistant"
+              src={tinaAiImg.url}
+              alt="Tina AI"
               className="h-40 w-40 object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] robot-float"
             />
             <div>
