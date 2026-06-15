@@ -109,16 +109,10 @@ export default function Login() {
             }}
           />
 
-          {/* Animated X background */}
-          <div
-            className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center animate-x-reveal"
-            style={{
-              backgroundImage: `url(${xBgPng})`,
-              backgroundSize: "85%",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
             }}
           />
+
+          {/* Top: wordmark */}
 
           {/* Top: wordmark */}
           <div className="relative z-10 flex items-center gap-3">
