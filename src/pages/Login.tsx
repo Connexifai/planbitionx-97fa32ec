@@ -203,14 +203,14 @@ export default function Login() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                  {t("login.username", "Gebruikersnaam")}
+                  {t("login.username", "Username")}
                 </Label>
                 <div className="relative">
                   <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
                     id="email"
                     type="email"
-                    placeholder="Planistrator"
+                    placeholder="Username"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -230,7 +230,7 @@ export default function Login() {
                     className="text-xs font-medium text-[hsl(var(--brand-accent))] hover:underline"
                     onClick={() => toast.info("Neem contact op met je beheerder.")}
                   >
-                    Wachtwoord vergeten?
+                    {t("login.forgotPassword", "Forgot password?")}
                   </button>
                 </div>
                 <div className="relative">

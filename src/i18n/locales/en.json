@@ -7,10 +7,12 @@
   "login": {
     "welcome": "Welcome back",
     "createAccount": "Create account",
-    "loginSubtitle": "Log in to continue with your roster planning",
+    "loginSubtitle": "Log in to continue with your planning",
     "signupSubtitle": "Create an account to start planning",
     "email": "Email address",
     "emailPlaceholder": "name@company.com",
+    "username": "Username",
+    "forgotPassword": "Forgot password?",
     "password": "Password",
     "login": "Log in",
     "signup": "Create account",

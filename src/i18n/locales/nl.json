@@ -7,10 +7,12 @@
   "login": {
     "welcome": "Welkom terug",
     "createAccount": "Account aanmaken",
-    "loginSubtitle": "Log in om verder te gaan met je roosterplanning",
+    "loginSubtitle": "Log in om verder te gaan met je planning",
     "signupSubtitle": "Maak een account aan om te beginnen met plannen",
     "email": "E-mailadres",
     "emailPlaceholder": "naam@bedrijf.nl",
+    "username": "Gebruikersnaam",
+    "forgotPassword": "Wachtwoord vergeten?",
     "password": "Wachtwoord",
     "login": "Inloggen",
     "signup": "Account aanmaken",
