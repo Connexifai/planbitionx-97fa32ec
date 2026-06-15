@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, LogIn, User, Lock, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
+import { Eye, EyeOff, LogIn, User, Lock, Sparkles, FileText, CalendarCheck, MessageSquare, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import tinaAiImg from "@/assets/tina-ai-alpaca.png.asset.json";
