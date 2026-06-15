@@ -295,21 +295,22 @@ export default function Login() {
               </div>
               <div className="grid gap-2.5">
                 {[
-                  { name: "Azure", provider: "azure" },
-                  { name: "Auth0", provider: "auth0" },
-                  { name: "Okta", provider: "okta" },
+                  { name: "Azure", provider: "azure", Logo: AzureLogo },
+                  { name: "Auth0", provider: "auth0", Logo: Auth0Logo },
+                  { name: "Okta", provider: "okta", Logo: OktaLogo },
                 ].map((sso) => (
                   <Button
                     key={sso.provider}
                     type="button"
                     variant="outline"
-                    className="h-11 w-full justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
                       )
                     }
                   >
+                    <sso.Logo className="h-4 w-4" />
                     {sso.name}
                   </Button>
                 ))}
