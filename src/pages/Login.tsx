@@ -9,6 +9,7 @@ import { Eye, EyeOff, LogIn, User, Lock, Sparkles, FileText, CalendarCheck, Mess
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import tinaAiImg from "@/assets/tina-ai-alpaca.png.asset.json";
+import xBg from "@/assets/x-bg.png";
 
 function AzureLogo({ className }: { className?: string }) {
   return (
@@ -105,6 +106,18 @@ export default function Login() {
                 "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
               backgroundSize: "44px 44px",
               maskImage: "radial-gradient(ellipse at center, black 30%, transparent 75%)",
+            }}
+          />
+
+          {/* Static X background */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+            style={{
+              backgroundImage: `url(${xBg})`,
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundSize: "85%",
+              opacity: 0.12,
             }}
           />
 
