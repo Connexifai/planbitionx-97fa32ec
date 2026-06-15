@@ -230,7 +230,7 @@ export default function Login() {
                     className="text-xs font-medium text-[hsl(var(--brand-accent))] hover:underline"
                     onClick={() => toast.info("Neem contact op met je beheerder.")}
                   >
-                    Wachtwoord vergeten?
+                    {t("login.forgotPassword", "Forgot password?")}
                   </button>
                 </div>
                 <div className="relative">
