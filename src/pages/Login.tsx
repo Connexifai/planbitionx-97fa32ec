@@ -10,6 +10,33 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import robotImg from "@/assets/robot-assistant.png";
 
+function AzureLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#f25022" d="M0 0h45.6v45.6H0z" />
+      <path fill="#7fba00" d="M50.4 0H96v45.6H50.4z" />
+      <path fill="#00a4ef" d="M0 50.4h45.6V96H0z" />
+      <path fill="#ffb900" d="M50.4 50.4H96V96H50.4z" />
+    </svg>
+  );
+}
+
+function Auth0Logo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M16 2.4l4.8 14.8H11.2L16 2.4zm0 27.2l-4.8-14.8h9.6L16 29.6zm-6.4-16h-8L9.6 0l-6.4 13.6zm-8 3.2h8l-6.4 13.6 6.4-13.6zm28.8-3.2h-8l6.4-13.6 6.4 13.6zm0 3.2l-6.4 13.6 6.4-13.6h-8z" />
+    </svg>
+  );
+}
+
+function OktaLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm0 2.286a9.714 9.714 0 1 0 0 19.428 9.714 9.714 0 0 0 0-19.428z" />
+    </svg>
+  );
+}
+
 const FEATURES = [
   { icon: Sparkles, titleKey: "login.smartPlanning", fallback: "Smart AI planning", desc: "Generate compliant rosters in seconds." },
   { icon: Zap, titleKey: "login.solveTime", fallback: "Sub-minute solve time", desc: "From requirements to roster in <1 minute." },
@@ -268,21 +295,22 @@ export default function Login() {
               </div>
               <div className="grid gap-2.5">
                 {[
-                  { name: "Azure", provider: "azure" },
-                  { name: "Auth0", provider: "auth0" },
-                  { name: "Okta", provider: "okta" },
+                  { name: "Azure", provider: "azure", Logo: AzureLogo },
+                  { name: "Auth0", provider: "auth0", Logo: Auth0Logo },
+                  { name: "Okta", provider: "okta", Logo: OktaLogo },
                 ].map((sso) => (
                   <Button
                     key={sso.provider}
                     type="button"
                     variant="outline"
-                    className="h-11 w-full justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
                       )
                     }
                   >
+                    <sso.Logo className="h-4 w-4" />
                     {sso.name}
                   </Button>
                 ))}
