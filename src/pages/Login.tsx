@@ -38,9 +38,9 @@ function OktaLogo({ className }: { className?: string }) {
 }
 
 const FEATURES = [
-  { icon: Sparkles, titleKey: "login.smartPlanning", fallback: "Smart AI planning", desc: "Generate compliant rosters in seconds." },
-  { icon: Zap, titleKey: "login.solveTime", fallback: "Sub-minute solve time", desc: "From requirements to roster in <1 minute." },
-  { icon: Shield, titleKey: "login.atwViolations", fallback: "Zero ATW violations", desc: "Hard-rule enforcement on every solve." },
+  { icon: FileText, titleKey: "login.aiBriefing", fallback: "AI Briefing", desc: "Capture demand, rules and preferences in a guided briefing." },
+  { icon: CalendarCheck, titleKey: "login.aiScheduler", fallback: "AI Scheduler", desc: "Generate a compliant roster in under a minute." },
+  { icon: MessageSquare, titleKey: "login.aiAssistant", fallback: "AI Assistant", desc: "Chat with Tina to tweak shifts, swaps and days off." },
 ];
 
 export default function Login() {
