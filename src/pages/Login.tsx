@@ -123,23 +123,11 @@ export default function Login() {
 
           {/* Middle: mascot + headline */}
           <div className="relative z-10 flex flex-col items-start gap-8 max-w-lg">
-            <div className="flex items-center gap-5">
-              <div className="relative h-40 w-40 robot-float">
-                <img
-                  src={tinaAiImg.url}
-                  alt="Tina AI"
-                  className="h-full w-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
-                />
-                {/* Planbition X collar badge */}
-                <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex h-7 w-7 items-center justify-center rounded-full bg-[hsl(var(--brand-accent))] text-[hsl(var(--brand-accent-foreground))] font-black text-sm shadow-lg ring-2 ring-white/30">
-                  X
-                </div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-black tracking-tight text-white">Tina AI</span>
-                <span className="text-sm font-medium text-[hsl(var(--brand-accent))]">de planner ondersteunt</span>
-              </div>
-            </div>
+            <img
+              src={tinaAiImg.url}
+              alt="Tina AI"
+              className="h-40 w-40 object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] robot-float"
+            />
             <div>
               <h1 className="text-4xl xl:text-5xl font-black leading-[1.05] tracking-tight">
                 The intelligent way to plan your{" "}
