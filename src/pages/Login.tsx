@@ -9,6 +9,7 @@ import { Eye, EyeOff, LogIn, User, Lock, Sparkles, FileText, CalendarCheck, Mess
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import tinaAiImg from "@/assets/tina-ai-alpaca.png.asset.json";
+import xBg from "@/assets/x-bg.png";
 
 function AzureLogo({ className }: { className?: string }) {
   return (
