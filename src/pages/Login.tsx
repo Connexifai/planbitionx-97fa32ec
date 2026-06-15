@@ -192,11 +192,7 @@ export default function Login() {
 
           <div className="w-full max-w-md">
             <div className="mb-8">
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
-                <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--brand-accent))]" />
-                Planbition X
-              </div>
-              <h2 className="mt-5 text-3xl sm:text-4xl font-black tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
                 {t("login.welcome", "Welkom terug")}.
               </h2>
               <p className="mt-2 text-muted-foreground">
@@ -317,21 +313,6 @@ export default function Login() {
               </div>
             </div>
 
-            {/* KPI strip */}
-            <div className="mt-10 grid grid-cols-3 gap-3 border-t border-border pt-6">
-              <div>
-                <div className="text-2xl font-black tracking-tight text-[hsl(var(--brand-accent))]">AI</div>
-                <div className="mt-1 text-[11px] text-muted-foreground">{t("login.smartPlanning")}</div>
-              </div>
-              <div>
-                <div className="text-2xl font-black tracking-tight">&lt;1m</div>
-                <div className="mt-1 text-[11px] text-muted-foreground">{t("login.solveTime")}</div>
-              </div>
-              <div>
-                <div className="text-2xl font-black tracking-tight">0</div>
-                <div className="mt-1 text-[11px] text-muted-foreground">{t("login.atwViolations")}</div>
-              </div>
-            </div>
           </div>
         </main>
       </div>
