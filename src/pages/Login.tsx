@@ -109,6 +109,18 @@ export default function Login() {
             }}
           />
 
+          {/* Static X background image */}
+          <div
+            className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+            style={{
+              backgroundImage: `url(${xBgPng})`,
+              backgroundSize: "85%",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              opacity: 0.12,
+            }}
+          />
+
           {/* Top: wordmark */}
           <div className="relative z-10 flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/10 backdrop-blur-md ring-1 ring-white/20">
