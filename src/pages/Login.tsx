@@ -116,7 +116,7 @@ export default function Login() {
             <div className="leading-tight">
               <div className="text-sm font-medium text-white/70">Planbition</div>
               <div className="text-xl font-black tracking-tight">
-                X <span className="text-[hsl(var(--brand-accent))]">·</span> Workforce AI
+                X <span className="text-[hsl(var(--brand-accent))]">·</span> The AI solution
               </div>
             </div>
           </div>
