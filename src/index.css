@@ -322,6 +322,30 @@
   }
 }
 
+/* X reveal animation — like the video intro */
+@keyframes x-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.75);
+  }
+  25% {
+    opacity: 0.18;
+    transform: scale(1.0);
+  }
+  75% {
+    opacity: 0.18;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+.animate-x-reveal {
+  animation: x-reveal 6s ease-in-out infinite;
+}
+
 .pulsating-x {
   position: absolute;
   inset: 0;
