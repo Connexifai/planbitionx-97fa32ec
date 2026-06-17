@@ -105,13 +105,7 @@ export default function LoginV2() {
           <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <img src={planbitionLogo} alt="Planbition" className="w-10 h-10 object-contain" />
-                <div>
-                  <div className="text-sm font-bold tracking-tight text-white">Planbition</div>
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
-                    The AI solution for workforce planning
-                  </div>
-                </div>
+                <img src={planbitionLogo} alt="Planbition" className="h-10 object-contain" />
               </div>
               <a
                 href="https://www.planbition.com"
