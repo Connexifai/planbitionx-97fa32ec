@@ -106,6 +106,10 @@ export default function LoginV2() {
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
                 <img src={planbitionLogo} alt="Planbition" className="h-10 object-contain" />
+                <div className="flex flex-col leading-tight">
+                  <span className="text-lg font-bold tracking-tight text-white">Planbition</span>
+                  <span className="text-[11px] font-medium tracking-wide text-white/60">a zvoove company</span>
+                </div>
               </div>
               <a
                 href="https://www.planbition.com"
