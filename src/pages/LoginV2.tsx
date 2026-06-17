@@ -52,8 +52,83 @@ export default function LoginV2() {
         <LanguageSwitcher />
       </div>
 
-      <div className="grid min-h-screen lg:grid-cols-[1fr_1.1fr]">
-        {/* LEFT — Editorial form */}
+      <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
+        {/* LEFT — Video brand canvas */}
+        <aside
+          className={`relative hidden lg:block overflow-hidden transition-all duration-700 ease-out ${entered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"}`}
+        >
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/videos/login-bg.mp4"
+          />
+          {/* Tint overlay */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg, hsl(220 40% 8% / 0.55) 0%, hsl(220 40% 8% / 0.25) 50%, hsl(28 90% 30% / 0.35) 100%)",
+            }}
+          />
+          {/* Grid texture */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-[0.08]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
+
+          {/* Editorial overlay */}
+          <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
+            <div className="flex items-start justify-between">
+              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
+                The AI solution
+                <br />
+                for workforce planning
+              </div>
+              <a
+                href="https://www.planbition.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 hover:text-[hsl(var(--brand-accent))] transition-colors"
+              >
+                planbition.com
+                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+
+            <div className="space-y-6">
+              <div className="font-black leading-[0.85] tracking-tighter">
+                <div className="text-[clamp(7rem,18vw,16rem)] text-[hsl(var(--brand-accent))]">
+                  X
+                </div>
+                <div className="text-2xl xl:text-3xl text-white/90 -mt-4 max-w-md">
+                  Rosters that obey rules, respect people, and ship in under a minute.
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-6 border-t border-white/15 pt-6 max-w-xl">
+                {[
+                  { k: "<60s", v: "Solve time" },
+                  { k: "100%", v: "Rule-compliant" },
+                  { k: "AI", v: "Explainable" },
+                ].map((s) => (
+                  <div key={s.v}>
+                    <div className="text-2xl xl:text-3xl font-black text-[hsl(var(--brand-accent))]">{s.k}</div>
+                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60 mt-1">{s.v}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        {/* RIGHT — Editorial form */}
         <main
           className={`relative flex flex-col justify-between px-8 py-10 sm:px-14 lg:px-20 xl:px-28 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
@@ -176,81 +251,6 @@ export default function LoginV2() {
             <span>Compliant · Explainable · Fast</span>
           </div>
         </main>
-
-        {/* RIGHT — Video brand canvas */}
-        <aside
-          className={`relative hidden lg:block overflow-hidden transition-all duration-700 ease-out ${entered ? "opacity-100 translate-x-0" : "opacity-0 translate-x-6"}`}
-        >
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/videos/login-bg.mp4"
-          />
-          {/* Tint overlay */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(135deg, hsl(220 40% 8% / 0.55) 0%, hsl(220 40% 8% / 0.25) 50%, hsl(28 90% 30% / 0.35) 100%)",
-            }}
-          />
-          {/* Grid texture */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          {/* Editorial overlay */}
-          <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
-            <div className="flex items-start justify-between">
-              <div className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/70">
-                The AI solution
-                <br />
-                for workforce planning
-              </div>
-              <a
-                href="https://www.planbition.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 hover:text-[hsl(var(--brand-accent))] transition-colors"
-              >
-                planbition.com
-                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </div>
-
-            <div className="space-y-6">
-              <div className="font-black leading-[0.85] tracking-tighter">
-                <div className="text-[clamp(7rem,18vw,16rem)] text-[hsl(var(--brand-accent))]">
-                  X
-                </div>
-                <div className="text-2xl xl:text-3xl text-white/90 -mt-4 max-w-md">
-                  Rosters that obey rules, respect people, and ship in under a minute.
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-6 border-t border-white/15 pt-6 max-w-xl">
-                {[
-                  { k: "<60s", v: "Solve time" },
-                  { k: "100%", v: "Rule-compliant" },
-                  { k: "AI", v: "Explainable" },
-                ].map((s) => (
-                  <div key={s.v}>
-                    <div className="text-2xl xl:text-3xl font-black text-[hsl(var(--brand-accent))]">{s.k}</div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60 mt-1">{s.v}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
     </div>
   );
