@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import planbitionLogo from "@/assets/planbition-logo.png";
+import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff, ArrowUpRight, LogIn, ArrowRight, User, Lock } from "lucide-react";
@@ -105,7 +105,7 @@ export default function LoginV2() {
           <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <img src={planbitionLogo} alt="Planbition" className="h-10 object-contain" />
+                <img src={planbitionLogo.url} alt="Planbition" className="h-10 object-contain" />
                 <div className="flex flex-col leading-tight">
                   <span className="text-lg font-bold tracking-tight text-white">Planbition</span>
                   <span className="text-[11px] font-medium tracking-wide text-white/60">a zvoove company</span>
