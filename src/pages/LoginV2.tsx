@@ -107,15 +107,32 @@ export default function LoginV2() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-6 border-t border-white/15 pt-6 max-w-xl">
+              <div className="space-y-3 border-t border-white/15 pt-6 max-w-xl">
                 {[
-                  { k: "<60s", v: "Solve time" },
-                  { k: "100%", v: "Rule-compliant" },
-                  { k: "AI", v: "Explainable" },
-                ].map((s) => (
-                  <div key={s.v}>
-                    <div className="text-2xl xl:text-3xl font-black text-[hsl(var(--brand-accent))]">{s.k}</div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60 mt-1">{s.v}</div>
+                  {
+                    Icon: MessageSquareText,
+                    title: "AI Briefing",
+                    desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
+                  },
+                  {
+                    Icon: Sparkles,
+                    title: "Uitlegbare AI Solver",
+                    desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
+                  },
+                  {
+                    Icon: LifeBuoy,
+                    title: "AI Assistent",
+                    desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
+                  },
+                ].map(({ Icon, title, desc }) => (
+                  <div key={title} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-bold tracking-tight">{title}</div>
+                      <div className="text-xs text-white/65 leading-relaxed mt-0.5">{desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
