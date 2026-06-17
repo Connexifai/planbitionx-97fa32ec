@@ -171,7 +171,7 @@ export default function LoginV2() {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
+          <div className="flex items-center justify-between gap-6 text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
             <span>© {new Date().getFullYear()} Planbition</span>
             <span>Compliant · Explainable · Fast</span>
           </div>
