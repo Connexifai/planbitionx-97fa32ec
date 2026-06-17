@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, ArrowUpRight, LogIn, ArrowRight, User, Lock } from "lucide-react";
+import { Eye, EyeOff, LogIn, ArrowRight, User, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -104,22 +104,7 @@ export default function LoginV2() {
           {/* Editorial overlay */}
           <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
             <div className="flex items-start justify-between">
-              <div className="flex items-center gap-3">
-                <img src={planbitionLogo.url} alt="Planbition" className="h-10 object-contain" />
-                <div className="flex flex-col leading-tight">
-                  <span className="text-lg font-bold tracking-tight text-white">Planbition</span>
-                  <span className="text-[11px] font-medium tracking-wide text-white/60">a zvoove company</span>
-                </div>
-              </div>
-              <a
-                href="https://www.planbition.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.25em] text-white/70 hover:text-[hsl(var(--brand-accent))] transition-colors"
-              >
-                planbition.com
-                <ArrowUpRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
+              <img src={planbitionLogo.url} alt="Planbition" className="h-12 object-contain" />
             </div>
 
             <div className="space-y-6">
