@@ -20,7 +20,11 @@
     "noAccount": "No account yet? Register",
     "smartPlanning": "Smart planning",
     "solveTime": "Solve time",
-    "atwViolations": "WTA violations"
+    "atwViolations": "WTA violations",
+    "heroTitle1": "Planbition X",
+    "heroTitle2": "available as an add-on",
+    "heroDesc": "Planbition X is an AI extension to your existing Planbition system. Sign in to explore the new capabilities.",
+    "learnMore": "Learn more"
   },
   "kpi": {
     "occupancy": "Occupancy",
