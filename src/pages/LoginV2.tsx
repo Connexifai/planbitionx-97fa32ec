@@ -128,37 +128,32 @@ export default function LoginV2() {
           </div>
         </aside>
 
-        {/* RIGHT — Editorial form */}
+        {/* RIGHT — Clean form */}
         <main
-          className={`relative flex flex-col justify-between px-8 py-10 sm:px-14 lg:px-20 xl:px-28 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`relative flex flex-col justify-between px-6 py-6 sm:px-10 lg:px-14 xl:px-16 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
           {/* Brand mark */}
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-[hsl(var(--brand-accent))] text-[hsl(220_40%_10%)] font-black text-lg">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded bg-[hsl(var(--brand-accent))] text-[hsl(220_40%_10%)] font-black text-sm">
               P
             </div>
-            <div className="font-mono text-xs uppercase tracking-[0.22em] text-white/60">
+            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50">
               Planbition / X
             </div>
           </div>
 
           {/* Form */}
-          <div className="w-full max-w-md mx-auto lg:mx-0">
-            <div className="mb-2 text-xs font-mono uppercase tracking-[0.25em] text-[hsl(var(--brand-accent))]">
-              01 — Access
-            </div>
-            <h1 className="text-5xl xl:text-6xl font-black tracking-tight leading-[0.95]">
-              Sign in.
-              <br />
-              <span className="text-white/40">Plan smarter.</span>
+          <div className="w-full max-w-sm mx-auto lg:mx-0">
+            <h1 className="text-3xl xl:text-4xl font-black tracking-tight leading-[1]">
+              Sign in
             </h1>
-            <p className="mt-5 text-sm text-white/60 max-w-sm leading-relaxed">
+            <p className="mt-2 text-xs text-white/50 max-w-xs leading-relaxed">
               {t("login.loginSubtitle", "Log in om verder te gaan met je roosterplanning")}
             </p>
 
-            <form onSubmit={handleSubmit} className="mt-10 space-y-7">
-              <div className="space-y-2 border-b border-white/15 pb-3 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
-                <Label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/50">
+            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+              <div className="space-y-1.5 border-b border-white/10 pb-2 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
+                <Label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
                   {t("login.username", "Username")}
                 </Label>
                 <Input
@@ -169,21 +164,21 @@ export default function LoginV2() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="username"
-                  className="h-9 px-0 bg-transparent border-0 text-lg text-white placeholder:text-white/25 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
+                  className="h-8 px-0 bg-transparent border-0 text-base text-white placeholder:text-white/20 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                 />
               </div>
 
-              <div className="space-y-2 border-b border-white/15 pb-3 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
+              <div className="space-y-1.5 border-b border-white/10 pb-2 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/50">
+                  <Label htmlFor="password" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
                     {t("login.password")}
                   </Label>
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="text-white/40 hover:text-white transition-colors"
+                    className="text-white/30 hover:text-white transition-colors"
                   >
-                    {showPassword ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
+                    {showPassword ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
                   </button>
                 </div>
                 <Input
@@ -195,14 +190,14 @@ export default function LoginV2() {
                   required
                   minLength={6}
                   autoComplete="current-password"
-                  className="h-9 px-0 bg-transparent border-0 text-lg text-white placeholder:text-white/25 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
+                  className="h-8 px-0 bg-transparent border-0 text-base text-white placeholder:text-white/20 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-2">
+              <div className="flex items-center justify-between pt-1">
                 <button
                   type="button"
-                  className="text-xs font-medium text-white/50 hover:text-[hsl(var(--brand-accent))] transition-colors"
+                  className="text-[10px] font-medium text-white/40 hover:text-[hsl(var(--brand-accent))] transition-colors"
                   onClick={() => toast.info("Neem contact op met je beheerder.")}
                 >
                   {t("login.forgotPassword", "Forgot password?")}
@@ -211,44 +206,42 @@ export default function LoginV2() {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="group h-12 gap-2 rounded-none bg-[hsl(var(--brand-accent))] px-7 text-sm font-bold uppercase tracking-[0.15em] text-[hsl(220_40%_10%)] hover:bg-[hsl(var(--brand-accent))]/90"
+                  className="group h-10 gap-1.5 rounded-none bg-[hsl(var(--brand-accent))] px-5 text-xs font-bold uppercase tracking-[0.12em] text-[hsl(220_40%_10%)] hover:bg-[hsl(var(--brand-accent))]/90"
                 >
                   {loading ? (
-                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-[hsl(220_40%_10%)]/30 border-t-[hsl(220_40%_10%)]" />
+                    <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[hsl(220_40%_10%)]/30 border-t-[hsl(220_40%_10%)]" />
                   ) : (
                     <>
                       {t("login.login", "Sign in")}
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </>
                   )}
                 </Button>
               </div>
             </form>
 
-            {/* SSO row — compact pills */}
-            <div className="mt-10">
-              <div className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40 mb-3">
-                Or via SSO
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {["Azure", "Auth0", "Okta"].map((name) => (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => toast.info(`${name} SSO — neem contact op met je beheerder om dit te activeren.`)}
-                    className="px-4 py-2 text-xs font-semibold uppercase tracking-wider border border-white/20 text-white/70 hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
-                  >
-                    {name}
-                  </button>
-                ))}
-              </div>
+            {/* SSO — minimal row */}
+            <div className="mt-6 flex items-center gap-2">
+              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">SSO</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <div className="mt-2 flex gap-2">
+              {["Azure", "Google"].map((name) => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => toast.info(`${name} SSO — neem contact op met je beheerder om dit te activeren.`)}
+                  className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider border border-white/10 text-white/50 hover:border-[hsl(var(--brand-accent))]/60 hover:text-[hsl(var(--brand-accent))] transition-colors"
+                >
+                  {name}
+                </button>
+              ))}
             </div>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between gap-6 text-[10px] font-mono uppercase tracking-[0.22em] text-white/35">
+          <div className="flex items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-white/25">
             <span>© {new Date().getFullYear()} Planbition</span>
-            <span>Compliant · Explainable · Fast</span>
           </div>
         </main>
       </div>
