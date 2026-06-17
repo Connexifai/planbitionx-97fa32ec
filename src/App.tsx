@@ -14,6 +14,11 @@ import PlanbitionHome from "./pages/PlanbitionHome.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Presentation from "./pages/Presentation.tsx";
 import AiSlides from "./pages/AiSlides.tsx";
+import SiteLayout from "./pages/marketing/SiteLayout.tsx";
+import SiteHome from "./pages/marketing/SiteHome.tsx";
+import SiteProduct from "./pages/marketing/SiteProduct.tsx";
+import SiteAbout from "./pages/marketing/SiteAbout.tsx";
+import SiteContact from "./pages/marketing/SiteContact.tsx";
 import robotImg from "@/assets/robot-assistant.png";
 
 const queryClient = new QueryClient();
@@ -79,6 +84,12 @@ const App = () => (
             <Route path="/" element={<HomeOrPlanner />} />
             <Route path="/presentation" element={<Presentation />} />
             <Route path="/ai-slides" element={<AiSlides />} />
+            <Route path="/site" element={<SiteLayout />}>
+              <Route index element={<SiteHome />} />
+              <Route path="product" element={<SiteProduct />} />
+              <Route path="over-ons" element={<SiteAbout />} />
+              <Route path="contact" element={<SiteContact />} />
+            </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>
