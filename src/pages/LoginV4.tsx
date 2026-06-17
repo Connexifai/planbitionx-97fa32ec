@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, LogIn, ArrowRight, User, Lock } from "lucide-react";
+import { Eye, EyeOff, LogIn, ArrowRight, User, Lock, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -37,7 +37,7 @@ function OktaLogo({ className }: { className?: string }) {
   );
 }
 
-export default function LoginV2() {
+export default function LoginV4() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -97,25 +97,47 @@ export default function LoginV2() {
               <img src={planbitionLogo.url} alt="Planbition" className="h-12 object-contain" />
             </div>
 
-            <div className="space-y-6">
-              <div className="font-black leading-[0.85] tracking-tighter">
-                <div className="text-[clamp(7rem,18vw,16rem)] text-[hsl(var(--brand-accent))]">
-                  X
+            <div className="space-y-8 max-w-xl">
+              <div>
+                <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 text-[10px] font-mono uppercase tracking-[0.2em] text-white/80 backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--brand-accent))] animate-pulse" />
+                  AI-native planning
                 </div>
-                <div className="text-2xl xl:text-3xl text-white/90 -mt-4 max-w-md">
-                  Rosters that obey rules, respect people, and ship in under a minute.
-                </div>
+                <h1 className="mt-4 text-4xl xl:text-5xl font-black leading-[1.05] tracking-tight">
+                  Plan in <span className="text-[hsl(var(--brand-accent))]">mensentaal</span>.
+                  <br />Laat de AI het zware werk doen.
+                </h1>
+                <p className="mt-3 text-base xl:text-lg text-white/70 leading-relaxed">
+                  Brief de solver in gewone zinnen, krijg een uitlegbaar rooster, en los dagelijkse verstoringen op met je AI-assistent.
+                </p>
               </div>
 
-              <div className="grid grid-cols-3 gap-6 border-t border-white/15 pt-6 max-w-xl">
+              <div className="space-y-3 border-t border-white/15 pt-6">
                 {[
-                  { k: "<60s", v: "Solve time" },
-                  { k: "100%", v: "Rule-compliant" },
-                  { k: "AI", v: "Explainable" },
-                ].map((s) => (
-                  <div key={s.v}>
-                    <div className="text-2xl xl:text-3xl font-black text-[hsl(var(--brand-accent))]">{s.k}</div>
-                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/60 mt-1">{s.v}</div>
+                  {
+                    Icon: MessageSquareText,
+                    title: "AI Briefing",
+                    desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
+                  },
+                  {
+                    Icon: Sparkles,
+                    title: "Uitlegbare AI Solver",
+                    desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
+                  },
+                  {
+                    Icon: LifeBuoy,
+                    title: "AI Assistent",
+                    desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
+                  },
+                ].map(({ Icon, title, desc }) => (
+                  <div key={title} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-bold tracking-tight">{title}</div>
+                      <div className="text-xs text-white/65 leading-relaxed mt-0.5">{desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -130,7 +152,7 @@ export default function LoginV2() {
           {/* Top-right controls */}
           <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-              Style B
+              Style C
             </span>
             <LanguageSwitcher />
           </div>
