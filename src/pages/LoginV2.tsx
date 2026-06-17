@@ -148,13 +148,13 @@ export default function LoginV2() {
                       },
                     ].map(({ Icon, title, desc }) => (
                       <CarouselItem key={title}>
-                        <div className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
-                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]">
-                            <Icon className="h-4 w-4" />
+                        <div className="flex gap-4 rounded-xl border border-white/15 bg-black/30 p-4 backdrop-blur-md">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/20 text-[hsl(var(--brand-accent))]">
+                            <Icon className="h-5 w-5" />
                           </div>
                           <div className="min-w-0">
-                            <div className="text-sm font-bold tracking-tight">{title}</div>
-                            <div className="text-xs text-white/65 leading-relaxed mt-0.5">{desc}</div>
+                            <div className="text-base font-semibold tracking-tight text-white">{title}</div>
+                            <div className="text-sm text-white/80 leading-relaxed mt-1">{desc}</div>
                           </div>
                         </div>
                       </CarouselItem>
