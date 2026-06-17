@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Index from "./pages/Index.tsx";
 import Login from "./pages/Login.tsx";
+import LoginV2 from "./pages/LoginV2.tsx";
 import Landing from "./pages/Landing.tsx";
 import PlanbitionHome from "./pages/PlanbitionHome.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -70,6 +71,7 @@ const App = () => (
           <Routes>
             <Route path="/landing" element={<Landing />} />
             <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+            <Route path="/login-v2" element={<PublicRoute><LoginV2 /></PublicRoute>} />
             <Route path="/" element={<HomeOrPlanner />} />
             <Route path="/presentation" element={<Presentation />} />
             <Route path="/ai-slides" element={<AiSlides />} />
