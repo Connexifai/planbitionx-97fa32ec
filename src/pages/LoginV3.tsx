@@ -131,19 +131,27 @@ export default function LoginV3() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
-              {t("login.heroTitle1", "Welcome back to")}
+              {t("login.heroTitle1", "Planbition X")}
               <br />
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Planbition X
+                {t("login.heroTitle2", "beschikbaar als add-on")}
               </span>
             </h1>
 
             <p className="mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed drop-shadow-sm">
               {t(
                 "login.heroDesc",
-                "Sign in to keep planning compliant, explainable rosters in under a minute."
+                "Planbition X is een AI-uitbreiding op je huidige Planbition systeem. Log in om de nieuwe mogelijkheden te verkennen."
               )}
             </p>
+
+            <Link
+              to="/landing"
+              className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
+            >
+              {t("login.learnMore", "Meer informatie")}
+              <ChevronRight className="w-4 h-4" />
+            </Link>
 
             <div className="mt-8 hidden md:flex items-center gap-6 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
