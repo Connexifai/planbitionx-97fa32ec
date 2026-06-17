@@ -12,11 +12,14 @@ import robotImg from "@/assets/robot-assistant.png";
 import {
   ArrowRight,
   Brain,
+  CalendarClock,
   ChevronRight,
   Eye,
   EyeOff,
+  FileText,
   Lock,
   LogIn,
+  MessageSquare,
   Sparkles,
   User,
   Zap,
@@ -153,19 +156,44 @@ export default function LoginV3() {
               <ChevronRight className="w-4 h-4" />
             </Link>
 
-            <div className="mt-8 hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                AI Briefing
-              </div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                AI Scheduler
-              </div>
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-primary" />
-                AI Assistant
-              </div>
+            <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[
+                {
+                  icon: FileText,
+                  title: t("login.module1Title", "AI Briefing"),
+                  desc: t(
+                    "login.module1Desc",
+                    "Dagstart in één oogopslag: risico's, gaten en wins direct zichtbaar."
+                  ),
+                },
+                {
+                  icon: CalendarClock,
+                  title: t("login.module2Title", "AI Scheduling"),
+                  desc: t(
+                    "login.module2Desc",
+                    "Genereert compliant roosters in seconden, perfect afgestemd op vraag en skills."
+                  ),
+                },
+                {
+                  icon: MessageSquare,
+                  title: t("login.module3Title", "AI Assistant"),
+                  desc: t(
+                    "login.module3Desc",
+                    "Je 24/7 co-pilot voor swaps, vragen en snelle aanpassingen — gewoon in chat."
+                  ),
+                },
+              ].map(({ icon: Icon, title, desc }) => (
+                <div
+                  key={title}
+                  className="group p-5 rounded-2xl bg-card/60 backdrop-blur-sm border border-border hover:border-primary/50 hover:bg-card/80 transition-all duration-300"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-primary/15 flex items-center justify-center mb-3 group-hover:bg-primary/25 transition-colors">
+                    <Icon className="w-4 h-4 text-primary" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-foreground mb-1.5">{title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
 

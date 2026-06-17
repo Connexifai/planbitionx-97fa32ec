@@ -24,7 +24,13 @@
     "heroTitle1": "Plan your roster",
     "heroTitle2": "in seconds with AI",
     "heroDesc": "Planbition X makes complex roster planning simple. AI helps you plan faster, smarter, and compliant.",
-    "learnMore": "Learn more"
+   "learnMore": "Learn more",
+   "module1Title": "AI Briefing",
+   "module1Desc": "Start your day at a glance — risks, gaps and wins surfaced instantly.",
+   "module2Title": "AI Scheduling",
+   "module2Desc": "Generates compliant schedules in seconds, perfectly matched to demand and skills.",
+   "module3Title": "AI Assistant",
+   "module3Desc": "Your 24/7 co-pilot for swaps, questions and quick changes — right in chat."
   },
   "kpi": {
     "occupancy": "Occupancy",
