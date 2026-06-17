@@ -88,7 +88,7 @@ export default function LoginV2() {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(135deg, hsl(220 40% 8% / 0.55) 0%, hsl(220 40% 8% / 0.25) 50%, hsl(28 90% 30% / 0.35) 100%)",
+                "radial-gradient(ellipse at top left, hsl(28 90% 45% / 0.38) 0%, transparent 55%), radial-gradient(ellipse at bottom right, hsl(28 90% 42% / 0.42) 0%, transparent 55%), linear-gradient(135deg, hsl(220 40% 8% / 0.50) 0%, hsl(220 40% 8% / 0.20) 50%, hsl(28 90% 32% / 0.38) 100%)",
             }}
           />
           {/* Editorial overlay */}
