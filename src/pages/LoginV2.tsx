@@ -7,6 +7,7 @@ import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff, LogIn, ArrowRight, User, Lock, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
+import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -46,11 +47,21 @@ export default function LoginV2() {
   const [loading, setLoading] = useState(false);
   const [exiting, setExiting] = useState(false);
   const [entered, setEntered] = useState(false);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     const tm = setTimeout(() => setEntered(true), 50);
     return () => clearTimeout(tm);
   }, []);
+
+  useEffect(() => {
+    if (!carouselApi) return;
+    setCurrentSlide(carouselApi.selectedScrollSnap());
+    carouselApi.on("select", () => {
+      setCurrentSlide(carouselApi.selectedScrollSnap());
+    });
+  }, [carouselApi]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,34 +118,52 @@ export default function LoginV2() {
                 </div>
               </div>
 
-              <div className="space-y-3 border-t border-white/15 pt-6 max-w-xl">
-                {[
-                  {
-                    Icon: MessageSquareText,
-                    title: "AI Briefing",
-                    desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
-                  },
-                  {
-                    Icon: Sparkles,
-                    title: "Uitlegbare AI Solver",
-                    desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
-                  },
-                  {
-                    Icon: LifeBuoy,
-                    title: "AI Assistent",
-                    desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
-                  },
-                ].map(({ Icon, title, desc }) => (
-                  <div key={title} className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
-                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]">
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-sm font-bold tracking-tight">{title}</div>
-                      <div className="text-xs text-white/65 leading-relaxed mt-0.5">{desc}</div>
-                    </div>
-                  </div>
-                ))}
+              <div className="border-t border-white/15 pt-5 max-w-xl">
+                <Carousel opts={{ loop: true }} setApi={setCarouselApi} className="w-full">
+                  <CarouselContent>
+                    {[
+                      {
+                        Icon: MessageSquareText,
+                        title: "AI Briefing",
+                        desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
+                      },
+                      {
+                        Icon: Sparkles,
+                        title: "Uitlegbare AI Solver",
+                        desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
+                      },
+                      {
+                        Icon: LifeBuoy,
+                        title: "AI Assistent",
+                        desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
+                      },
+                    ].map(({ Icon, title, desc }) => (
+                      <CarouselItem key={title}>
+                        <div className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.04] p-3 backdrop-blur-sm">
+                          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))]/15 text-[hsl(var(--brand-accent))]">
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div className="min-w-0">
+                            <div className="text-sm font-bold tracking-tight">{title}</div>
+                            <div className="text-xs text-white/65 leading-relaxed mt-0.5">{desc}</div>
+                          </div>
+                        </div>
+                      </CarouselItem>
+                    ))}
+                  </CarouselContent>
+                </Carousel>
+                <div className="mt-3 flex justify-center gap-2">
+                  {[0, 1, 2].map((i) => (
+                    <button
+                      key={i}
+                      onClick={() => carouselApi?.scrollTo(i)}
+                      className={`h-1.5 rounded-full transition-all ${
+                        i === currentSlide ? "w-5 bg-[hsl(var(--brand-accent))]" : "w-1.5 bg-white/30 hover:bg-white/50"
+                      }`}
+                      aria-label={`Ga naar slide ${i + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
