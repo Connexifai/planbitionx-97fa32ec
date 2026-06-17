@@ -212,11 +212,7 @@ export default function LoginV2() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="group h-12 w-full gap-2 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_hsl(var(--brand-accent)/0.6)] hover:shadow-[0_14px_40px_-10px_hsl(var(--brand-accent)/0.75)] transition-all"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(135deg, hsl(var(--brand-accent)) 0%, hsl(28 95% 58%) 50%, hsl(var(--primary)) 130%)",
-                }}
+                className="group h-12 w-full gap-2 text-sm font-semibold text-white bg-[hsl(var(--brand-accent))] hover:bg-[hsl(var(--brand-accent))] shadow-[0_10px_30px_-10px_hsl(var(--brand-accent)/0.6)] hover:shadow-[0_14px_40px_-10px_hsl(var(--brand-accent)/0.75)] transition-all"
               >
                 {loading ? (
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
