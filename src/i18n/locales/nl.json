@@ -24,7 +24,13 @@
     "heroTitle1": "Plan je rooster",
     "heroTitle2": "in seconden met AI",
     "heroDesc": "Planbition X maakt complexe roosterplanning eenvoudig. AI helpt je om sneller, slimmer en compliant te plannen.",
-    "learnMore": "Meer informatie"
+    "learnMore": "Meer informatie",
+    "module1Title": "AI Briefing",
+    "module1Desc": "Dagstart in één oogopslag: risico's, gaten en wins direct zichtbaar.",
+    "module2Title": "AI Scheduling",
+    "module2Desc": "Genereert compliant roosters in seconden, perfect afgestemd op vraag en skills.",
+    "module3Title": "AI Assistant",
+    "module3Desc": "Je 24/7 co-pilot voor swaps, vragen en snelle aanpassingen — gewoon in chat."
   },
   "kpi": {
     "occupancy": "Bezetting",
