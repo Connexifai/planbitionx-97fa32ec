@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -84,6 +84,12 @@ export default function Login() {
       className={`min-h-screen w-full bg-background text-foreground transition-all duration-700 ease-in-out ${exiting ? "scale-105 opacity-0 blur-sm" : ""}`}
     >
       <div className="absolute top-4 right-4 z-30">
+        <Link
+          to="/login-v2"
+          className="mr-3 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground hover:text-[hsl(var(--brand-accent))] transition-colors"
+        >
+          Style B ↻
+        </Link>
         <LanguageSwitcher />
       </div>
 
