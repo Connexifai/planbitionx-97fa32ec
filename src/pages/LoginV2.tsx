@@ -63,6 +63,15 @@ export default function LoginV2() {
     });
   }, [carouselApi]);
 
+  // Autoplay
+  useEffect(() => {
+    if (!carouselApi) return;
+    const interval = setInterval(() => {
+      carouselApi.scrollNext();
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [carouselApi]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
