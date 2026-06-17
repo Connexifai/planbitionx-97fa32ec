@@ -1,13 +1,40 @@
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, ArrowUpRight } from "lucide-react";
+import { Eye, EyeOff, ArrowUpRight, LogIn, ArrowRight, User, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+
+function AzureLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="#f25022" d="M0 0h45.6v45.6H0z" />
+      <path fill="#7fba00" d="M50.4 0H96v45.6H50.4z" />
+      <path fill="#00a4ef" d="M0 50.4h45.6V96H0z" />
+      <path fill="#ffb900" d="M50.4 50.4H96V96H50.4z" />
+    </svg>
+  );
+}
+
+function Auth0Logo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M16 2.4l4.8 14.8H11.2L16 2.4zm0 27.2l-4.8-14.8h9.6L16 29.6zm-6.4-16h-8L9.6 0l-6.4 13.6zm-8 3.2h8l-6.4 13.6 6.4-13.6zm28.8-3.2h-8l6.4-13.6 6.4 13.6zm0 3.2l-6.4 13.6 6.4-13.6h-8z" />
+    </svg>
+  );
+}
+
+function OktaLogo({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M16 4c6.627 0 12 5.373 12 12s-5.373 12-12 12S4 22.627 4 16 9.373 4 16 4zm0 2.286a9.714 9.714 0 1 0 0 19.428 9.714 9.714 0 0 0 0-19.428z" />
+    </svg>
+  );
+}
 
 export default function LoginV2() {
   const { t } = useTranslation();
@@ -40,22 +67,12 @@ export default function LoginV2() {
 
   return (
     <div
-      className={`min-h-screen w-full bg-[hsl(220_30%_8%)] text-white transition-all duration-700 ease-in-out ${exiting ? "scale-105 opacity-0 blur-sm" : ""}`}
+      className={`min-h-screen w-full transition-all duration-700 ease-in-out ${exiting ? "scale-105 opacity-0 blur-sm" : ""}`}
     >
-      <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-        <Link
-          to="/login"
-          className="text-xs font-medium uppercase tracking-[0.18em] text-white/60 hover:text-[hsl(var(--brand-accent))] transition-colors"
-        >
-          Style A ↺
-        </Link>
-        <LanguageSwitcher />
-      </div>
-
       <div className="grid min-h-screen lg:grid-cols-[1.1fr_1fr]">
         {/* LEFT — Video brand canvas */}
         <aside
-          className={`relative hidden lg:block overflow-hidden transition-all duration-700 ease-out ${entered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"}`}
+          className={`relative hidden lg:block overflow-hidden bg-[hsl(220_30%_8%)] text-white transition-all duration-700 ease-out ${entered ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-6"}`}
         >
           <video
             autoPlay
@@ -128,120 +145,148 @@ export default function LoginV2() {
           </div>
         </aside>
 
-        {/* RIGHT — Clean form */}
+        {/* RIGHT — Clean light form */}
         <main
-          className={`relative flex flex-col justify-between px-6 py-6 sm:px-10 lg:px-14 xl:px-16 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`relative flex items-center justify-center bg-background text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
-          {/* Brand mark */}
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-8 w-8 items-center justify-center rounded bg-[hsl(var(--brand-accent))] text-[hsl(220_40%_10%)] font-black text-sm">
-              P
-            </div>
-            <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50">
-              Planbition / X
-            </div>
+          {/* Top-right controls */}
+          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
+            <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
+              Style B
+            </span>
+            <LanguageSwitcher />
           </div>
 
-          {/* Form */}
-          <div className="w-full max-w-sm mx-auto lg:mx-0">
-            <h1 className="text-3xl xl:text-4xl font-black tracking-tight leading-[1]">
-              Sign in
-            </h1>
-            <p className="mt-2 text-xs text-white/50 max-w-xs leading-relaxed">
-              {t("login.loginSubtitle", "Log in om verder te gaan met je roosterplanning")}
-            </p>
+          {/* Mobile brand badge */}
+          <div className="absolute top-6 left-6 flex items-center gap-2 lg:hidden">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[hsl(var(--brand-accent))] text-[hsl(var(--brand-accent-foreground))] font-black">
+              P
+            </div>
+            <div className="font-black tracking-tight">Planbition X</div>
+          </div>
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-              <div className="space-y-1.5 border-b border-white/10 pb-2 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
-                <Label htmlFor="email" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+          <div className="w-full max-w-md">
+            <div className="mb-8">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+                {t("login.welcome", "Welkom terug")}.
+              </h2>
+              <p className="mt-2 text-muted-foreground">
+                {t("login.loginSubtitle", "Log in om verder te gaan met je roosterplanning")}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {t("login.username", "Username")}
                 </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="you@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="username"
-                  className="h-8 px-0 bg-transparent border-0 text-base text-white placeholder:text-white/20 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
-                />
+                <div className="relative">
+                  <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Username"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoComplete="username"
+                    className="h-12 pl-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                  />
+                </div>
               </div>
 
-              <div className="space-y-1.5 border-b border-white/10 pb-2 focus-within:border-[hsl(var(--brand-accent))] transition-colors">
+              <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-[10px] font-mono uppercase tracking-[0.25em] text-white/40">
+                  <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("login.password")}
                   </Label>
                   <button
                     type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-white/30 hover:text-white transition-colors"
+                    className="text-xs font-medium text-[hsl(var(--brand-accent))] hover:underline"
+                    onClick={() => toast.info("Neem contact op met je beheerder.")}
                   >
-                    {showPassword ? <EyeOff className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                    {t("login.forgotPassword", "Forgot password?")}
                   </button>
                 </div>
-                <Input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength={6}
-                  autoComplete="current-password"
-                  className="h-8 px-0 bg-transparent border-0 text-base text-white placeholder:text-white/20 focus-visible:ring-0 focus-visible:ring-offset-0 shadow-none"
-                />
+                <div className="relative">
+                  <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    autoComplete="current-password"
+                    className="h-12 pl-10 pr-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
 
-              <div className="flex items-center justify-between pt-1">
-                <button
-                  type="button"
-                  className="text-[10px] font-medium text-white/40 hover:text-[hsl(var(--brand-accent))] transition-colors"
-                  onClick={() => toast.info("Neem contact op met je beheerder.")}
-                >
-                  {t("login.forgotPassword", "Forgot password?")}
-                </button>
-
-                <Button
-                  type="submit"
-                  disabled={loading}
-                  className="group h-10 gap-1.5 rounded-none bg-[hsl(var(--brand-accent))] px-5 text-xs font-bold uppercase tracking-[0.12em] text-[hsl(220_40%_10%)] hover:bg-[hsl(var(--brand-accent))]/90"
-                >
-                  {loading ? (
-                    <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[hsl(220_40%_10%)]/30 border-t-[hsl(220_40%_10%)]" />
-                  ) : (
-                    <>
-                      {t("login.login", "Sign in")}
-                      <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </>
-                  )}
-                </Button>
-              </div>
+              <Button
+                type="submit"
+                disabled={loading}
+                className="group h-12 w-full gap-2 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_hsl(var(--brand-accent)/0.6)] hover:shadow-[0_14px_40px_-10px_hsl(var(--brand-accent)/0.75)] transition-all"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(135deg, hsl(var(--brand-accent)) 0%, hsl(28 95% 58%) 50%, hsl(var(--primary)) 130%)",
+                }}
+              >
+                {loading ? (
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                ) : (
+                  <>
+                    <LogIn className="h-4 w-4" />
+                    {t("login.login", "Sign in")}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </>
+                )}
+              </Button>
             </form>
 
-            {/* SSO — minimal row */}
-            <div className="mt-6 flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-white/30">SSO</span>
-              <div className="flex-1 h-px bg-white/10" />
+            {/* SSO options */}
+            <div className="mt-8">
+              <div className="relative mb-4">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-3 text-muted-foreground tracking-wider">
+                    {t("login.useAnotherService", "Use another service to log in")}
+                  </span>
+                </div>
+              </div>
+              <div className="grid gap-2.5">
+                {[
+                  { name: "Azure", provider: "azure", Logo: AzureLogo },
+                  { name: "Auth0", provider: "auth0", Logo: Auth0Logo },
+                  { name: "Okta", provider: "okta", Logo: OktaLogo },
+                ].map((sso) => (
+                  <Button
+                    key={sso.provider}
+                    type="button"
+                    variant="outline"
+                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    onClick={() =>
+                      toast.info(
+                        `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
+                      )
+                    }
+                  >
+                    <sso.Logo className="h-4 w-4" />
+                    {sso.name}
+                  </Button>
+                ))}
+              </div>
             </div>
-            <div className="mt-2 flex gap-2">
-              {["Azure", "Google"].map((name) => (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => toast.info(`${name} SSO — neem contact op met je beheerder om dit te activeren.`)}
-                  className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider border border-white/10 text-white/50 hover:border-[hsl(var(--brand-accent))]/60 hover:text-[hsl(var(--brand-accent))] transition-colors"
-                >
-                  {name}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Footer */}
-          <div className="flex items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.2em] text-white/25">
-            <span>© {new Date().getFullYear()} Planbition</span>
           </div>
         </main>
       </div>
