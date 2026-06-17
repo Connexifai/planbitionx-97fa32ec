@@ -91,16 +91,6 @@ export default function LoginV2() {
                 "linear-gradient(135deg, hsl(220 40% 8% / 0.55) 0%, hsl(220 40% 8% / 0.25) 50%, hsl(28 90% 30% / 0.35) 100%)",
             }}
           />
-          {/* Grid texture */}
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-
           {/* Editorial overlay */}
           <div className="relative z-10 flex h-full flex-col justify-between p-12 xl:p-16 text-white">
             <div className="flex items-start justify-between">
