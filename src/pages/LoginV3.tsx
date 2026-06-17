@@ -131,17 +131,17 @@ export default function LoginV3() {
             </div>
 
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight leading-[1.05]">
-              {t("login.heroTitle1", "Planbition X")}
+              {t("login.heroTitle1", "Plan je rooster")}
               <br />
               <span className="bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                {t("login.heroTitle2", "beschikbaar als add-on")}
+                {t("login.heroTitle2", "in seconden met AI")}
               </span>
             </h1>
 
             <p className="mt-6 text-lg text-foreground/80 max-w-xl leading-relaxed drop-shadow-sm">
               {t(
                 "login.heroDesc",
-                "Planbition X is een AI-uitbreiding op je huidige Planbition systeem. Log in om de nieuwe mogelijkheden te verkennen."
+                "Planbition X maakt complexe roosterplanning eenvoudig. AI helpt je om sneller, slimmer en compliant te plannen."
               )}
             </p>
 
