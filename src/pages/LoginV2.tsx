@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, ArrowUpRight, LogIn, ArrowRight, User, Lock } from "lucide-react";
+import { Eye, EyeOff, LogIn, ArrowRight, User, Lock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
