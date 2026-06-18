@@ -217,7 +217,7 @@ export default function LoginV2() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <Label htmlFor="email" className="text-sm font-bold uppercase tracking-wider text-foreground">
                   {t("login.username", "Username")}
                 </Label>
                 <div className="relative">
@@ -230,14 +230,14 @@ export default function LoginV2() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     autoComplete="username"
-                    className="h-12 pl-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <Label htmlFor="password" className="text-sm font-bold uppercase tracking-wider text-foreground">
                     {t("login.password")}
                   </Label>
                   <button
@@ -259,7 +259,7 @@ export default function LoginV2() {
                     required
                     minLength={6}
                     autoComplete="current-password"
-                    className="h-12 pl-10 pr-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 pr-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                   <button
                     type="button"
@@ -310,14 +310,14 @@ export default function LoginV2() {
                     key={sso.provider}
                     type="button"
                     variant="outline"
-                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    className="h-12 w-full gap-2.5 justify-center font-semibold text-sm border-2 border-border bg-background shadow-sm hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
                       )
                     }
                   >
-                    <sso.Logo className="h-4 w-4" />
+                    <sso.Logo className="h-5 w-5" />
                     {sso.name}
                   </Button>
                 ))}
