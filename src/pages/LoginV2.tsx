@@ -204,7 +204,7 @@ export default function LoginV2() {
                 <img src={tinaAlpaca.url} alt="Tina" className="h-14 w-14 object-contain" />
                 <p className="text-2xl leading-tight">
                   <span className="font-bold text-primary">Log in</span>
-                  <span className="text-foreground font-medium"> en plan met Tina mee.</span>
+                  <span className="text-foreground font-medium"> en plan met Tina.</span>
                 </p>
               </div>
             </div>
