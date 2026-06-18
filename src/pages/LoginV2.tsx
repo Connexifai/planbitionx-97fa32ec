@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
-import tinaAlpaca from "@/assets/tina-ai-alpaca-transparent.png.asset.json";
+import tinaAlpaca from "@/assets/tina-alpaca-cutout.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff, LogIn, ArrowRight, User, Lock, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
