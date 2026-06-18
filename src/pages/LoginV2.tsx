@@ -126,7 +126,7 @@ export default function LoginV2() {
                 </div>
                 <div className="text-2xl xl:text-3xl text-white/90">
                   Rosters that obey rules, respect people, and ship<br />
-                  in under a minute. <a href="https://www.planbition.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-400 hover:text-[hsl(var(--brand-accent))]">More info</a>
+                  in under a minute. <a href="https://www.planbition.com" target="_blank" rel="noopener noreferrer" className="underline text-[hsl(var(--brand-accent))] hover:text-blue-400">More info</a>
                 </div>
               </div>
 
