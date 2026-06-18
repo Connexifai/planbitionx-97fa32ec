@@ -310,14 +310,14 @@ export default function LoginV2() {
                     key={sso.provider}
                     type="button"
                     variant="outline"
-                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    className="h-12 w-full gap-2.5 justify-center font-semibold text-sm border-2 border-border bg-background shadow-sm hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
                       )
                     }
                   >
-                    <sso.Logo className="h-4 w-4" />
+                    <sso.Logo className="h-5 w-5" />
                     {sso.name}
                   </Button>
                 ))}
