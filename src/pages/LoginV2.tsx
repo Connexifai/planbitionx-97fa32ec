@@ -120,10 +120,10 @@ export default function LoginV2() {
 
             <div className="space-y-6">
               <div className="font-black leading-[0.85] tracking-tighter">
-                <div className="text-[clamp(7rem,18vw,16rem)] text-[hsl(var(--brand-accent))]">
-                  X
+                <div className="text-[clamp(4rem,10vw,8rem)] text-[hsl(var(--brand-accent))]">
+                  Meet Planbition X
                 </div>
-                <div className="text-2xl xl:text-3xl text-white/90 -mt-4 max-w-md">
+                <div className="text-2xl xl:text-3xl text-white/90 max-w-md">
                   Rosters that obey rules, respect people, and ship in under a minute.
                 </div>
               </div>
@@ -132,20 +132,20 @@ export default function LoginV2() {
                 <Carousel opts={{ loop: true }} setApi={setCarouselApi} className="w-full">
                   <CarouselContent>
                     {[
-                      {
+                    {
                         Icon: MessageSquareText,
                         title: "AI Briefing",
-                        desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
+                        desc: "Describe hard and soft constraints in plain language — \"Anna not on Friday\", \"no late shift for Tom if possible\".",
                       },
                       {
                         Icon: Sparkles,
-                        title: "Uitlegbare AI Solver",
-                        desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
+                        title: "Explainable AI Solver",
+                        desc: "Automatically builds a schedule that respects every rule, and explains every choice in plain language.",
                       },
                       {
                         Icon: LifeBuoy,
-                        title: "AI Assistent",
-                        desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
+                        title: "AI Assistant",
+                        desc: "Supports the planner with sick leave and disruptions, and proposes concrete swaps and replacements.",
                       },
                     ].map(({ Icon, title, desc }) => (
                       <CarouselItem key={title}>
