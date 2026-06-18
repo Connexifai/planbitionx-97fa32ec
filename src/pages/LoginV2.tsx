@@ -183,7 +183,8 @@ export default function LoginV2() {
 
         {/* RIGHT — Clean light form */}
         <main
-          className={`relative flex items-center justify-center bg-background text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`relative flex items-center justify-center text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{ background: "radial-gradient(ellipse at 20% 0%, hsl(210 40% 96%) 0%, hsl(var(--background)) 60%)" }}
         >
 
           {/* Mobile brand badge */}
