@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
+import planbitionLogo from "@/assets/planbition-logo-v3.png.asset.json";
 import tinaAlpaca from "@/assets/tina-alpaca-transparent.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
