@@ -132,20 +132,20 @@ export default function LoginV2() {
                 <Carousel opts={{ loop: true }} setApi={setCarouselApi} className="w-full">
                   <CarouselContent>
                     {[
-                      {
+                    {
                         Icon: MessageSquareText,
                         title: "AI Briefing",
-                        desc: "Geef in mensentaal harde en zachte restricties mee — \"Anna niet op vrijdag\", \"liefst geen late dienst voor Tom\".",
+                        desc: "Describe hard and soft constraints in plain language — \"Anna not on Friday\", \"no late shift for Tom if possible\".",
                       },
                       {
                         Icon: Sparkles,
-                        title: "Uitlegbare AI Solver",
-                        desc: "Maakt automatisch een planning die alle regels respecteert en legt elke keuze in begrijpelijke taal uit.",
+                        title: "Explainable AI Solver",
+                        desc: "Automatically builds a schedule that respects every rule, and explains every choice in plain language.",
                       },
                       {
                         Icon: LifeBuoy,
-                        title: "AI Assistent",
-                        desc: "Ondersteunt de planner bij ziekmeldingen en verstoringen, en doet concrete voorstellen voor swaps en invallers.",
+                        title: "AI Assistant",
+                        desc: "Supports the planner with sick leave and disruptions, and proposes concrete swaps and replacements.",
                       },
                     ].map(({ Icon, title, desc }) => (
                       <CarouselItem key={title}>
