@@ -79,7 +79,7 @@ export default function LoginV2() {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
       setLoading(false);
-      toast.error(t("login.error", "Ongeldige inloggegevens"));
+      toast.error(t("login.error", "Invalid login credentials"));
       return;
     }
     setExiting(true);
@@ -172,7 +172,7 @@ export default function LoginV2() {
                       className={`h-1.5 rounded-full transition-all ${
                         i === currentSlide ? "w-5 bg-[hsl(var(--brand-accent))]" : "w-1.5 bg-white/30 hover:bg-white/50"
                       }`}
-                      aria-label={`Ga naar slide ${i + 1}`}
+                      aria-label={`Go to slide ${i + 1}`}
                     />
                   ))}
                 </div>
@@ -201,13 +201,13 @@ export default function LoginV2() {
           <div className="w-full max-w-md">
             <div className="mb-8">
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
-                {t("login.welcome", "Welkom terug")}.
+                {t("login.welcome", "Welcome back")}.
               </h2>
               <div className="mt-1 -ml-[15px] flex items-center gap-1">
                 <img src={tinaAlpaca.url} alt="Tina" className="h-14 w-14 object-contain" />
                 <p className="text-lg leading-tight">
                   <span className="font-bold text-primary">Log in</span>
-                  <span className="text-foreground font-medium"> en plan met Tina.</span>
+                  <span className="text-foreground font-medium"> and plan with Tina.</span>
                 </p>
               </div>
             </div>
@@ -240,7 +240,7 @@ export default function LoginV2() {
                   <button
                     type="button"
                     className="text-xs font-medium text-[hsl(var(--brand-accent))] hover:underline"
-                    onClick={() => toast.info("Neem contact op met je beheerder.")}
+                    onClick={() => toast.info("Contact your administrator.")}
                   >
                     {t("login.forgotPassword", "Forgot password?")}
                   </button>
@@ -310,7 +310,7 @@ export default function LoginV2() {
                     className="h-12 w-full gap-2.5 justify-center font-semibold text-sm border-2 border-border bg-card shadow-sm hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
-                        `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
+                        `${sso.name} SSO — contact your administrator to activate this.`
                       )
                     }
                   >
