@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
 import tinaAlpaca from "@/assets/tina-ai-alpaca.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { Eye, EyeOff, ArrowRight, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
+import { Eye, EyeOff, LogIn, ArrowRight, User, Lock, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -180,17 +181,8 @@ export default function LoginV2() {
 
         {/* RIGHT — Clean light form */}
         <main
-          className={`relative flex items-center justify-center overflow-hidden text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          style={{ background: "#ffffff" }}
+          className={`relative flex items-center justify-center bg-background text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
-          {/* Editorial corner mascot */}
-          <img
-            src={tinaAlpaca.url}
-            alt=""
-            aria-hidden
-            className="pointer-events-none absolute bottom-6 right-6 hidden h-24 w-24 object-contain opacity-30 xl:block"
-          />
-
           {/* Top-right controls */}
           <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -207,59 +199,56 @@ export default function LoginV2() {
             <div className="font-black tracking-tight">Planbition X</div>
           </div>
 
-          <div className="relative z-10 w-full max-w-md">
-            {/* Editorial header */}
-            <div className="mb-10 flex items-end justify-between border-b border-slate-900 pb-6">
-              <div>
-                <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">
-                  Planbition X
+          <div className="w-full max-w-md">
+            <div className="mb-8">
+              <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
+                {t("login.welcome", "Welkom terug")}.
+              </h2>
+              <div className="mt-3 flex items-center gap-3">
+                <img src={tinaAlpaca.url} alt="Tina" className="h-14 w-14 object-contain" />
+                <p className="text-base">
+                  <span className="font-semibold text-[hsl(var(--brand-accent))]">Log in</span>
+                  <span className="text-foreground"> en plan met Tina mee.</span>
                 </p>
-                <h2
-                  className="text-5xl tracking-tight text-slate-900"
-                  style={{ fontFamily: "'Instrument Serif', ui-serif, Georgia, serif", fontWeight: 400 }}
-                >
-                  {t("login.welcome", "Welkom terug")}
-                </h2>
               </div>
-              <img
-                src={tinaAlpaca.url}
-                alt="Tina"
-                className="hidden h-12 w-12 object-contain opacity-60 sm:block"
-              />
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {t("login.username", "Username")}
                 </Label>
-                <input
-                  id="email"
-                  type="email"
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  autoComplete="username"
-                  className="w-full border-0 border-b border-slate-200 bg-transparent px-0 py-3 text-slate-900 outline-none transition-colors placeholder:text-slate-300 focus:border-[hsl(var(--brand-accent))]"
-                />
+                <div className="relative">
+                  <User className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Username"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoComplete="username"
+                    className="h-12 pl-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                  />
+                </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">
+                  <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                     {t("login.password")}
                   </Label>
                   <button
                     type="button"
-                    className="text-[10px] font-bold uppercase tracking-[0.18em] text-[hsl(var(--brand-accent))] hover:underline"
+                    className="text-xs font-medium text-[hsl(var(--brand-accent))] hover:underline"
                     onClick={() => toast.info("Neem contact op met je beheerder.")}
                   >
-                    {t("login.forgotPassword", "Forgot?")}
+                    {t("login.forgotPassword", "Forgot password?")}
                   </button>
                 </div>
                 <div className="relative">
-                  <input
+                  <Lock className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
@@ -268,12 +257,12 @@ export default function LoginV2() {
                     required
                     minLength={6}
                     autoComplete="current-password"
-                    className="w-full border-0 border-b border-slate-200 bg-transparent px-0 py-3 pr-8 text-slate-900 outline-none transition-colors placeholder:text-slate-300 focus:border-[hsl(var(--brand-accent))]"
+                    className="h-12 pl-10 pr-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-700"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </button>
@@ -283,13 +272,14 @@ export default function LoginV2() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="group mt-2 h-14 w-full gap-2 rounded-none text-xs font-bold uppercase tracking-[0.2em] text-white bg-[hsl(var(--brand-accent))] hover:bg-[hsl(28,90%,45%)] transition-all"
+                className="group h-12 w-full gap-2 text-sm font-semibold text-white bg-[hsl(var(--brand-accent))] hover:bg-[hsl(var(--brand-accent))] shadow-[0_10px_30px_-10px_hsl(var(--brand-accent)/0.6)] hover:shadow-[0_14px_40px_-10px_hsl(var(--brand-accent)/0.75)] transition-all"
               >
                 {loading ? (
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
                 ) : (
                   <>
-                    {t("login.login", "Sign into Account")}
+                    <LogIn className="h-4 w-4" />
+                    {t("login.login", "Sign in")}
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </>
                 )}
@@ -297,27 +287,28 @@ export default function LoginV2() {
             </form>
 
             {/* SSO options */}
-            <div className="mt-10">
-              <div className="relative mb-6">
+            <div className="mt-8">
+              <div className="relative mb-4">
                 <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t border-slate-100" />
+                  <span className="w-full border-t border-border" />
                 </div>
-                <div className="relative flex justify-center text-[10px] uppercase">
-                  <span className="bg-white px-4 font-bold tracking-[0.2em] text-slate-400">
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="bg-background px-3 text-muted-foreground tracking-wider">
                     {t("login.useAnotherService", "Use another service to log in")}
                   </span>
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-0 -space-x-px">
+              <div className="grid gap-2.5">
                 {[
                   { name: "Azure", provider: "azure", Logo: AzureLogo },
                   { name: "Auth0", provider: "auth0", Logo: Auth0Logo },
                   { name: "Okta", provider: "okta", Logo: OktaLogo },
                 ].map((sso) => (
-                  <button
+                  <Button
                     key={sso.provider}
                     type="button"
-                    className="flex h-12 items-center justify-center gap-2 border border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-700 transition-colors hover:bg-slate-50 hover:text-[hsl(var(--brand-accent))]"
+                    variant="outline"
+                    className="h-11 w-full gap-2.5 justify-center font-semibold border-border hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
@@ -326,15 +317,9 @@ export default function LoginV2() {
                   >
                     <sso.Logo className="h-4 w-4" />
                     {sso.name}
-                  </button>
+                  </Button>
                 ))}
               </div>
-            </div>
-
-            {/* Footer accent bar */}
-            <div className="mt-12 flex h-1 w-full">
-              <div className="h-full w-1/3 bg-[hsl(var(--brand-accent))]" />
-              <div className="h-full w-2/3 bg-slate-100" />
             </div>
           </div>
         </main>
