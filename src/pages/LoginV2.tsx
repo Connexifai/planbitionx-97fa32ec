@@ -217,7 +217,7 @@ export default function LoginV2() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                <Label htmlFor="email" className="text-sm font-bold uppercase tracking-wider text-foreground">
                   {t("login.username", "Username")}
                 </Label>
                 <div className="relative">
@@ -230,14 +230,14 @@ export default function LoginV2() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     autoComplete="username"
-                    className="h-12 pl-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="password" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  <Label htmlFor="password" className="text-sm font-bold uppercase tracking-wider text-foreground">
                     {t("login.password")}
                   </Label>
                   <button
@@ -259,7 +259,7 @@ export default function LoginV2() {
                     required
                     minLength={6}
                     autoComplete="current-password"
-                    className="h-12 pl-10 pr-10 bg-card border-border focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 pr-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                   <button
                     type="button"
