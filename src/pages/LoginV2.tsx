@@ -122,7 +122,7 @@ export default function LoginV2() {
               <div className="font-black leading-[0.85] tracking-tighter">
                 <div className="text-[clamp(3rem,7vw,5.5rem)] whitespace-nowrap">
                   <span className="text-white">Meet Planbition</span>
-                  <span className="text-[hsl(var(--brand-accent))]"> X</span>
+                  <span className="text-[hsl(var(--brand-accent))] text-[1.35em] font-black"> X</span>
                 </div>
                 <div className="text-2xl xl:text-3xl text-white/90">
                   Rosters that obey rules, respect people, and ship<br />
