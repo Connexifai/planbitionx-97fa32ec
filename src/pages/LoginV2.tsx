@@ -199,11 +199,11 @@ export default function LoginV2() {
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
                 {t("login.welcome", "Welkom terug")}.
               </h2>
-              <div className="mt-3 flex items-center gap-3">
-                <img src={tinaAlpaca.url} alt="Tina" className="h-14 w-14 object-contain rounded-lg" />
-                <p className="text-base">
-                  <span className="font-semibold text-[hsl(var(--brand-accent))]">Log in</span>
-                  <span className="text-foreground"> en plan met Tina.</span>
+              <div className="mt-4 flex items-center gap-4">
+                <img src={tinaAlpaca.url} alt="Tina" className="h-20 w-20 object-contain rounded-xl" />
+                <p className="text-xl">
+                  <span className="font-bold text-[hsl(var(--brand-accent))]">Log in</span>
+                  <span className="text-foreground font-medium"> en plan met Tina.</span>
                 </p>
               </div>
             </div>
