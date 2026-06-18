@@ -181,9 +181,58 @@ export default function LoginV2() {
 
         {/* RIGHT — Clean light form */}
         <main
-          className={`relative flex items-center justify-center text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
-          style={{ background: "linear-gradient(180deg, #eef4fa 0%, #f8fafc 40%, #ffffff 100%)" }}
+          className={`relative flex items-center justify-center overflow-hidden text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{
+            background:
+              "radial-gradient(ellipse at 70% 30%, hsl(28 90% 95%) 0%, #f6faff 45%, #ffffff 100%)",
+          }}
         >
+          {/* Decorative background layers */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-32 -right-24 h-[520px] w-[520px] rounded-full opacity-60 blur-[110px]"
+            style={{ background: "hsl(var(--brand-accent) / 0.18)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -bottom-20 -left-16 h-[360px] w-[360px] rounded-full opacity-50 blur-[90px]"
+            style={{ background: "hsl(210 90% 80% / 0.35)" }}
+          />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.035]"
+            style={{
+              backgroundImage: "radial-gradient(circle, #0f172a 1px, transparent 1px)",
+              backgroundSize: "32px 32px",
+            }}
+          />
+
+          {/* Floating Tina mascot — decorative, behind form */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute right-6 top-1/2 hidden -translate-y-1/2 xl:block"
+          >
+            <div className="relative">
+              <div
+                className="absolute inset-0 rounded-full blur-3xl"
+                style={{ background: "hsl(var(--brand-accent) / 0.25)", transform: "scale(0.8)" }}
+              />
+              <img
+                src={tinaAlpaca.url}
+                alt=""
+                className="relative h-72 w-72 object-contain opacity-25 drop-shadow-2xl"
+                style={{ animation: "tina-float 7s ease-in-out infinite" }}
+              />
+            </div>
+          </div>
+
+          <style>{`
+            @keyframes tina-float {
+              0%, 100% { transform: translateY(0) rotate(-2deg); }
+              50% { transform: translateY(-14px) rotate(2deg); }
+            }
+          `}</style>
+
           {/* Top-right controls */}
           <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
             <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
@@ -200,7 +249,7 @@ export default function LoginV2() {
             <div className="font-black tracking-tight">Planbition X</div>
           </div>
 
-          <div className="w-full max-w-md">
+          <div className="relative z-10 w-full max-w-md">
             <div className="mb-8">
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
                 {t("login.welcome", "Welkom terug")}.
@@ -294,7 +343,7 @@ export default function LoginV2() {
                   <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="px-3 text-muted-foreground tracking-wider" style={{ background: "linear-gradient(180deg, #eef4fa 0%, #f8fafc 40%, #ffffff 100%)" }}>
+                  <span className="px-3 text-muted-foreground tracking-wider bg-transparent backdrop-blur-sm">
                     {t("login.useAnotherService", "Use another service to log in")}
                   </span>
                 </div>
