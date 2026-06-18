@@ -200,7 +200,7 @@ export default function LoginV2() {
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
                 {t("login.welcome", "Welkom terug")}.
               </h2>
-              <div className="mt-2 flex items-center gap-2.5">
+              <div className="mt-2 -ml-[15px] flex items-center gap-2.5">
                 <img src={tinaAlpaca.url} alt="Tina" className="h-14 w-14 object-contain" />
                 <p className="text-2xl leading-tight">
                   <span className="font-bold text-primary">Log in</span>
