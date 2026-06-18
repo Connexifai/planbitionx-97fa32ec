@@ -4,7 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import planbitionLogo from "@/assets/planbition-zvoove-logo.png.asset.json";
-import tinaAlpaca from "@/assets/tina-cartoon-alpaca.png.asset.json";
+import tinaAlpaca from "@/assets/tina-alpaca-transparent.png.asset.json";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Eye, EyeOff, LogIn, ArrowRight, User, Lock, MessageSquareText, Sparkles, LifeBuoy } from "lucide-react";
@@ -200,12 +200,12 @@ export default function LoginV2() {
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
                 {t("login.welcome", "Welkom terug")}.
               </h2>
-              <div className="mt-10 flex items-center gap-6">
-                <img src={tinaAlpaca.url} alt="Tina" className="h-16 w-16 object-contain" />
-                <div className="flex items-center text-xl leading-tight">
+              <div className="mt-4 flex items-center gap-4">
+                <img src={tinaAlpaca.url} alt="Tina" className="h-20 w-20 object-contain rounded-xl" />
+                <p className="text-xl">
                   <span className="font-bold text-[hsl(var(--brand-accent))]">Log in</span>
                   <span className="text-foreground font-medium"> en plan met Tina.</span>
-                </div>
+                </p>
               </div>
             </div>
 
