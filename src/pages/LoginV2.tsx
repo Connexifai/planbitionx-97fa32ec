@@ -223,7 +223,7 @@ export default function LoginV2() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     autoComplete="username"
-                    className="h-12 pl-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 bg-card border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default function LoginV2() {
                     required
                     minLength={6}
                     autoComplete="current-password"
-                    className="h-12 pl-10 pr-10 bg-background border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
+                    className="h-12 pl-10 pr-10 bg-card border-2 border-border shadow-sm focus-visible:ring-[hsl(var(--brand-accent))] focus-visible:ring-offset-0"
                   />
                   <button
                     type="button"
@@ -303,7 +303,7 @@ export default function LoginV2() {
                     key={sso.provider}
                     type="button"
                     variant="outline"
-                    className="h-12 w-full gap-2.5 justify-center font-semibold text-sm border-2 border-border bg-background shadow-sm hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
+                    className="h-12 w-full gap-2.5 justify-center font-semibold text-sm border-2 border-border bg-card shadow-sm hover:border-[hsl(var(--brand-accent))] hover:text-[hsl(var(--brand-accent))] transition-colors"
                     onClick={() =>
                       toast.info(
                         `${sso.name} SSO — neem contact op met je beheerder om dit te activeren.`
