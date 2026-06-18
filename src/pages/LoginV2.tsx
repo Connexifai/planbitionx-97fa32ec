@@ -124,7 +124,7 @@ export default function LoginV2() {
                   <span className="text-white">Meet Planbition</span>
                   <span className="text-[hsl(var(--brand-accent))] text-[1.35em] font-black"> X</span>
                 </div>
-                <div className="text-2xl xl:text-3xl text-white/90">
+                <div className="text-2xl xl:text-3xl text-white/90 font-medium">
                   Rosters that obey rules, respect people, and ship<br />
                   in under a minute. <a href="https://www.planbition.com" target="_blank" rel="noopener noreferrer" className="underline text-[hsl(var(--brand-accent))] hover:text-blue-400">More info</a>
                 </div>
