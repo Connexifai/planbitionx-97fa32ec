@@ -120,7 +120,7 @@ export default function LoginV2() {
 
             <div className="space-y-6">
               <div className="font-black leading-[0.85] tracking-tighter">
-                <div className="text-[clamp(4rem,10vw,8rem)]">
+                <div className="text-[clamp(3rem,7vw,5.5rem)] whitespace-nowrap">
                   <span className="text-white">Meet Planbition</span>
                   <span className="text-[hsl(var(--brand-accent))]"> X</span>
                 </div>
