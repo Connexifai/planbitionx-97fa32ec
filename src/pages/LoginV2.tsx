@@ -185,13 +185,6 @@ export default function LoginV2() {
         <main
           className={`relative flex items-center justify-center bg-background text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
         >
-          {/* Top-right controls */}
-          <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-            <span className="text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground">
-              Style B
-            </span>
-            <LanguageSwitcher />
-          </div>
 
           {/* Mobile brand badge */}
           <div className="absolute top-6 left-6 flex items-center gap-2 lg:hidden">
