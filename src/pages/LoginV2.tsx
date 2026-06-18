@@ -181,7 +181,8 @@ export default function LoginV2() {
 
         {/* RIGHT — Clean light form */}
         <main
-          className={`relative flex items-center justify-center bg-background text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          className={`relative flex items-center justify-center text-foreground px-6 py-12 sm:px-10 transition-all duration-700 ease-out ${entered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+          style={{ background: "linear-gradient(180deg, #eef4fa 0%, #f8fafc 40%, #ffffff 100%)" }}
         >
           {/* Top-right controls */}
           <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
