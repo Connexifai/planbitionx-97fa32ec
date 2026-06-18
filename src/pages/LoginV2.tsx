@@ -294,7 +294,7 @@ export default function LoginV2() {
                   <span className="w-full border-t border-border" />
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-3 text-muted-foreground tracking-wider">
+                  <span className="px-3 text-muted-foreground tracking-wider" style={{ background: "linear-gradient(180deg, #eef4fa 0%, #f8fafc 40%, #ffffff 100%)" }}>
                     {t("login.useAnotherService", "Use another service to log in")}
                   </span>
                 </div>
